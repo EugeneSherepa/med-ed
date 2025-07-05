@@ -5,7 +5,6 @@ export const About = () => {
   return (
     <>
       <Header />
-      <h1>About Us</h1>
       <Footer />
     </>
   );
