@@ -7,7 +7,9 @@
   background-color: $blue;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
@@ -15,8 +17,19 @@ html {
   box-sizing: border-box;
 }
 
-h1, h2, h3, h4, h5, h6, p {
-  font-family: "Artegra Sans";
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-family: 'Artegra Sans';
   margin: 0;
 }
 
@@ -28,6 +41,7 @@ p {
 
 .page-width {
   max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 64px;
 }
@@ -46,11 +60,17 @@ p {
   color: $white;
   background-color: $primary-color;
   text-decoration: none;
-  transition: .3s ease-in-out;
+  transition: 0.3s ease-in-out;
 
   &:hover {
     background-color: transparent;
     color: $primary-color;
-    transition: .3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
+}
+
+@media screen and (max-width: 9900px) {
+  .page-width {
+    padding: 0 24px;
   }
 }
