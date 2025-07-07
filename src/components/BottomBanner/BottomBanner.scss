@@ -1,0 +1,192 @@
+@use '../../styles/variables' as *;
+
+.bottombanner {
+  position: relative;
+  padding: 188px 0 90px;
+
+  & > .page-width {
+    position: relative;
+  }
+
+  &-heading {
+    position: relative;
+    margin-bottom: 48px;
+    font-family: $font-artegra;
+    font-size: 128px;
+    line-height: 100%;
+    font-weight: 800;
+    color: $primary-color;
+    text-transform: uppercase;
+    z-index: 2;
+
+    &-desktop {
+      display: block;
+    }
+
+    &-mobile {
+      display: none;
+    }
+
+    &-wrapper {
+      position: relative;
+      z-index: 4;
+    }
+
+    &-subheading {
+      position: relative;
+      font-family: $font-artegra;
+      font-size: 48px;
+      line-height: 80px;
+      font-weight: 600;
+      text-transform: uppercase;
+      z-index: 4;
+
+      &-underline {
+        position: absolute;
+        top: 60%;
+        left: 0;
+        right: 0;
+
+        & img {
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  &-text {
+    position: relative;
+    margin-bottom: 24px;
+    font-family: $font-eastman;
+    font-size: 24px;
+    line-height: 40px;
+    color: #252c3fcc;
+    z-index: 4;
+
+    &-desktop {
+      display: block;
+    }
+
+    &-mobile {
+      display: none;
+    }
+  }
+
+  & .button-primary {
+    position: relative;
+    width: fit-content;
+    z-index: 4;
+  }
+
+  &-first {
+    position: absolute;
+    left: 0;
+    top: -40px;
+    z-index: 1;
+  }
+
+  &-second {
+    position: absolute;
+    left: 240px;
+    bottom: -112%;
+    z-index: 3;
+  }
+
+  &-third {
+    position: absolute;
+    top: -45px;
+    right: 22%;
+    z-index: 4;
+  }
+
+  &-forth {
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+    z-index: 3;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .bottombanner {
+    position: relative;
+    padding: 64px 0 56px;
+
+    & > .page-width {
+      position: relative;
+      padding: 0;
+    }
+
+    &-heading {
+      padding: 0 18px;
+      margin-bottom: 36px;
+      font-size: 30px;
+      line-height: 48px;
+      text-align: end;
+
+      &-desktop {
+        display: none;
+      }
+
+      &-mobile {
+        display: block;
+      }
+
+      &-subheading {
+        display: block;
+        text-align: end;
+        font-size: 24px;
+        line-height: 24px;
+
+        &-underline {
+          position: absolute;
+          top: 90%;
+          left: 0;
+          right: 0;
+
+          & img {
+            width: 80%;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+
+    &-text {
+      padding: 0 8px;
+      margin-bottom: 8px;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: center;
+
+      &-desktop {
+        display: none;
+      }
+
+      &-mobile {
+        display: block;
+      }
+    }
+
+    & .button-primary {
+      margin: 0 auto;
+    }
+
+    &-first {
+      display: none;
+    }
+
+    &-second {
+      display: none;
+    }
+
+    &-third {
+      display: none;
+    }
+
+    &-forth {
+      display: none;
+    }
+  }
+}

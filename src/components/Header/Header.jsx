@@ -29,7 +29,7 @@ export const Header = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setShowHeader(false);
         setStepsOpened(false);
         setPrepareOpened(false);

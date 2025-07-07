@@ -1,0 +1,148 @@
+@use '../../styles/variables' as *;
+
+.home-it {
+  &-wrapper {
+    & > .page-width {
+      padding: 0;
+    }
+
+    &-bubble {
+      display: none;
+    }
+  }
+
+  & img {
+    position: relative;
+    left: 16px;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 55px;
+  }
+
+  &-title {
+    position: relative;
+    left: 6px;
+    font-family: $font-artegra;
+    font-size: 36px;
+    line-height: 100%;
+    font-weight: 800;
+    color: $primary-color;
+    text-align: end;
+    text-transform: uppercase;
+  }
+
+  &-text {
+    padding: 62px 0 108px 0;
+    background-image: url('../../assets/home-text-image-backrgound.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &-text {
+      font-family: $font-eastman;
+      font-size: 16px;
+      line-height: 30px;
+      font-weight: 500;
+      color: $primary-color;
+
+      &-mobile {
+        display: block;
+      }
+
+      &-desktop {
+        display: none;
+      }
+    }
+
+    &-button {
+      padding-right: 0;
+      display: none;
+    }
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .home-it {
+    position: relative;
+    padding-bottom: 92px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 22px;
+
+    &-wrapper {
+      position: relative;
+
+      & > .page-width {
+        padding: 0 64px;
+      }
+    }
+
+    &-wrapper-bubble {
+      display: block;
+      position: absolute;
+      top: 49px;
+      left: 0;
+    }
+
+    & > .page-width {
+      padding: 0;
+      width: fit-content;
+    }
+
+    & img {
+      margin-bottom: 32px;
+      left: 26px;
+      max-width: 706px;
+      max-height: 752px;
+      width: 100%;
+      height: 100%;
+    }
+
+    &-title {
+      left: 26px;
+      font-size: 64px;
+    }
+
+    &-text {
+      padding: 0;
+      padding-top: 130px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background-image: unset;
+      align-items: flex-end;
+      z-index: 2;
+
+      & > .page-width {
+        padding: 0;
+      }
+
+      &-text {
+        margin-bottom: 28px;
+        font-size: 24px;
+        line-height: 30px;
+        max-width: 568px;
+
+        &-mobile {
+          display: none;
+        }
+
+        &-desktop {
+          display: block;
+        }
+      }
+
+      &-button {
+        display: block;
+        padding-right: 52px;
+
+        & .button-secondary {
+          width: fit-content;
+        }
+      }
+    }
+  }
+}

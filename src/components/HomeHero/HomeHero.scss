@@ -1,0 +1,137 @@
+@use '../../styles/variables' as *;
+
+.home-hero {
+  &-bubble-right {
+    display: none;
+  }
+
+  &-bubble-left {
+    display: none;
+  }
+
+  &-wrapper {
+    padding: 160px 0 38px 0;
+
+    &-top {
+      display: none;
+    }
+
+    &-text {
+      margin-bottom: 8px;
+
+      &-heading {
+        margin-bottom: 8px;
+        font-size: 32px;
+        line-height: 40px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      &-subheading {
+        font-family: $font-eastman;
+        font-size: 16px;
+        line-height: 20px;
+        color: $primary-color;
+      }
+    }
+
+    &-buttons {
+      width: fit-content;
+
+      & .button-secondary {
+        padding: 16px 16px;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        font-family: $font-eastman;
+        font-size: 16px;
+        line-height: 16px;
+        font-weight: 700;
+        border: 2px solid $primary-color;
+        border-radius: 30px;
+        color: $white;
+        background-color: $primary-color;
+        text-decoration: none;
+        transition: 0.3s ease-in-out;
+
+        &:hover {
+          background-color: transparent;
+          color: $primary-color;
+          transition: 0.3s ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .home-hero {
+    position: relative;
+
+    &-bubble-right {
+      display: flex;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    &-bubble-left {
+      display: flex;
+      position: absolute;
+      top: 142px;
+      left: 0;
+    }
+
+    &-wrapper {
+      position: relative;
+      padding: 268px 0 32px 0;
+      z-index: 2;
+
+      &-top {
+        margin-bottom: 38px;
+        display: flex;
+        align-items: center;
+        gap: 36px;
+
+        &-item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+
+          &-text {
+            font-family: $font-eastman;
+            font-size: 16px;
+            line-height: 150%;
+            text-transform: lowercase;
+            color: $primary-color;
+          }
+        }
+      }
+
+      &-text {
+        margin-bottom: 24px;
+
+        &-heading {
+          margin-bottom: 8px;
+          font-family: $font-artegra;
+          font-size: 54px;
+          line-height: 115%;
+          font-weight: 800;
+          text-transform: uppercase;
+        }
+
+        &-subheading {
+          font-family: $font-eastman;
+          font-size: 20px;
+          line-height: 100%;
+          color: $primary-color;
+        }
+      }
+
+      &-buttons {
+        width: fit-content;
+      }
+    }
+  }
+}

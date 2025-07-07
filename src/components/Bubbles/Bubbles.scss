@@ -1,0 +1,110 @@
+@use '../../styles/variables' as *;
+
+.bubbles {
+  position: relative;
+
+  &-title {
+    margin-bottom: 42px;
+    font-family: $font-artegra;
+    font-size: 36px;
+    line-height: 125%;
+    text-transform: uppercase;
+  }
+
+  &-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    height: 795px;
+
+    &-desktop {
+      display: block;
+    }
+
+    &-mobile {
+      display: none;
+    }
+
+    &-first {
+      position: absolute;
+      left: -12px;
+      top: -32px;
+      display: flex;
+    }
+
+    &-second {
+      position: absolute;
+      left: 300px;
+      top: 58px;
+      display: flex;
+    }
+
+    &-third {
+      position: absolute;
+      right: 0;
+      top: -132px;
+      display: flex;
+    }
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .bubbles-wrapper {
+    &-second {
+      top: 200px;
+    }
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .bubbles {
+    position: relative;
+
+    &-title {
+      margin-bottom: 0;
+      font-family: $font-artegra;
+      font-size: 24px;
+      line-height: 125%;
+    }
+
+    &-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      height: 880px;
+
+      &-desktop {
+        display: none;
+      }
+
+      &-mobile {
+        display: block;
+
+        &-first {
+          position: absolute;
+          left: 0;
+          top: 0;
+          display: flex;
+          height: fit-content;
+          z-index: 2;
+        }
+
+        &-second {
+          position: absolute;
+          right: 0;
+          top: 58px;
+          display: flex;
+          z-index: 1;
+        }
+
+        &-third {
+          position: absolute;
+          left: 0;
+          top: 270px;
+          display: flex;
+          z-index: 2;
+        }
+      }
+    }
+  }
+}
