@@ -1,0 +1,55 @@
+@use '../../styles/variables' as *;
+
+.about-icon-text {
+  padding: 54px 0 130px;
+
+  &-heading {
+    font-family: $font-artegra;
+    margin-bottom: 84px;
+    font-size: 64px;
+    line-height: 80px;
+    font-weight: 600;
+    text-align: center;
+    color: $primary-color;
+    text-transform: uppercase;
+  }
+
+  &-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 84px;
+  }
+
+  &-text {
+    font-family: $font-eastman;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    color: $primary-color;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .about-icon-text {
+    padding: 36px 0 64px;
+
+    &-heading {
+      margin-bottom: 36px;
+      font-size: 24px;
+      line-height: 32px;
+    }
+
+    &-logo {
+      margin-bottom: 36px;
+    }
+
+    &-text {
+      font-family: $font-eastman;
+      font-size: 20px;
+      line-height: 30px;
+      text-align: center;
+      color: $primary-color;
+    }
+  }
+}

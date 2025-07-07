@@ -13,6 +13,7 @@
   background-color: #ffffff3d;
   transition: 0.3s ease-in-out;
   z-index: 9;
+  backdrop-filter: blur(9.2px);
 
   &.hidden {
     transform: translateY(-100%);

@@ -26,7 +26,7 @@ export const HomeTextImage = () => {
               складання КРОК.
             </div>
             <div className="home-it-text-button">
-              <a href="/about" className="button-secondary">
+              <a href="/about-us" className="button-secondary">
                 Про нас
               </a>
             </div>
