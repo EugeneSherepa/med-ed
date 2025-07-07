@@ -1,0 +1,204 @@
+@use '../../styles/variables' as *;
+
+.bottombanner {
+  position: relative;
+  padding-top: 188px;
+
+  & > .page-width {
+    position: relative;
+    padding-bottom: 174px;
+  }
+
+  &-heading {
+    position: relative;
+    margin-bottom: 48px;
+    font-family: $font-artegra;
+    font-size: 64px;
+    line-height: 100%;
+    font-weight: 800;
+    color: $primary-color;
+    text-transform: uppercase;
+    z-index: 2;
+
+    &-desktop {
+      display: block;
+    }
+
+    &-mobile {
+      display: none;
+    }
+
+    &-wrapper {
+      position: relative;
+      z-index: 4;
+    }
+
+    &-subheading {
+      position: relative;
+      font-family: $font-artegra;
+      font-size: 48px;
+      line-height: 80px;
+      font-weight: 600;
+      text-transform: uppercase;
+      z-index: 4;
+
+      &-underline {
+        position: absolute;
+        top: 85%;
+        left: unset;
+        right: 0;
+        max-width: 900px;
+        width: 70vw;
+
+        & img {
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  &-text {
+    position: relative;
+    margin-bottom: 24px;
+    font-family: $font-eastman;
+    font-size: 24px;
+    line-height: 40px;
+    color: #252c3fcc;
+    z-index: 4;
+
+    &-desktop {
+      display: block;
+    }
+
+    &-mobile {
+      display: none;
+    }
+  }
+
+  & .button-primary-big {
+    position: relative;
+    width: fit-content;
+    z-index: 4;
+  }
+
+  &-first {
+    position: absolute;
+    left: 0;
+    top: -40px;
+    z-index: 1;
+  }
+
+  &-second {
+    position: absolute;
+    left: 205px;
+    top: 100%;
+    z-index: 3;
+  }
+
+  &-third {
+    position: absolute;
+    top: -70px;
+    right: 22.7%;
+    z-index: 3;
+  }
+
+  &-forth {
+    position: absolute;
+    bottom: 100px;
+    right: 0;
+    z-index: 3;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .bottombanner-heading-subheading-underline {
+    top: 90%;
+    max-width: 500px;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .bottombanner {
+    position: relative;
+    padding-top: 64px;
+    padding-bottom: 0;
+
+    & > .page-width {
+      position: relative;
+      padding: 0;
+      padding-bottom: 56px;
+    }
+
+    &-heading {
+      padding: 0 18px;
+      margin-bottom: 36px;
+      font-size: 30px;
+      line-height: 48px;
+      text-align: end;
+
+      &-desktop {
+        display: none;
+      }
+
+      &-mobile {
+        display: block;
+      }
+
+      &-subheading {
+        display: block;
+        text-align: end;
+        font-size: 24px;
+        line-height: 24px;
+
+        &-underline {
+          position: absolute;
+          top: 100%;
+          left: unset;
+          right: 0;
+
+          & img {
+            width: 80%;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+
+    &-text {
+      padding: 0 8px;
+      margin-bottom: 8px;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: center;
+
+      &-desktop {
+        display: none;
+      }
+
+      &-mobile {
+        display: block;
+      }
+    }
+
+    & .button-primary {
+      margin: 0 auto;
+    }
+
+    &-first {
+      display: none;
+    }
+
+    &-second {
+      display: none;
+    }
+
+    &-third {
+      display: none;
+    }
+
+    &-forth {
+      display: none;
+    }
+  }
+}

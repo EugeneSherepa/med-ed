@@ -172,7 +172,7 @@ export const Header = () => {
         </nav>
         <div className="header-wrapper-buttons">
           <a href="" className="button-primary">
-            Почати навачання
+            Почати навчання
           </a>
           <button className='header-wrapper-buttons-burger' onClick={menuToggle}>
             <img src={burger} alt="Burger Menu" />

@@ -1,0 +1,99 @@
+@use '../../styles/variables' as *;
+
+.about {
+  padding: 180px 0 24px;
+
+  &-title {
+    margin-bottom: 64px;
+    font-family: $font-artegra;
+    font-size: 64px;
+    line-height: 100%;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: $primary-color;
+  }
+
+  &-wrapper {
+    padding: 0 96px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &-text {
+      display: flex;
+      flex-direction: column;
+
+      &-item {
+        font-family: $font-eastman;
+        font-size: 20px;
+        line-height: 20px;
+        color: $primary-color;
+
+        &-first {
+          margin-left: 65px;
+        }
+
+        &-second {
+          margin-left: 98px;
+        }
+      }
+    }
+
+    &-image {
+      display: flex;
+      margin: 0 auto;
+
+      & img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .about {
+    padding: 120px 0 24px;
+
+    &-title {
+      margin-bottom: 32px;
+      font-size: 32px;
+      line-height: 40px;
+    }
+
+    &-wrapper {
+      padding: 0;
+      flex-direction: column;
+      align-items: flex-start;
+
+      &-text {
+        display: flex;
+        flex-direction: column;
+
+        &-item {
+          &-second {
+            margin-left: 0;
+          }
+
+          &-third {
+            margin-right: 98px;
+          }
+        }
+
+        &-second {
+          width: 100%;
+          text-align: end;
+        }
+      }
+
+      &-image {
+        display: flex;
+
+        & img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
