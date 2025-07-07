@@ -1,0 +1,81 @@
+@use '../../styles/variables' as *;
+
+.cards-section {
+  padding: 62px 0 86px 0;
+
+  &-title {
+    margin-bottom: 16px;
+    font-size: 48px;
+    line-height: 100%;
+    font-weight: 800;
+    color: $primary-color;
+    text-transform: uppercase;
+  }
+
+  &-text {
+    margin-bottom: 64px;
+    font-size: 20px;
+    line-height: 140%;
+
+    &-desktop {
+      display: block;
+    }
+
+    &-mobile {
+      display: none;
+    }
+  }
+
+  &-cards {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-bottom: 32px !important;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .cards-section {
+    padding: 40px 0 64px 0;
+    & .swiper-srapper {
+      padding: 0;
+      margin-right: 8px;
+    }
+
+    &-title {
+      margin-bottom: 0;
+      font-size: 24px;
+      line-height: 24px;
+    }
+
+    &-text {
+      margin-bottom: 42px;
+      font-size: 16px;
+      line-height: 20px;
+
+      &-desktop {
+        display: none;
+      }
+
+      &-mobile {
+        display: block;
+      }
+    }
+
+    &-cards {
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      &-card {
+        &:first-child {
+          margin-left: 8px;
+        }
+
+        &:last-child {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}

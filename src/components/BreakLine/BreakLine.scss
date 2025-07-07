@@ -1,0 +1,36 @@
+@use '../../styles/variables' as *;
+
+.breakline {
+  padding: 94px 0 128px 0;
+
+  &-backrgound {
+    background-image: url('../../assets/breakline_background.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  &-title {
+    font-family: $font-artegra;
+    padding: 124px 0 158px;
+    font-size: 32px;
+    line-height: 40px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .breakline {
+    padding: 0 0 124px 0;
+
+    &-backrgound {
+      background-size: cover;
+    }
+
+    &-title {
+      padding: 37px 0 37px;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: center;
+    }
+  }
+}
