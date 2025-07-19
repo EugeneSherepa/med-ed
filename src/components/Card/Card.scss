@@ -31,7 +31,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      font-family: $font-eastman;
+      font-family: $font-inter;
       font-size: 14px;
       line-height: 100%;
       font-weight: 500;
@@ -66,15 +66,20 @@
       gap: 16px;
 
       &-title {
-        font-family: $font-eastman;
+        font-family: $font-fixel;
         font-size: 24px;
         line-height: 32px;
+        font-weight: 600;
+        color: $primary-color;
       }
     }
 
     &-text {
+      font-family: $font-fixel;
       font-size: 16px;
       line-height: 24px;
+      font-weight: 400;
+      color: $primary-color;
     }
   }
 
@@ -99,22 +104,23 @@
 
       &-info {
         &-position {
-          font-family: $font-eastman;
-          font-weight: 500;
+          font-family: $font-fixel;
           font-size: 16px;
-          line-height: 24px;
+          line-height: 19px;
+          font-weight: 500;
         }
 
         &-name {
           font-family: $font-eastman;
           font-size: 16px;
-          line-height: 24px;
+          line-height: 21px;
+          font-weight: 400;
         }
       }
     }
 
     &-price {
-      font-family: $font-artegra;
+      font-family: $font-inter;
       font-size: 26px;
       line-height: 100%;
       font-weight: 700;
