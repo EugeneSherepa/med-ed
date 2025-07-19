@@ -134,6 +134,78 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Fixel';
+  src: url('../assets/fonts/Fixel/FixelDisplay-Thin.otf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel';
+  src: url('../assets/fonts/Fixel/FixelDisplay-ExtraLight.otf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel';
+  src: url('../assets/fonts/Fixel/FixelDisplay-Light.otf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel';
+  src: url('../assets/fonts/Fixel/FixelDisplay-Regular.otf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel';
+  src: url('../assets/fonts/Fixel/FixelDisplay-Medium.otf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel';
+  src: url('../assets/fonts/Fixel/FixelDisplay-SemiBold.otf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel';
+  src: url('../assets/fonts/Fixel/FixelDisplay-Bold.otf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel';
+  src: url('../assets/fonts/Fixel/FixelDisplay-ExtraBold.otf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel';
+  src: url('../assets/fonts/Fixel/FixelDisplay-Black.otf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   font-family: 'Eastman', sans-serif;
 }
