@@ -1,0 +1,69 @@
+@use '../../styles/variables' as *;
+
+.materialsline {
+  &-backrgound {
+    background-image: url('../../assets/breakline_background.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  &-title {
+    font-family: $font-artegra;
+    padding: 158px 0 98px;
+    font-size: 32px;
+    line-height: 40px;
+    text-align: start;
+
+    &-big {
+      font-family: $font-artegra;
+      font-size: 128px;
+      line-height: 128px;
+      color: $primary-color;
+    }
+
+    &-small {
+      font-family: $font-artegra;
+      font-size: 48px;
+      line-height: 80px;
+      color: $primary-color;
+    }
+
+    &-button {
+      width: fit-content;
+    }
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .materialsline {
+    padding: 0;
+
+    &-backrgound {
+      background-size: cover;
+    }
+
+    &-title {
+      padding: 56px 0 48px;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: center;
+
+      &-big {
+        font-size: 36px;
+        line-height: 36px;
+        margin-bottom: 16px;
+      }
+
+      &-small {
+        font-size: 24px;
+        line-height: 24px;
+        margin-bottom: 16px;
+      }
+
+      &-button {
+        margin: 0 auto;
+      }
+    }
+  }
+}

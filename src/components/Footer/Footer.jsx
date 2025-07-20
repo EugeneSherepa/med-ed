@@ -15,7 +15,7 @@ export const Footer = () => {
               <ul className="footer-top-left-navigation-list">
                 <li className="footer-top-left-navigation-list-item">
                   <a
-                    href=""
+                    href="/about-us"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     Про нас
@@ -57,7 +57,7 @@ export const Footer = () => {
                 </li>
                 <li className="footer-top-left-navigation-list-item">
                   <a
-                    href=""
+                    href="/materials"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     Матеріали
