@@ -30,7 +30,17 @@ export const Header = () => {
   };
 
   const menuToggle = () => {
-    setMenuOpened((prev) => !prev);
+    setMenuOpened((prev) => {
+      const newState = !prev;
+
+      if (newState) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+
+      return newState;
+    });
   };
 
   useEffect(() => {
@@ -171,7 +181,7 @@ export const Header = () => {
               </li>
               <li className="header-wrapper-navigation-items-item">
                 <a
-                  href="/about-us"
+                  href="/materials"
                   className="header-wrapper-navigation-items-item-link"
                 >
                   Матеріали
@@ -227,11 +237,15 @@ export const Header = () => {
                 Іспити
                 <img src={caret} />
               </li>
-              <li className="mobile-menu-main-item">
-                <a href="/about-us">Про нас</a>
+              <li>
+                <a className="mobile-menu-main-item-link" href="/about-us">
+                  Про нас
+                </a>
               </li>
-              <li className="mobile-menu-main-item">
-                <a href="/about-us">Матеріали</a>
+              <li>
+                <a className="mobile-menu-main-item-link" href="/materials">
+                  Матеріали
+                </a>
               </li>
             </ul>
           )}
@@ -246,20 +260,45 @@ export const Header = () => {
                 <img src={caret} />
               </button>
               <ul>
-                <li className="mobile-menu-main-item">
-                  <a href="/lessons/anatomy">Анатомія</a>
+                <li>
+                  <a
+                    className="mobile-menu-main-item-link"
+                    href="/lessons/anatomy"
+                  >
+                    Анатомія
+                  </a>
                 </li>
-                <li className="mobile-menu-main-item">
-                  <a href="/lessons/histology">Фізіологія</a>
+                <li>
+                  <a
+                    className="mobile-menu-main-item-link"
+                    href="/lessons/histology"
+                  >
+                    Фізіологія
+                  </a>
                 </li>
-                <li className="mobile-menu-main-item">
-                  <a href="/lessons/biology">Біохімія</a>
+                <li>
+                  <a
+                    className="mobile-menu-main-item-link"
+                    href="/lessons/biology"
+                  >
+                    Біохімія
+                  </a>
                 </li>
-                <li className="mobile-menu-main-item">
-                  <a href="/lessons/biology">Патоморфологія</a>
+                <li>
+                  <a
+                    className="mobile-menu-main-item-link"
+                    href="/lessons/biology"
+                  >
+                    Патоморфологія
+                  </a>
                 </li>
-                <li className="mobile-menu-main-item">
-                  <a href="/lessons/biology">Фармакологія</a>
+                <li>
+                  <a
+                    className="mobile-menu-main-item-link"
+                    href="/lessons/biology"
+                  >
+                    Фармакологія
+                  </a>
                 </li>
               </ul>
             </div>
@@ -275,11 +314,21 @@ export const Header = () => {
                 <img src={caret} />
               </button>
               <ul>
-                <li className="mobile-menu-main-item">
-                  <a href="/lessons/anatomy">КРОК-1</a>
+                <li>
+                  <a
+                    className="mobile-menu-main-item-link"
+                    href="/lessons/anatomy"
+                  >
+                    КРОК-1
+                  </a>
                 </li>
-                <li className="mobile-menu-main-item">
-                  <a href="/lessons/histology">КРОК-2</a>
+                <li>
+                  <a
+                    className="mobile-menu-main-item-link"
+                    href="/lessons/histology"
+                  >
+                    КРОК-2
+                  </a>
                 </li>
               </ul>
             </div>
