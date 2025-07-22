@@ -31,7 +31,7 @@ export const Footer = () => {
                 </li>
                 <li className="footer-top-left-navigation-list-item">
                   <a
-                    href=""
+                    href="/reviews"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     Відгуки

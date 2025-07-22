@@ -1,6 +1,6 @@
 @use '../../styles/variables' as *;
 
-.bottombanner {
+.bottombanner-secondwrapper {
   position: relative;
   padding-top: 188px;
 
@@ -112,14 +112,14 @@
 }
 
 @media screen and (max-width: 1400px) {
-  .bottombanner-heading-subheading-underline {
+  .bottombanner-secondwrapper-heading-subheading-underline {
     top: 90%;
     max-width: 500px;
   }
 }
 
 @media screen and (max-width: 990px) {
-  .bottombanner {
+  .bottombanner-secondwrapper {
     position: relative;
     padding-top: 64px;
     padding-bottom: 0;
