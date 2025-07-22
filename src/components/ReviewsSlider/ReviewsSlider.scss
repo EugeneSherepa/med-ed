@@ -1,0 +1,111 @@
+@use '../../styles/variables' as *;
+
+.reviews-slider {
+  padding-top: 184px;
+  padding-bottom: 260px;
+
+  &-title {
+    margin-bottom: 40px;
+    font-family: $font-artegra;
+    font-size: 48px;
+    line-height: 64px;
+    font-weight: 800;
+    color: $primary-color;
+    text-transform: uppercase;
+  }
+
+  &-wrapper {
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+
+    &-review {
+      padding: 54px 24px;
+      background: radial-gradient(
+          73.92% 251.95% at 26.91% 46.73%,
+          #f7b4d1 0%,
+          #e3cee1 23.19%,
+          #dbd0f7 44.5%,
+          #b1d4e0 97%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(255, 154, 66, 0) 0%,
+          rgba(177, 212, 224, 0.2) 55.02%,
+          rgba(255, 154, 66, 0.2) 100%
+        );
+      border: 1px solid #d4d2e3;
+      border-radius: 24px;
+
+      &-wrapper {
+        padding: 16px;
+        background-color: $white;
+        border-radius: 8px;
+
+        & img {
+          margin-bottom: 24px;
+          aspect-ratio: 1;
+          width: 80px;
+          border-radius: 50px;
+        }
+
+        &-title {
+          margin-bottom: 24px;
+          font-family: $font-eastman;
+          font-size: 20px;
+          line-height: 24px;
+          font-weight: 800;
+          color: $primary-color;
+        }
+
+        &-text {
+          margin-bottom: 24px;
+          font-family: $font-eastman;
+          font-size: 18px;
+          line-height: 20px;
+        }
+
+        &-author {
+          font-family: $font-eastman;
+          font-size: 18px;
+          line-height: 24px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .reviews-slider {
+    padding-top: 124px;
+    padding-bottom: 40px;
+
+    & .page-width-left {
+      margin-left: 0 !important;
+      padding: 0 !important;
+      padding-left: 24px !important;
+    }
+
+    &-title {
+      margin-bottom: 24px;
+      font-size: 28px;
+      line-height: 32px;
+    }
+
+    &-wrapper {
+      cursor: grab;
+
+      &:active {
+        cursor: grabbing;
+      }
+
+      &-review {
+        padding: 18px;
+        border-radius: 16px;
+      }
+    }
+  }
+}

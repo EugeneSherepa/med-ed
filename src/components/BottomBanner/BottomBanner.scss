@@ -73,7 +73,7 @@
     }
   }
 
-  & .button-primary {
+  & .button-primary-big {
     position: relative;
     width: fit-content;
     z-index: 4;
@@ -131,6 +131,7 @@
 
       &-mobile {
         display: block;
+        text-align: center;
       }
 
       &-subheading {
@@ -169,7 +170,7 @@
       }
     }
 
-    & .button-primary {
+    & .button-primary-big {
       margin: 0 auto;
     }
 

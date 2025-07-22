@@ -7,41 +7,41 @@ import forthBubble from '../../assets/BottomBannerBubbles/forth.svg';
 
 export const BottomBannerSecond = () => {
   return (
-    <div className="bottombanner">
-      <img src={firstBubble} className="bottombanner-first" />
+    <div className="bottombanner-secondwrapper">
+      <img src={firstBubble} className="bottombanner-secondwrapper-first" />
       <div className="page-width">
-        <div className="bottombanner-heading-wrapper">
-          <h2 className="bottombanner-heading bottombanner-heading-desktop">
-            <img src={secondBubble} className="bottombanner-second" />
+        <div className="bottombanner-secondwrapper-heading-wrapper">
+          <h2 className="bottombanner-secondwrapper-heading bottombanner-secondwrapper-heading-desktop">
+            <img src={secondBubble} className="bottombanner-secondwrapper-second" />
             IT’s Med Ed{' '}
-            <span className="bottombanner-heading-subheading">
+            <span className="bottombanner-secondwrapper-heading-subheading">
               — це платформа,
               <br />
               створена студентами для студентів
-              <div className="bottombanner-heading-subheading-underline">
+              <div className="bottombanner-secondwrapper-heading-subheading-underline">
                 <img src={textUnderline} />
               </div>
             </span>
           </h2>
-          <h2 className="bottombanner-heading bottombanner-heading-mobile">
-            <img src={secondBubble} className="bottombanner-second" />
+          <h2 className="bottombanner-secondwrapper-heading bottombanner-secondwrapper-heading-mobile">
+            <img src={secondBubble} className="bottombanner-secondwrapper-second" />
             IT’s Med Ed{' '}<br />
-            <span className="bottombanner-heading-subheading">
+            <span className="bottombanner-secondwrapper-heading-subheading">
               — це платформа, створена студентами для студентів
-              <div className="bottombanner-heading-subheading-underline">
+              <div className="bottombanner-secondwrapper-heading-subheading-underline">
                 <img src={textUnderline} />
               </div>
             </span>
           </h2>
         </div>
-        <div className="bottombanner-text bottombanner-text-desktop">
+        <div className="bottombanner-secondwrapper-text bottombanner-secondwrapper-text-desktop">
           Ми зробили навчання наочним та простим.
           <br />
           Весь необхідний матеріал в одному місці.
           <br />
           Почни сьогодні!
         </div>
-        <div className="bottombanner-text bottombanner-text-mobile">
+        <div className="bottombanner-secondwrapper-text bottombanner-secondwrapper-text-mobile">
           Ми зробили навчання наочним та простим.
           <br />
           Весь необхідний матеріал в одному місці.
@@ -49,8 +49,8 @@ export const BottomBannerSecond = () => {
         <a href="" className="button-primary-big">
           Почати навчання
         </a>
-        <img src={thirdBubble} className="bottombanner-third" />
-        <img src={forthBubble} className="bottombanner-forth" />
+        <img src={thirdBubble} className="bottombanner-secondwrapper-third" />
+        <img src={forthBubble} className="bottombanner-secondwrapper-forth" />
       </div>
     </div>
   );

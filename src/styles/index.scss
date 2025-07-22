@@ -10,7 +10,7 @@
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+  box-sizing: border-box !important;
 }
 
 html {
@@ -49,6 +49,8 @@ p {
 .page-width-left {
   margin-left: calc(50vw - 1440px / 2) !important;
   padding: 0 64px !important;
+  padding-right: 0 !important;
+  overflow: visible !important;
 }
 
 .button-primary {
