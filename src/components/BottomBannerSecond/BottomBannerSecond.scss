@@ -135,7 +135,7 @@
       margin-bottom: 36px;
       font-size: 30px;
       line-height: 48px;
-      text-align: end;
+      text-align: center;
 
       &-desktop {
         display: none;
@@ -147,18 +147,18 @@
 
       &-subheading {
         display: block;
-        text-align: end;
-        font-size: 24px;
+        text-align: center;
+        font-size: 18px;
         line-height: 24px;
 
         &-underline {
           position: absolute;
           top: 100%;
-          left: unset;
+          left: 40px;
           right: 0;
 
           & img {
-            width: 80%;
+            width: 100%;
             object-fit: cover;
           }
         }
@@ -181,8 +181,10 @@
       }
     }
 
-    & .button-primary {
+    & .button-primary-big {
       margin: 0 auto;
+      margin-top: 8px;
+      padding: 16px;
     }
 
     &-first {

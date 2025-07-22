@@ -46,6 +46,11 @@ p {
   padding: 0 64px;
 }
 
+.page-width-left {
+  margin-left: calc(50vw - 1440px / 2) !important;
+  padding: 0 64px !important;
+}
+
 .button-primary {
   padding: 18px 24px;
   display: flex;

@@ -24,7 +24,7 @@ export const Cards = ({ title, text, textMobile, cards }) => {
           breakpoints={{
             0: {
               slidesPerView: 1.225,
-              spaceBetween: 58,
+              spaceBetween: 32,
             },
             990: {
               slidesPerView: 3,
