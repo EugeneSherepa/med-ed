@@ -27,7 +27,7 @@ export const BottomBanner = () => {
             <img src={secondBubble} className="bottombanner-second" />
             НАВЧАЙСЯ ЛЕГКО{' '} <br/>
             <span className="bottombanner-heading-subheading">
-              — складай успішно!
+              складай успішно!
               <div className="bottombanner-heading-subheading-underline">
                 <img src={textUnderline} />
               </div>

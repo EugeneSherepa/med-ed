@@ -3,6 +3,52 @@
 .team {
   padding-bottom: 172px;
 
+  &-padding {
+    padding-top: 182px;
+    padding-bottom: 118px !important;
+  }
+
+  &-bottom {
+    margin-top: 86px;
+    display: flex;
+    gap: 106px;
+    width: 100%;
+
+    &-first {
+      width: 45%;
+
+      &-title {
+        font-family: $font-artegra;
+        font-size: 48px;
+        line-height: 56px;
+        font-weight: 800;
+        color: $primary-color;
+        text-transform: uppercase;
+      }
+
+      &-text {
+        font-family: $font-fixel;
+        font-size: 48px;
+        line-height: 100%;
+        color: $primary-color;
+        font-weight: 300;
+      }
+    }
+
+    &-second {
+      width: 35%;
+      font-family: $font-eastman;
+      font-size: 20px;
+      line-height: 20px;
+      color: $primary-color;
+    }
+
+    &-third {
+      width: fit-content;
+      align-items: flex-start;
+    }
+  }
+
   &-heading {
     font-family: $font-artegra;
     font-size: 64px;
@@ -23,7 +69,7 @@
   &-members {
     &-member {
       &:first-child {
-        padding-left: 8px;
+        padding-left: 24px;
       }
 
       &-wrapper {
@@ -83,6 +129,43 @@
 @media screen and (max-width: 990px) {
   .team {
     padding-bottom: 84px;
+
+    &-padding {
+      padding-top: 112px;
+      padding-bottom: 84px !important;
+    }
+
+    & .page-width-left {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    &-bottom {
+      margin-top: 36px;
+      flex-direction: column;
+      gap: 24px;
+
+      &-first {
+        width: 100%;
+
+        &-title {
+          font-size: 28px;
+          line-height: 100%;
+          margin-bottom: 16px;
+        }
+
+        &-text {
+          font-size: 24px;
+          line-height: 100%;
+        }
+      }
+
+      &-second {
+        width: 100%;
+        font-size: 18px;
+        line-height: 100%;
+      }
+    }
 
     &-heading {
       font-size: 32px;
