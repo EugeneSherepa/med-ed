@@ -31,6 +31,11 @@
     display: flex;
     align-items: center;
     padding-bottom: 32px !important;
+
+    &-center .swiper-wrapper {
+      justify-content: center;
+      gap: 204px;
+    }
   }
 }
 
@@ -66,6 +71,11 @@
       width: 100%;
       display: flex;
       align-items: center;
+
+      &-center .swiper-wrapper {
+        justify-content: flex-start;
+        gap: unset;
+      }
 
       &-card {
         &:first-child {

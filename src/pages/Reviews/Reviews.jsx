@@ -4,7 +4,7 @@ import { BottomBanner } from '../../components/BottomBanner/BottomBanner';
 import { FaqCards } from '../../components/FaqCards/FaqCards';
 import { Footer } from '../../components/Footer/Footer';
 import reviews from "../../data/Reviews/reviews"
-import cards from "../../data/Reviews/cards"
+import cardreviews from "../../data/Reviews/cards"
 
 export const Reviews = () => {
   return (
@@ -12,7 +12,7 @@ export const Reviews = () => {
       <Header />
       <ReviewsSlider reviews={reviews} />
       <BottomBanner />
-      <FaqCards cards={cards} />
+      <FaqCards cardreviews={cardreviews} />
       <Footer />
     </>
   );

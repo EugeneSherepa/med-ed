@@ -29,9 +29,10 @@ export const Cards = ({ title, text, textMobile, cards }) => {
             990: {
               slidesPerView: 3,
               spaceBetween: 78,
+              centered: true,
             },
           }}
-          className="mySwiper cards-section-cards"
+          className={cards.length > 2 ? "mySwiper cards-section-cards" : "mySwiper cards-section-cards cards-section-cards-center"}
         >
           {cards.map((card) => (
             <SwiperSlide key={card.id} className="cards-section-cards-card">

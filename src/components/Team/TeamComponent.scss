@@ -68,14 +68,11 @@
 
   &-members {
     &-member {
-      &:first-child {
-        padding-left: 24px;
-      }
-
       &-wrapper {
         display: flex;
         position: relative;
         border-radius: 24px;
+        height: 100%;
 
         & > img {
           aspect-ratio: 3/3.6;
@@ -138,6 +135,15 @@
     & .page-width-left {
       margin: 0 !important;
       padding: 0 !important;
+    }
+
+    &-members {
+      &-member {
+        &:first-child {
+          padding-left: 24px;
+          height: -webkit-fill-available;
+        }
+      }
     }
 
     &-bottom {
