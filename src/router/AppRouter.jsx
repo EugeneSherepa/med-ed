@@ -4,6 +4,7 @@ import { About } from '../pages/About/About';
 import { Materials } from '../pages/Materials/Materials';
 import { Team } from '../pages/Team/Team';
 import { Reviews } from '../pages/Reviews/Reviews';
+import { Contact } from '../pages/Contact/Contact';
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -13,6 +14,7 @@ const AppRouter = () => (
       <Route path="/materials" element={<Materials />} />
       <Route path="/team" element={<Team />} />
       <Route path="/reviews" element={<Reviews />} />
+      <Route path="/contact" element={<Contact />} />
     </Routes>
   </BrowserRouter>
 );

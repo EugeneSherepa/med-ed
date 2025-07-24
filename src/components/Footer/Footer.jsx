@@ -75,7 +75,7 @@ export const Footer = () => {
                 </li>
                 <li className="footer-top-left-navigation-list-item">
                   <a
-                    href=""
+                    href="/contact"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     Зв’язок з нами
