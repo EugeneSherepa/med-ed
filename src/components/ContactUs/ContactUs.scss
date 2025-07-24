@@ -1,0 +1,45 @@
+@use '../../styles/variables' as *;
+
+.contact-us {
+  padding-top: 224px;
+  padding-bottom: 72px;
+
+  &-title {
+    margin-bottom: 16px;
+    font-family: $font-artegra;
+    font-size: 48px;
+    line-height: 56px;
+    font-weight: 800;
+    color: $primary-color;
+  }
+
+  &-text {
+    margin-bottom: 16px;
+    font-family: $font-eastman;
+    font-size: 20px;
+    line-height: 100%;
+    font-weight: 400;
+    color: $primary-color;
+  }
+
+  & .button-primary-big {
+    width: fit-content;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .contact-us {
+    padding-top: 124px;
+    padding-bottom: 44px;
+
+    &-title {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    &-text {
+      font-size: 18px;
+      line-height: 100%;
+    }
+  }
+}
