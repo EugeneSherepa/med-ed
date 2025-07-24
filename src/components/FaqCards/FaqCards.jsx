@@ -2,7 +2,7 @@ import './FaqCards.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import cardSticker from '../../assets/card-sticker.png';
 
-export const FaqCards = ({ cards }) => {
+export const FaqCards = ({ cardreviews }) => {
   return (
     <div className="faq-cards">
       <div className="page-width-left">
@@ -13,20 +13,20 @@ export const FaqCards = ({ cards }) => {
               spaceBetween: 16,
             },
             990: {
-              slidesPerView: 3.4,
-              spaceBetween: 24,
+              slidesPerView: 2.5,
+              spaceBetween: 180,
             },
           }}
           className="mySwiper faq-cards-wrapper"
         >
-          {cards.map((card) => (
-            <SwiperSlide key={card.id} className="faq-cards-wrapper-card">
+          {cardreviews.map((review) => (
+            <SwiperSlide key={review.id} className="faq-cards-wrapper-card">
               <div className="faq-cards-wrapper-card-top">
                 <div className="faq-cards-wrapper-card-top-caption">
                   питання
                 </div>
                 <div className="faq-cards-wrapper-card-top-title">
-                  {card.question}
+                  {review.question}
                 </div>
               </div>
               <div className="faq-cards-wrapper-card-bottom">
@@ -36,7 +36,7 @@ export const FaqCards = ({ cards }) => {
                     відповідь
                   </div>
                   <div className='faq-cards-wrapper-card-bottom-text-text'>
-                    {card.answer}
+                    {review.answer}
                   </div>
                 </div>
               </div>

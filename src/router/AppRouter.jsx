@@ -5,6 +5,7 @@ import { Materials } from '../pages/Materials/Materials';
 import { Team } from '../pages/Team/Team';
 import { Reviews } from '../pages/Reviews/Reviews';
 import { Contact } from '../pages/Contact/Contact';
+import { StepOne } from '../pages/StepOne/StepOne';
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -15,6 +16,7 @@ const AppRouter = () => (
       <Route path="/team" element={<Team />} />
       <Route path="/reviews" element={<Reviews />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/step-one" element={<StepOne />} />
     </Routes>
   </BrowserRouter>
 );

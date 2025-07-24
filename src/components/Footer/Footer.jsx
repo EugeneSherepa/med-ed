@@ -41,7 +41,7 @@ export const Footer = () => {
               <ul className="footer-top-left-navigation-list">
                 <li className="footer-top-left-navigation-list-item">
                   <a
-                    href=""
+                    href="/step-one"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     КРОК-1

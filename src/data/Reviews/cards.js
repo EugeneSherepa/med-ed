@@ -1,4 +1,4 @@
-const cards = [
+const cardreviews = [
   {
     id: 1,
     question: "Як відбувається підготовка до КРОК-1 і КРОК-2?",
@@ -36,4 +36,4 @@ const cards = [
   },
 ];
 
-export default cards;
+export default cardreviews;

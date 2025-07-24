@@ -16,11 +16,35 @@
     line-height: 40px;
     text-align: center;
   }
+
+  &-wrapper {
+    padding-top: 128px;
+    padding-bottom: 92px;
+
+    &-title {
+      font-family: $font-artegra;
+      font-size: 64px;
+      line-height: 98px;
+      text-transform: uppercase;
+    }
+
+    &-text {
+      font-family: $font-eastman;
+      font-size: 20px;
+      line-height: 33px;
+      color: $primary-color;
+    }
+  }
 }
 
 @media screen and (max-width: 990px) {
   .breakline {
     padding: 0 0 124px 0;
+
+    &-background-wrapper {
+      padding-top: 84px;
+      padding-bottom: 0;
+    }
 
     &-backrgound {
       background-size: cover;
@@ -31,6 +55,25 @@
       font-size: 16px;
       line-height: 20px;
       text-align: center;
+    }
+
+    &-wrapper {
+      padding-top: 128px;
+      padding-bottom: 128px;
+
+      &-title {
+        font-family: $font-artegra;
+        font-size: 28px;
+        line-height: 36px;
+        text-transform: uppercase;
+      }
+
+      &-text {
+        font-family: $font-eastman;
+        font-size: 16px;
+        line-height: 20px;
+        color: $primary-color;
+      }
     }
   }
 }
