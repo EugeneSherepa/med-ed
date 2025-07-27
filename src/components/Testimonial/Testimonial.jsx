@@ -1,4 +1,5 @@
 import "./Testimonial.scss"
+import "../Testimonials/Testimonials.scss"
 
 export const Testimonial = ({ testimonial }) => {
   const {image, title, text, author} = testimonial;
