@@ -24,7 +24,7 @@ export const StepOne = () => {
         textMobile={'Обирай, що підходить саме тобі.'}
         cards={cards}
       />
-      <TeamComponent showText={true} team={team}/>
+      <TeamComponent dpt={100} showText={true} team={team}/>
       <Testimonials testimonials={testimonials} />
       <BottomBanner />
       <FaqCards cardreviews={cardreviews} />

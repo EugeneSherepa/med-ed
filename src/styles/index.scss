@@ -53,6 +53,7 @@ p {
 }
 
 .button-primary {
+  cursor: pointer;
   padding: 18px 24px;
   display: flex;
   justify-content: center;
@@ -68,14 +69,17 @@ p {
   text-decoration: none;
   transition: 0.3s ease-in-out;
 
-  &:hover {
-    background-color: transparent;
-    color: $primary-color;
-    transition: 0.3s ease-in-out;
+  @media screen and (min-width: 990px) {
+    &:hover {
+      background-color: transparent;
+      color: $primary-color;
+      transition: 0.3s ease-in-out;
+    }
   }
 }
 
 .button-primary-big {
+  cursor: pointer;
   padding: 22px 36px;
   display: flex;
   justify-content: center;
@@ -99,6 +103,7 @@ p {
 }
 
 .button-secondary {
+  cursor: pointer;
   padding: 18px 24px;
   display: flex;
   justify-content: center;
