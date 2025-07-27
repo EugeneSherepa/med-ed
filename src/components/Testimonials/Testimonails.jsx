@@ -6,24 +6,39 @@ import { Testimonial } from '../Testimonial/Testimonial';
 import iconCaret from '../../assets/icon-caret-swiper.svg';
 import iconCaretDisaabled from '../../assets/icon-caret-swiper-disabled.svg';
 
-export const Testimonials = ({ testimonials }) => {
+export const Testimonials = ({
+  dpt = 0,
+  dpb = 212,
+  mpt = 0,
+  mpb = 32,
+  title = 'Наші студенти кажуть:',
+  testimonials,
+}) => {
   return (
-    <div className="testimonials-section page-width">
+    <div
+      className="testimonials-section page-width"
+      style={{
+        '--dpt': `${dpt}px`,
+        '--dpb': `${dpb}px`,
+        '--mpt': `${mpt}px`,
+        '--mpb': `${mpb}px`,
+      }}
+    >
       <div className="swiper-srapper testimonials-section-wrapper page-width">
         <div className="testimonials-section-wrapper-top">
-          <h3 className="testimonials-section-wrapper-top-heading">
-            Наші студенти кажуть:
-          </h3>
-          <div className="testimonials-section-wrapper-top-buttons">
-            <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
-              <img src={iconCaret} className="active" />
-              <img src={iconCaretDisaabled} className="disabled" />
-            </button>
-            <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next">
-              <img src={iconCaret} className="active" />
-              <img src={iconCaretDisaabled} className="disabled" />
-            </button>
-          </div>
+          <h3 className="testimonials-section-wrapper-top-heading">{title}</h3>
+          {testimonials.length > 1 && (
+            <div className="testimonials-section-wrapper-top-buttons">
+              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
+                <img src={iconCaret} className="active" />
+                <img src={iconCaretDisaabled} className="disabled" />
+              </button>
+              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next">
+                <img src={iconCaret} className="active" />
+                <img src={iconCaretDisaabled} className="disabled" />
+              </button>
+            </div>
+          )}
         </div>
         <Swiper
           slidesPerView={1}
@@ -32,12 +47,12 @@ export const Testimonials = ({ testimonials }) => {
             0: {
               slidesPerView: 1.2,
               spaceBetween: 28,
-              speed: 300
+              speed: 300,
             },
             990: {
               slidesPerView: 1,
               spaceBetween: 16,
-              speed: 500
+              speed: 500,
             },
           }}
           navigation={{

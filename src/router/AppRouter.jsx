@@ -6,6 +6,7 @@ import { Team } from '../pages/Team/Team';
 import { Reviews } from '../pages/Reviews/Reviews';
 import { Contact } from '../pages/Contact/Contact';
 import { StepOne } from '../pages/StepOne/StepOne';
+import { Anatomy } from '../pages/Lessons/Anatomy/Anatomy';
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -17,6 +18,7 @@ const AppRouter = () => (
       <Route path="/reviews" element={<Reviews />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/step-one" element={<StepOne />} />
+      <Route path="/lessons/anatomy" element={<Anatomy />} />
     </Routes>
   </BrowserRouter>
 );

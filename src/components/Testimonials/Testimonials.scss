@@ -1,7 +1,13 @@
 @use '../../styles/variables' as *;
 
 .testimonials-section {
-  padding-bottom: 211px;
+  padding-top: var(--dpt);
+  padding-bottom: var(--dpb);
+
+  @media (max-width: 768px) {
+    padding-top: var(--mpt);
+    padding-bottom: var(--mpb);
+  }
 
   &-wrapper {
     width: 100%;
@@ -156,7 +162,7 @@
       &-testimonials {
         width: 100%;
         padding-bottom: 32px;
-        
+
         &-testimonial {
           &:first-child {
             margin-left: 28px;
