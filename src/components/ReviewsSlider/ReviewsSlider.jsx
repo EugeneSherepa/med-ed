@@ -2,11 +2,19 @@ import './ReviewsSlider.scss';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-export const ReviewsSlider = ({ reviews }) => {
+export const ReviewsSlider = ({ dpt = 184, dpb = 260, showtitle, reviews }) => {
   return (
-    <div className="reviews-slider">
+    <div
+      className="reviews-slider"
+      style={{
+        '--dpt': `${dpt}px`,
+        '--dpb': `${dpb}px`,
+      }}
+    >
       <div className="page-width">
-        <h1 className="reviews-slider-title">Відгуки Студентів</h1>
+        {showtitle !== false && (
+          <h1 className="reviews-slider-title">Відгуки Студентів</h1>
+        )}
       </div>
       <div className="page-width-left">
         <Swiper

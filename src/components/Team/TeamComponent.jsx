@@ -6,11 +6,17 @@ import { Navigation } from 'swiper/modules';
 import iconCaret from '../../assets/icon-caret-swiper.svg';
 import iconCaretDisaabled from '../../assets/icon-caret-swiper-disabled.svg';
 
-export const TeamComponent = ({ showText, team }) => {
+export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
   return (
-    <div className={showText ? "team" : "team team-padding"}>
+    <div
+      className={showText ? 'team' : 'team team-padding'}
+      style={{
+        '--dpt': `${dpt}px`,
+        '--dpb': `${dpb}px`,
+      }}
+    >
       <div className="page-width">
-        {showText && (
+        {showText && showText !== 'false' && (
           <>
             <h3 className="team-heading">Команда</h3>
             <div className="team-subheading">З якою ти підкориш крок!</div>
@@ -97,12 +103,12 @@ export const TeamComponent = ({ showText, team }) => {
       )}
       {!showText && (
         <div className="page-width">
-          <div className='team-bottom'>
-            <div className='team-bottom-first'>
-              <h1 className='team-bottom-first-title'>Наші викладачі</h1>
-              <div className='team-bottom-first-text'>Познайомимось?</div>
+          <div className="team-bottom">
+            <div className="team-bottom-first">
+              <h1 className="team-bottom-first-title">Наші викладачі</h1>
+              <div className="team-bottom-first-text">Познайомимось?</div>
             </div>
-            <div className='team-bottom-second'>
+            <div className="team-bottom-second">
               За кожним успішним студентом стоїть команда викладачів, які вірять
               у нього більше, ніж він сам!
               <br />

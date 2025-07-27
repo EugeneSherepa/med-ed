@@ -9,7 +9,7 @@ export const Team = () => {
   return (
     <>
       <Header />
-      <TeamComponent showText={false} team={team} />
+      <TeamComponent dpt={192} showText={false} team={team} />
       <TeamImage />
       <TextButton />
       <Footer />

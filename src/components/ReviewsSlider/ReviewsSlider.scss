@@ -1,8 +1,8 @@
 @use '../../styles/variables' as *;
 
 .reviews-slider {
-  padding-top: 184px;
-  padding-bottom: 260px;
+  padding-top: var(--dpt);
+  padding-bottom: var(--dpb);
 
   &-title {
     margin-bottom: 40px;

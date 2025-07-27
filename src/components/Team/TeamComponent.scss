@@ -1,11 +1,12 @@
 @use '../../styles/variables' as *;
 
 .team {
-  padding-bottom: 172px;
+  padding-top: var(--dpt);
+  padding-bottom: var(--dpb);
 
   &-padding {
-    padding-top: 182px;
-    padding-bottom: 118px !important;
+    padding-top: var(--dpt);
+    padding-bottom: var(--dpb) !important;
   }
 
   &-bottom {

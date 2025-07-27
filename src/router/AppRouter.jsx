@@ -7,6 +7,7 @@ import { Reviews } from '../pages/Reviews/Reviews';
 import { Contact } from '../pages/Contact/Contact';
 import { StepOne } from '../pages/StepOne/StepOne';
 import { Anatomy } from '../pages/Lessons/Anatomy/Anatomy';
+import { Pharmacy } from '../pages/AboutCourse/Pharmacy/Pharmacy';
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -19,6 +20,7 @@ const AppRouter = () => (
       <Route path="/contact" element={<Contact />} />
       <Route path="/step-one" element={<StepOne />} />
       <Route path="/lessons/anatomy" element={<Anatomy />} />
+      <Route path="/about/pharmacy" element={<Pharmacy />} />
     </Routes>
   </BrowserRouter>
 );
