@@ -49,7 +49,7 @@ export const Footer = () => {
                 </li>
                 <li className="footer-top-left-navigation-list-item">
                   <a
-                    href=""
+                    href="/step-two"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     КРОК-2

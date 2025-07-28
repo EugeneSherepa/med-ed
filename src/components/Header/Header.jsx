@@ -171,7 +171,7 @@ export const Header = () => {
                     <li className="header-wrapper-navigation-items-item-link-dropdown-list-item">
                       <a
                         className="header-wrapper-navigation-items-item-link-dropdown-list-item-link"
-                        href="/lessons/histology"
+                        href="/step-two"
                       >
                         КРОК-2
                       </a>
@@ -325,7 +325,7 @@ export const Header = () => {
                 <li>
                   <a
                     className="mobile-menu-main-item-link"
-                    href="/lessons/histology"
+                    href="/step-two"
                   >
                     КРОК-2
                   </a>
