@@ -15,37 +15,47 @@ export const AboutCource = ({
   price,
   cardTitle,
   cardContent,
+  showCard = true,
+  showBreadcrumbs = true,
+  mpt = 112,
 }) => {
   const [activeButton, setActiveButton] = useState(1);
 
   return (
-    <div className="about-course">
+    <div
+      className="about-course"
+      style={{
+        '--mpt': `${mpt}px`,
+      }}
+    >
       <div className="page-width">
-        <div className="about-course-breadcrumbs">
-          <div className="about-course-breadcrumbs-item">
-            <a href="/">Головна</a>
-          </div>
-          <div className="about-course-breadcrumbs-item">
-            <div className="about-course-breadcrumbs-item-image">
-              <img src={breadcrumbIcon} />
+        {showBreadcrumbs !== false && (
+          <div className="about-course-breadcrumbs">
+            <div className="about-course-breadcrumbs-item">
+              <a href="/">Головна</a>
             </div>
-          </div>
-          <div className="about-course-breadcrumbs-item">Іспити</div>
-          <div className="about-course-breadcrumbs-item">
-            <div className="about-course-breadcrumbs-item-image">
-              <img src={breadcrumbIcon} />
+            <div className="about-course-breadcrumbs-item">
+              <div className="about-course-breadcrumbs-item-image">
+                <img src={breadcrumbIcon} />
+              </div>
             </div>
-          </div>
-          <div className="about-course-breadcrumbs-item">
-            <a href="/step-one">Підготовка до КРОК-1</a>
-          </div>
-          <div className="about-course-breadcrumbs-item">
-            <div className="about-course-breadcrumbs-item-image">
-              <img src={breadcrumbIcon} />
+            <div className="about-course-breadcrumbs-item">Іспити</div>
+            <div className="about-course-breadcrumbs-item">
+              <div className="about-course-breadcrumbs-item-image">
+                <img src={breadcrumbIcon} />
+              </div>
             </div>
+            <div className="about-course-breadcrumbs-item">
+              <a href="/step-one">Підготовка до КРОК-1</a>
+            </div>
+            <div className="about-course-breadcrumbs-item">
+              <div className="about-course-breadcrumbs-item-image">
+                <img src={breadcrumbIcon} />
+              </div>
+            </div>
+            <div className="about-course-breadcrumbs-item">{title}</div>
           </div>
-          <div className="about-course-breadcrumbs-item">{title}</div>
-        </div>
+        )}
         <div className="about-course-wrapper">
           <div className="about-course-wrapper-left">
             <div className="about-course-wrapper-left-hero">
@@ -88,26 +98,28 @@ export const AboutCource = ({
             </div>
           </div>
           <div className="about-course-wrapper-right">
-            <div className="about-course-wrapper-right-card">
-              <img src={cardImage} />
-              <div className="about-course-wrapper-right-card-header">
-                <h5 className="about-course-wrapper-right-card-header-title">
-                  Курс {title}
-                </h5>
-                <div className="about-course-wrapper-right-card-header-price">
-                  {price}
+            {showCard !== false && (
+              <div className="about-course-wrapper-right-card">
+                <img src={cardImage} />
+                <div className="about-course-wrapper-right-card-header">
+                  <h5 className="about-course-wrapper-right-card-header-title">
+                    Курс {title}
+                  </h5>
+                  <div className="about-course-wrapper-right-card-header-price">
+                    {price}
+                  </div>
+                </div>
+                <a href="" className="button-primary">
+                  Почати навачання
+                </a>
+                <div className="about-course-wrapper-right-card-content">
+                  <h6 className="about-course-wrapper-right-card-content-title">
+                    {cardTitle}
+                  </h6>
+                  <div dangerouslySetInnerHTML={{ __html: cardContent }} />
                 </div>
               </div>
-              <a href="" className="button-primary">
-                Почати навачання
-              </a>
-              <div className="about-course-wrapper-right-card-content">
-                <h6 className="about-course-wrapper-right-card-content-title">
-                  {cardTitle}
-                </h6>
-                <div dangerouslySetInnerHTML={{ __html: cardContent }} />
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
