@@ -46,7 +46,7 @@ export const BottomBannerSecond = () => {
           <br />
           Весь необхідний матеріал в одному місці.
         </div>
-        <a href="" className="button-primary-big">
+        <a href="" className="button-primary">
           Почати навчання
         </a>
         <img src={thirdBubble} className="bottombanner-secondwrapper-third" />

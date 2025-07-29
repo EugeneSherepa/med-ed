@@ -112,11 +112,14 @@
             font-size: 20px;
             line-height: 20px;
             color: $white;
+            text-align: center;
           }
 
-          &:hover {
-            opacity: 1;
-            transition: 0.3s ease-in-out;
+          @media screen and (min-width: 990px) {
+            &:hover {
+              opacity: 1;
+              transition: 0.3s ease-in-out;
+            }
           }
         }
       }
@@ -139,10 +142,10 @@
     }
 
     &-members {
-      &-member {
-        &:first-child {
-          padding-left: 24px;
-          height: -webkit-fill-available;
+      & .swiper-slide-active {
+        .team-members-member-wrapper-overlay {
+          opacity: 1;
+          transition: 0.3s ease-in-out;
         }
       }
     }

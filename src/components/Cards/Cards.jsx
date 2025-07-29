@@ -25,6 +25,8 @@ export const Cards = ({ title, text, textMobile, cards }) => {
             0: {
               slidesPerView: 1.225,
               spaceBetween: 32,
+              slidesOffsetAfter: 24,
+              slidesOffsetBefore: 24,
             },
             990: {
               slidesPerView: 3,

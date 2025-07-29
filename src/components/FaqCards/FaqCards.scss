@@ -87,7 +87,6 @@
 
 @media screen and (max-width: 990px) {
   .faq-cards {
-
     & .page-width-left {
       margin-left: 0 !important;
       padding: 0 !important;
@@ -96,9 +95,19 @@
 
     &-wrapper {
       padding-top: 84px;
-      padding-bottom: 24px;
+      padding-bottom: 46px;
 
       &-card {
+        &.swiper-slide-active {
+          transition: 0.3s ease-in-out;
+
+          .faq-cards-wrapper-card-bottom {
+            transition: 0.3s ease-in-out;
+            top: 29px;
+            transform: rotate(5deg);
+          }
+        }
+
         &-top {
           padding: 24px;
         }
