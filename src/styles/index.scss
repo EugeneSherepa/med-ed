@@ -71,9 +71,17 @@ p {
 
   @media screen and (min-width: 990px) {
     &:hover {
-      background-color: transparent;
-      color: $primary-color;
       transition: 0.3s ease-in-out;
+      box-shadow: 0px 2px 3px 0px #0000004d;
+      box-shadow: 0px 6px 10px 4px #00000026;
+    }
+
+    &:active {
+      transition: 0.3s ease-in-out;
+      border-color: #252c3f8f;
+      background: #252c3f8f;
+      box-shadow: 0px 2px 3px 0px #0000004d inset;
+      box-shadow: 0px 6px 10px 4px #00000026 inset;
     }
   }
 }
@@ -95,10 +103,20 @@ p {
   text-decoration: none;
   transition: 0.3s ease-in-out;
 
-  &:hover {
-    background-color: transparent;
-    color: $primary-color;
-    transition: 0.3s ease-in-out;
+  @media screen and (min-width: 990px) {
+    &:hover {
+      transition: 0.3s ease-in-out;
+      box-shadow: 0px 2px 3px 0px #0000004d;
+      box-shadow: 0px 6px 10px 4px #00000026;
+    }
+
+    &:active {
+      transition: 0.3s ease-in-out;
+      border-color: #252c3f8f;
+      background: #252c3f8f;
+      box-shadow: 0px 2px 3px 0px #0000004d inset;
+      box-shadow: 0px 6px 10px 4px #00000026 inset;
+    }
   }
 }
 
@@ -119,10 +137,20 @@ p {
   text-decoration: none;
   transition: 0.3s ease-in-out;
 
-  &:hover {
-    background-color: $primary-color;
-    color: $white;
-    transition: 0.3s ease-in-out;
+  @media screen and (min-width: 990px) {
+    &:hover {
+      background-color: $primary-color;
+      color: $white;
+      transition: 0.3s ease-in-out;
+    }
+
+    &:active {
+      transition: 0.3s ease-in-out;
+      border-color: #252c3f8f;
+      background: #252c3f8f;
+      box-shadow: 0px 2px 3px 0px #0000004d inset;
+      box-shadow: 0px 6px 10px 4px #00000026 inset;
+    }
   }
 }
 

@@ -40,7 +40,7 @@ export const HomeHero = () => {
             </p>
           </div>
           <div className="home-hero-wrapper-buttons">
-            <a href="" className="button-secondary">
+            <a href="" className="button-primary">
               Почати навчання
             </a>
           </div>

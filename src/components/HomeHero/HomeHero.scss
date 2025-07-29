@@ -37,29 +37,6 @@
 
     &-buttons {
       width: fit-content;
-
-      & .button-secondary {
-        padding: 16px 16px;
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        font-family: $font-eastman;
-        font-size: 16px;
-        line-height: 16px;
-        font-weight: 700;
-        border: 2px solid $primary-color;
-        border-radius: 30px;
-        color: $white;
-        background-color: $primary-color;
-        text-decoration: none;
-        transition: 0.3s ease-in-out;
-
-        &:hover {
-          background-color: transparent;
-          color: $primary-color;
-          transition: 0.3s ease-in-out;
-        }
-      }
     }
   }
 }
