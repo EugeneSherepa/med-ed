@@ -44,7 +44,7 @@
 
       &-underline {
         position: absolute;
-        top: 85%;
+        top: 100%;
         left: unset;
         right: 0;
         max-width: 900px;
@@ -76,7 +76,7 @@
     }
   }
 
-  & .button-primary-big {
+  & .button-primary {
     position: relative;
     width: fit-content;
     z-index: 4;
@@ -131,10 +131,10 @@
     }
 
     &-heading {
-      padding: 0 18px;
-      margin-bottom: 36px;
-      font-size: 30px;
-      line-height: 48px;
+      padding: 0 24px;
+      margin-bottom: 8px;
+      font-size: 24px;
+      line-height: 38px;
       text-align: center;
 
       &-desktop {
@@ -153,12 +153,12 @@
 
         &-underline {
           position: absolute;
-          top: 100%;
-          left: 40px;
+          top: 92%;
+          left: 0;
           right: 0;
 
           & img {
-            width: 100%;
+            width: 125%;
             object-fit: cover;
           }
         }
@@ -166,9 +166,9 @@
     }
 
     &-text {
-      padding: 0 8px;
-      margin-bottom: 8px;
-      font-size: 16px;
+      padding: 0 12px;
+      margin-bottom: 16px;
+      font-size: 14px;
       line-height: 20px;
       text-align: center;
 
@@ -181,7 +181,7 @@
       }
     }
 
-    & .button-primary-big {
+    & .button-primary {
       margin: 0 auto;
       margin-top: 8px;
       padding: 16px;
