@@ -11,6 +11,7 @@ export const FaqCards = ({ cardreviews }) => {
             0: {
               slidesPerView: 1.1,
               spaceBetween: 16,
+              slidesOffsetAfter: 24,
             },
             990: {
               slidesPerView: 2.5,

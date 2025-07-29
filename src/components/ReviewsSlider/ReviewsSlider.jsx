@@ -22,6 +22,7 @@ export const ReviewsSlider = ({ dpt = 184, dpb = 260, showtitle, reviews }) => {
             0: {
               slidesPerView: 1.1,
               spaceBetween: 16,
+              slidesOffsetAfter: 24,
             },
             990: {
               slidesPerView: 3.4,

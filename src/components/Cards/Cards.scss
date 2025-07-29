@@ -68,6 +68,7 @@
     }
 
     &-cards {
+      margin-left: 24px;
       width: 100%;
       display: flex;
       align-items: center;
@@ -75,16 +76,6 @@
       &-center .swiper-wrapper {
         justify-content: flex-start;
         gap: unset;
-      }
-
-      &-card {
-        &:first-child {
-          margin-left: 24px;
-        }
-
-        &:last-child {
-          margin-right: 8px;
-        }
       }
     }
   }

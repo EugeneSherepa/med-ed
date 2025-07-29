@@ -48,6 +48,8 @@ export const Testimonials = ({
               slidesPerView: 1.2,
               spaceBetween: 28,
               speed: 300,
+              slidesOffsetAfter: 24,
+              slidesOffsetBefore: 24,
             },
             990: {
               slidesPerView: 1,

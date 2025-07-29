@@ -31,6 +31,8 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
             0: {
               slidesPerView: 1.225,
               spaceBetween: 24,
+              slidesOffsetAfter: 24,
+              slidesOffsetBefore: 24,
             },
             990: {
               slidesPerView: 2.7,
@@ -67,6 +69,8 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
             0: {
               slidesPerView: 1.225,
               spaceBetween: 24,
+              slidesOffsetAfter: 24,
+              slidesOffsetBefore: 24,
             },
             990: {
               slidesPerView: 2.7,
