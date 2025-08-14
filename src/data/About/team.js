@@ -1,15 +1,8 @@
-import mentorOneImage from '../../assets/mentors/menor_dmutro.jpg';
-import mentorTwoImage from '../../assets/mentors/nazrin.jpg';
-import mentorThreeImage from '../../assets/mentors/margo.jpg';
-import mentorFourImage from '../../assets/mentors/maxum.jpg';
+import mentorTwoImage from '../../assets/mentors/nazrin-biochemistry.jpg';
+import mentorThreeImage from '../../assets/mentors/margo-patamarphology.jpg';
+import mentorFourImage from '../../assets/mentors/maxim-step-one-med.jpg';
 
 const team = [
-  {
-    id: 1,
-    image: mentorOneImage,
-    name: "Дмитро",
-    position: "Викладач КРОК-2 медицина"
-  },
   {
     id: 2,
     image: mentorTwoImage,

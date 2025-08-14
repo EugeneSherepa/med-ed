@@ -62,14 +62,19 @@ export const AboutCource = ({
               <img src={image} alt="Course Image" />
             </div>
             <h1 className="about-course-wrapper-left-title">{title}</h1>
-            <div className="about-course-wrapper-left-tags">
-              {tags.map((tag, index) => (
-                <div key={index} className="about-course-wrapper-left-tags-tag">
-                  <img src={tag.logo} />
-                  {tag.text}
-                </div>
-              ))}
-            </div>
+            {tags && (
+              <div className="about-course-wrapper-left-tags">
+                {tags.map((tag, index) => (
+                  <div
+                    key={index}
+                    className="about-course-wrapper-left-tags-tag"
+                  >
+                    <img src={tag.logo} />
+                    {tag.text}
+                  </div>
+                ))}
+              </div>
+            )}
             <div className="about-course-wrapper-left-buttons">
               <button
                 className={
@@ -146,6 +151,13 @@ export const AboutCource = ({
               <div
                 className="about-course-wrapper-content-text"
                 dangerouslySetInnerHTML={{ __html: content.second_text }}
+              />
+              <h3 className="about-course-wrapper-content-title">
+                {content.third_title}
+              </h3>
+              <div
+                className="about-course-wrapper-content-text"
+                dangerouslySetInnerHTML={{ __html: content.third_text }}
               />
             </div>
           </div>

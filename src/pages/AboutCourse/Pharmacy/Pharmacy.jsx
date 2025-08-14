@@ -1,4 +1,3 @@
-import './Pharmacy.scss';
 import { Header } from '../../../components/Header/Header';
 import { AboutCource } from '../../../components/AboutCource/AboutCource';
 import { Footer } from '../../../components/Footer/Footer';
