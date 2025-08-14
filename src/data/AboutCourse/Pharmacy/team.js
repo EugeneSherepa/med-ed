@@ -1,7 +1,7 @@
-import mentorOneImage from '../../../assets/mentors/menor_dmutro.jpg';
-import mentorTwoImage from '../../../assets/mentors/nazrin.jpg';
-import mentorThreeImage from '../../../assets/mentors/margo.jpg';
-import mentorFourImage from '../../../assets/mentors/maxum.jpg';
+import mentorOneImage from '../../../assets/mentors/maxim-step-one-med.jpg';
+import mentorTwoImage from '../../../assets/mentors/maxim-step-one-med.jpg';
+import mentorThreeImage from '../../../assets/mentors/maxim-step-one-med.jpg';
+import mentorFourImage from '../../../assets/mentors/maxim-step-one-med.jpg';
 
 const team = [
   {

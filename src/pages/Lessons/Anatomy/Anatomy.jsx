@@ -7,7 +7,7 @@ import { BottomBanner } from '../../../components/BottomBanner/BottomBanner';
 import { FaqCards } from '../../../components/FaqCards/FaqCards';
 import { Footer } from '../../../components/Footer/Footer';
 import cards from '../../../data/Lessons/Anatomy/cards';
-import rostislav from '../../../assets/mentors/rostislav.jpg';
+import rostislav from '../../../assets/mentors/rostislav-anatomiya.jpg';
 import faqcards from '../../../data/Lessons/Anatomy/faqcards';
 
 const testimonials = [

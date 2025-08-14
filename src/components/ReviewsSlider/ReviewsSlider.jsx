@@ -37,7 +37,6 @@ export const ReviewsSlider = ({ dpt = 184, dpb = 260, showtitle, reviews }) => {
               className="reviews-slider-wrapper-review"
             >
               <div className="reviews-slider-wrapper-review-wrapper">
-                <img src={review.image} />
                 <h4 className="reviews-slider-wrapper-review-wrapper-title">
                   {review.title}
                 </h4>

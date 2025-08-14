@@ -4,11 +4,11 @@ import arrow from '../../assets/icon-arrow-link.svg';
 import cardDot from '../../assets/card-dot.svg';
 
 export const Card = ({ card }) => {
-  const { url, image, tag, caption, title, text, mentor, price } = card;
+  const { url, image, tags, caption, title, text, mentor, price } = card;
 
   return (
     <div className="card">
-      <div className='card-dots'>
+      <div className="card-dots">
         <img src={cardDot} />
         <img src={cardDot} />
         <img src={cardDot} />
@@ -18,12 +18,14 @@ export const Card = ({ card }) => {
       </div>
       <div className="card-image">
         <img src={image} alt={`${title} Фото`} />
-        {tag && (
-          <div className="card-image-tag">
-            <img src={clock} alt="Clock Icon" />
-            {tag}
-          </div>
-        )}
+        <div className="card-image-tags">
+          {Object.values(tags).map((tag) => (
+            <div className="card-image-tag" key={tag}>
+              <img src={clock} alt="Clock Icon" />
+              {tag}
+            </div>
+          ))}
+        </div>
       </div>
       <div className="card-information">
         <div className="card-information-caption">{caption}</div>
@@ -45,9 +47,9 @@ export const Card = ({ card }) => {
             </div>
           </div>
         )}
-        <div className='card-bottom-price'>{price}</div>
+        <div className="card-bottom-price">{price}</div>
       </div>
-      <a href={url} className='card-link'></a>
+      <a href={url} className="card-link"></a>
     </div>
   );
 };
