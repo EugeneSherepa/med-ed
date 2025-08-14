@@ -5,7 +5,7 @@ import mentorOneImage from '../../assets/mentors/mentor-placeholder.png';
 const cards = [
   {
     id: 1,
-    url: "",
+    url: "/about/medicine",
     image: stepOneMedicine,
     tags: {
       tag: '1 тиждень'
@@ -22,7 +22,7 @@ const cards = [
   },
   {
     id: 2,
-    url: "",
+    url: "/about/stomatology",
     image: stepOneDentistry,
     tags: {
       tag: '1 тиждень'

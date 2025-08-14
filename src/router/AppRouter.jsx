@@ -8,8 +8,8 @@ import { Contact } from '../pages/Contact/Contact';
 import { StepOne } from '../pages/StepOne/StepOne';
 import { StepTwo } from '../pages/StepTwo/StepTwo';
 import { Anatomy } from '../pages/Lessons/Anatomy/Anatomy';
-import { Pharmacy } from '../pages/AboutCourse/Pharmacy/Pharmacy';
 import { Medicine } from '../pages/AboutCourse/Medicine/Medicine';
+import { Stomatology } from '../pages/AboutCourse/StepOneStomatology/Stomatology';
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -23,8 +23,8 @@ const AppRouter = () => (
       <Route path="/step-one" element={<StepOne />} />
       <Route path="/step-two" element={<StepTwo />} />
       <Route path="/lessons/anatomy" element={<Anatomy />} />
-      <Route path="/about/pharmacy" element={<Pharmacy />} />
       <Route path="/about/medicine" element={<Medicine />} />
+      <Route path="/about/stomatology" element={<Stomatology />} />
     </Routes>
   </BrowserRouter>
 );
