@@ -1,7 +1,7 @@
 import mentorOneImage from '../../assets/mentors/mentor-placeholder.png';
 import mentorTwoImage from '../../assets/mentors/nika-step-one-med.jpg';
 import mentorThreeImage from '../../assets/mentors/ivanna-step-one-med.JPG';
-import mentorFourImage from '../../assets/mentors/mentor-placeholder.png';
+import mentorFourImage from '../../assets/mentors/mentor-placeholder-two.png';
 
 const team = [
 {

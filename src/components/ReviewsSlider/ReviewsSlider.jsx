@@ -37,9 +37,9 @@ export const ReviewsSlider = ({ dpt = 184, dpb = 260, showtitle, reviews }) => {
               className="reviews-slider-wrapper-review"
             >
               <div className="reviews-slider-wrapper-review-wrapper">
-                <h4 className="reviews-slider-wrapper-review-wrapper-title">
+                {/* <h4 className="reviews-slider-wrapper-review-wrapper-title">
                   {review.title}
-                </h4>
+                </h4> */}
                 <div className="reviews-slider-wrapper-review-wrapper-text">
                   {review.text}
                 </div>
