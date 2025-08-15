@@ -21,6 +21,10 @@
       cursor: grabbing;
     }
 
+    & .swiper-wrapper {
+      align-items: center;
+    }
+
     &-review {
       padding: 54px 24px;
       background: radial-gradient(
@@ -38,11 +42,16 @@
         );
       border: 1px solid #d4d2e3;
       border-radius: 24px;
+      height: -webkit-fill-available;
 
       &-wrapper {
         padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         background-color: $white;
         border-radius: 8px;
+        height: -webkit-fill-available;
 
         & img {
           margin-bottom: 24px;

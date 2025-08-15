@@ -2,6 +2,7 @@ import './AboutCource.scss';
 import { TeamComponent } from '../Team/TeamComponent';
 import { ReviewsSlider } from '../ReviewsSlider/ReviewsSlider';
 import breadcrumbIcon from '../../assets/icon-breadcrumb.svg';
+import cardDot from '../../assets/card-dot.svg';
 import { useState } from 'react';
 
 export const AboutCource = ({
@@ -105,23 +106,36 @@ export const AboutCource = ({
           <div className="about-course-wrapper-right">
             {showCard !== false && (
               <div className="about-course-wrapper-right-card">
-                <img src={cardImage} />
-                <div className="about-course-wrapper-right-card-header">
-                  <h5 className="about-course-wrapper-right-card-header-title">
-                    Курс {title}
-                  </h5>
-                  <div className="about-course-wrapper-right-card-header-price">
-                    {price}
+                <div className="about-course-wrapper-right-card-wrapper">
+                  <div className="about-course-wrapper-right-card-dots">
+                    <img src={cardDot} />
+                    <img src={cardDot} />
+                    <img src={cardDot} />
+                    <img src={cardDot} />
+                    <img src={cardDot} />
+                    <img src={cardDot} />
                   </div>
-                </div>
-                <a href="" className="button-primary">
-                  Почати навачання
-                </a>
-                <div className="about-course-wrapper-right-card-content">
-                  <h6 className="about-course-wrapper-right-card-content-title">
-                    {cardTitle}
-                  </h6>
-                  <div dangerouslySetInnerHTML={{ __html: cardContent }} />
+                  <img
+                    src={cardImage}
+                    className="about-course-wrapper-right-card-image"
+                  />
+                  <div className="about-course-wrapper-right-card-header">
+                    <h5 className="about-course-wrapper-right-card-header-title">
+                      Курс {title}
+                    </h5>
+                    <div className="about-course-wrapper-right-card-header-price">
+                      {price}
+                    </div>
+                  </div>
+                  <a href="" className="button-primary">
+                    Почати навачання
+                  </a>
+                  <div className="about-course-wrapper-right-card-content">
+                    <h6 className="about-course-wrapper-right-card-content-title">
+                      {cardTitle}
+                    </h6>
+                    <div dangerouslySetInnerHTML={{ __html: cardContent }} />
+                  </div>
                 </div>
               </div>
             )}
@@ -142,7 +156,7 @@ export const AboutCource = ({
                 {content.first_title}
               </h3>
               <div
-                className="about-course-wrapper-content-text"
+                className="about-course-wrapper-content-text about-course-wrapper-content-text-first"
                 dangerouslySetInnerHTML={{ __html: content.first_text }}
               />
               <h3 className="about-course-wrapper-content-title">
@@ -152,6 +166,15 @@ export const AboutCource = ({
                 className="about-course-wrapper-content-text"
                 dangerouslySetInnerHTML={{ __html: content.second_text }}
               />
+              {content.link && (
+                <a
+                  className="about-course-wrapper-content-text-link"
+                  target="_blank"
+                  href={content.link}
+                >
+                  Дивитись весь план курсу
+                </a>
+              )}
               <h3 className="about-course-wrapper-content-title">
                 {content.third_title}
               </h3>

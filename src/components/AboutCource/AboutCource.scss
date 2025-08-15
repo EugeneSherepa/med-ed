@@ -41,7 +41,7 @@
   }
 
   &-wrapper {
-    margin-bottom: 42px;
+    margin-bottom: 54px;
     display: flex;
     width: 100%;
     gap: 88px;
@@ -90,7 +90,7 @@
       }
 
       &-buttons {
-        margin-bottom: 54px;
+        margin-bottom: 0;
         display: flex;
         align-items: center;
         gap: 32px;
@@ -103,11 +103,24 @@
       &-card {
         position: sticky;
         top: 156px;
-        padding: 40px 36px;
-        border-radius: 36px;
-        background-color: $white;
 
-        & img {
+        &-wrapper {
+          position: relative;
+          padding: 40px 36px;
+          border-radius: 36px;
+          background-color: $white;
+        }
+
+        &-dots {
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          left: 0;
+          justify-content: space-between;
+          height: 87%;
+        }
+
+        &-image {
           margin-bottom: 16px;
           aspect-ratio: 16/9;
           border-radius: 4px;
@@ -168,18 +181,46 @@
       }
 
       &-text {
-        margin-bottom: 54px;
         font-family: $font-fixel;
         font-size: 18px;
         line-height: 28px;
+        font-weight: 400;
+
+        &-first {
+          margin-bottom: 54px;
+        }
+
+        & ul {
+          margin: 0;
+          padding: 0;
+        }
 
         & li {
           padding-left: 12px;
           font-family: $font-fixel;
           font-size: 18px;
           line-height: 28px;
-          font-weight: 600;
+          font-weight: 400;
           color: $primary-color;
+
+          &::marker {
+            font-size: 10px;
+          }
+        }
+
+        & b {
+          font-weight: 600 !important;
+        }
+
+        &-link {
+          display: block;
+          margin-top: 16px;
+          margin-bottom: 54px;
+          font-family: $font-fixel;
+          font-size: 18px;
+          line-height: 28px;
+          font-weight: 600;
+          color: #252c3f;
         }
       }
     }
