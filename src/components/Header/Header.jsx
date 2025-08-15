@@ -110,7 +110,7 @@ export const Header = () => {
                     <li className="header-wrapper-navigation-items-item-link-dropdown-list-item">
                       <a
                         className="header-wrapper-navigation-items-item-link-dropdown-list-item-link"
-                        href="/lessons/histology"
+                        href="/lessons/physiology"
                       >
                         Фізіологія
                       </a>
@@ -118,7 +118,7 @@ export const Header = () => {
                     <li className="header-wrapper-navigation-items-item-link-dropdown-list-item">
                       <a
                         className="header-wrapper-navigation-items-item-link-dropdown-list-item-link"
-                        href="/lessons/biology"
+                        href="/lessons/biochemistry"
                       >
                         Біохімія
                       </a>
@@ -126,7 +126,7 @@ export const Header = () => {
                     <li className="header-wrapper-navigation-items-item-link-dropdown-list-item">
                       <a
                         className="header-wrapper-navigation-items-item-link-dropdown-list-item-link"
-                        href="/lessons/biology"
+                        href="/lessons/pathomorphology"
                       >
                         Патоморфологія
                       </a>
@@ -134,7 +134,7 @@ export const Header = () => {
                     <li className="header-wrapper-navigation-items-item-link-dropdown-list-item">
                       <a
                         className="header-wrapper-navigation-items-item-link-dropdown-list-item-link"
-                        href="/lessons/biology"
+                        href="/lessons/pharmacology"
                       >
                         Фармакологія
                       </a>
@@ -271,7 +271,7 @@ export const Header = () => {
                 <li>
                   <a
                     className="mobile-menu-main-item-link"
-                    href="/lessons/histology"
+                    href="/lessons/physiology"
                   >
                     Фізіологія
                   </a>
@@ -279,7 +279,7 @@ export const Header = () => {
                 <li>
                   <a
                     className="mobile-menu-main-item-link"
-                    href="/lessons/biology"
+                    href="/lessons/biochemistry"
                   >
                     Біохімія
                   </a>
@@ -287,7 +287,7 @@ export const Header = () => {
                 <li>
                   <a
                     className="mobile-menu-main-item-link"
-                    href="/lessons/biology"
+                    href="/lessons/pathomorphology"
                   >
                     Патоморфологія
                   </a>
@@ -295,7 +295,7 @@ export const Header = () => {
                 <li>
                   <a
                     className="mobile-menu-main-item-link"
-                    href="/lessons/biology"
+                    href="/lessons/pharmacology"
                   >
                     Фармакологія
                   </a>

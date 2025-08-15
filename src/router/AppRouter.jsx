@@ -8,6 +8,10 @@ import { Contact } from '../pages/Contact/Contact';
 import { StepOne } from '../pages/StepOne/StepOne';
 import { StepTwo } from '../pages/StepTwo/StepTwo';
 import { Anatomy } from '../pages/Lessons/Anatomy/Anatomy';
+import { Physiology } from '../pages/Lessons/Physiology/Physiology';
+import { Biochemistry } from '../pages/Lessons/Biochemistry/Biochemistry';
+import { Pathomorphology } from '../pages/Lessons/Pathomorphology/Pathomorphology';
+import { Pharmacology } from '../pages/Lessons/Pharmacology/Pharmacology';
 import { Medicine } from '../pages/AboutCourse/Medicine/Medicine';
 import { Stomatology } from '../pages/AboutCourse/StepOneStomatology/Stomatology';
 
@@ -23,6 +27,10 @@ const AppRouter = () => (
       <Route path="/step-one" element={<StepOne />} />
       <Route path="/step-two" element={<StepTwo />} />
       <Route path="/lessons/anatomy" element={<Anatomy />} />
+      <Route path="/lessons/physiology" element={<Physiology />} />
+      <Route path="/lessons/biochemistry" element={<Biochemistry />} />
+      <Route path="/lessons/pathomorphology" element={<Pathomorphology />} />
+      <Route path="/lessons/pharmacology" element={<Pharmacology />} />
       <Route path="/about/medicine" element={<Medicine />} />
       <Route path="/about/stomatology" element={<Stomatology />} />
     </Routes>
