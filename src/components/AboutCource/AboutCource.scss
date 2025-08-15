@@ -135,7 +135,7 @@
           justify-content: space-between;
 
           &-title {
-            width: 50%;
+            width: 100%;
             font-family: $font-eastman;
             font-size: 20px;
             line-height: 24px;
@@ -239,7 +239,7 @@
 
     &-wrapper {
       display: flex;
-      flex-direction: column;
+      flex-direction: column-reverse;
       width: 100%;
       gap: 0;
 
@@ -247,8 +247,12 @@
         width: fit-content;
 
         &-hero {
-          margin-bottom: 24px;
+          margin-bottom: 0;
           display: flex;
+
+          & img {
+            display: none;
+          }
         }
 
         &-title {
@@ -297,8 +301,12 @@
             font-family: $font-fixel;
             font-size: 18px;
             line-height: 28px;
-            font-weight: 600;
+            font-weight: 400;
             color: $primary-color;
+
+            &::marker {
+              font-size: 10px;
+            }
           }
         }
       }
