@@ -108,6 +108,10 @@
     &-wrapper {
       cursor: grab;
 
+      & .swiper-wrapper {
+        align-items: flex-start;
+      }
+
       &:active {
         cursor: grabbing;
       }
@@ -115,6 +119,11 @@
       &-review {
         padding: 18px;
         border-radius: 16px;
+        height: fit-content;
+
+        &-wrapper {
+          height: fit-content;
+        }
       }
     }
   }

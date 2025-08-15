@@ -13,7 +13,6 @@ export const AboutCource = ({
   reviews,
   content,
   cardImage,
-  price,
   cardTitle,
   cardContent,
   showCard = true,
@@ -123,9 +122,6 @@ export const AboutCource = ({
                     <h5 className="about-course-wrapper-right-card-header-title">
                       Курс {title}
                     </h5>
-                    <div className="about-course-wrapper-right-card-header-price">
-                      {price}
-                    </div>
                   </div>
                   <a href="" className="button-primary">
                     Почати навачання
