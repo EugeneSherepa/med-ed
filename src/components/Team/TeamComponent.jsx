@@ -27,9 +27,6 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
         <Swiper
           slidesPerView={2.7}
           spaceBetween={78}
-          simulateTouch={true}
-          touchStartPreventDefault={false}
-          grabCursor={true}
           mousewheel={{ forceToAxis: true }}
           modules={[Navigation, Mousewheel]}
           breakpoints={{
@@ -70,9 +67,6 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
         <Swiper
           slidesPerView={2.7}
           spaceBetween={78}
-          simulateTouch={true}
-          touchStartPreventDefault={false}
-          grabCursor={true}
           mousewheel={{ forceToAxis: true }}
           modules={[Navigation, Mousewheel]}
           breakpoints={{
