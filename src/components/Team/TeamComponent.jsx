@@ -2,7 +2,7 @@ import './TeamComponent.scss';
 import '../Testimonials/Testimonials.scss';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Mousewheel } from 'swiper/modules';
 import iconCaret from '../../assets/icon-caret-swiper.svg';
 import iconCaretDisaabled from '../../assets/icon-caret-swiper-disabled.svg';
 
@@ -30,6 +30,8 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
           simulateTouch={true}
           touchStartPreventDefault={false}
           grabCursor={true}
+          mousewheel={{ forceToAxis: true }}
+          modules={[Navigation, Mousewheel]}
           breakpoints={{
             0: {
               slidesPerView: 1.225,
@@ -71,6 +73,8 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
           simulateTouch={true}
           touchStartPreventDefault={false}
           grabCursor={true}
+          mousewheel={{ forceToAxis: true }}
+          modules={[Navigation, Mousewheel]}
           breakpoints={{
             0: {
               slidesPerView: 1.225,
@@ -88,7 +92,6 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
             nextEl: '.testimonials-section-wrapper-top-buttons-next',
             prevEl: '.testimonials-section-wrapper-top-buttons-prev',
           }}
-          modules={[Navigation]}
           className="page-width-left mySwiper team-members"
         >
           {team.map((team_member) => (

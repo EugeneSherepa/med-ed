@@ -5,6 +5,7 @@ import card_biochemistry from '../../assets/materials-card-biochemistry.png';
 
 import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 
 export const MaterialsGrid = () => {
@@ -39,7 +40,8 @@ export const MaterialsGrid = () => {
 
       <div className="page-width page-width-swiper">
         {isMobile ? (
-        <Swiper spaceBetween={16} slidesPerView={1.2}>
+        <Swiper spaceBetween={16} slidesPerView={1.2} mousewheel={{ forceToAxis: true }}
+        modules={[Navigation, Mousewheel]}>
           {cards.map((card, index) => (
             <SwiperSlide key={index}>
               <div className="materialsgrid-wrapper-item">

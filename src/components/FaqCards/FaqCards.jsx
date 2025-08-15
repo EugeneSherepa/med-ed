@@ -1,5 +1,6 @@
 import './FaqCards.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Mousewheel } from 'swiper/modules';
 import cardSticker from '../../assets/card-sticker.png';
 
 export const FaqCards = ({ cardreviews }) => {
@@ -7,6 +8,8 @@ export const FaqCards = ({ cardreviews }) => {
     <div className="faq-cards">
       <div className="page-width-left">
         <Swiper
+          mousewheel={{ forceToAxis: true }}
+          modules={[Navigation, Mousewheel]}
           breakpoints={{
             0: {
               slidesPerView: 1.1,

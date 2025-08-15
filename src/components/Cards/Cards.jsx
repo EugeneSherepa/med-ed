@@ -1,5 +1,6 @@
 import './Cards.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 import { Card } from '../Card/Card';
 
@@ -21,6 +22,8 @@ export const Cards = ({ title, text, textMobile, cards }) => {
         <Swiper
           slidesPerView={3}
           spaceBetween={78}
+          mousewheel={{ forceToAxis: true }}
+          modules={[Navigation, Mousewheel]}
           breakpoints={{
             0: {
               slidesPerView: 1.225,

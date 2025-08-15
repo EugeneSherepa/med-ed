@@ -1,6 +1,6 @@
 import './Testimonials.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 import { Testimonial } from '../Testimonial/Testimonial';
 import iconCaret from '../../assets/icon-caret-swiper.svg';
@@ -43,6 +43,8 @@ export const Testimonials = ({
         <Swiper
           slidesPerView={1}
           spaceBetween={16}
+          mousewheel={{ forceToAxis: true }}
+          modules={[Navigation, Mousewheel]}
           breakpoints={{
             0: {
               slidesPerView: 1.2,
@@ -61,7 +63,6 @@ export const Testimonials = ({
             nextEl: '.testimonials-section-wrapper-top-buttons-next',
             prevEl: '.testimonials-section-wrapper-top-buttons-prev',
           }}
-          modules={[Navigation]}
           className="mySwiper testimonials-section-wrapper-testimonials"
         >
           {testimonials.map((testimonial) => (

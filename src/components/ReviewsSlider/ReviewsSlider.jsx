@@ -1,6 +1,7 @@
 import './ReviewsSlider.scss';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Mousewheel } from 'swiper/modules';
 
 export const ReviewsSlider = ({ dpt = 184, dpb = 260, showtitle, reviews }) => {
   return (
@@ -18,6 +19,8 @@ export const ReviewsSlider = ({ dpt = 184, dpb = 260, showtitle, reviews }) => {
       </div>
       <div className="page-width-left">
         <Swiper
+          mousewheel={{ forceToAxis: true }}
+          modules={[Navigation, Mousewheel]}
           breakpoints={{
             0: {
               slidesPerView: 1.1,
