@@ -27,6 +27,9 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
         <Swiper
           slidesPerView={2.7}
           spaceBetween={78}
+          simulateTouch={true}
+          touchStartPreventDefault={false}
+          grabCursor={true}
           breakpoints={{
             0: {
               slidesPerView: 1.225,
@@ -37,7 +40,7 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
             990: {
               slidesPerView: 2.7,
               spaceBetween: 32,
-              loop: false 
+              loop: false,
             },
           }}
           className="mySwiper team-members"
@@ -65,6 +68,9 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
         <Swiper
           slidesPerView={2.7}
           spaceBetween={78}
+          simulateTouch={true}
+          touchStartPreventDefault={false}
+          grabCursor={true}
           breakpoints={{
             0: {
               slidesPerView: 1.225,
