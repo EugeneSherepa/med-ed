@@ -31,14 +31,6 @@ export const AboutCource = ({
       <div className="page-width">
         {showBreadcrumbs !== false && (
           <div className="about-course-breadcrumbs">
-            <div className="about-course-breadcrumbs-item">
-              <a href="/">Головна</a>
-            </div>
-            <div className="about-course-breadcrumbs-item">
-              <div className="about-course-breadcrumbs-item-image">
-                <img src={breadcrumbIcon} />
-              </div>
-            </div>
             <div className="about-course-breadcrumbs-item">Іспити</div>
             <div className="about-course-breadcrumbs-item">
               <div className="about-course-breadcrumbs-item-image">

@@ -235,6 +235,16 @@
     &-breadcrumbs {
       margin-bottom: 24px;
       flex-wrap: wrap;
+
+      &-item {
+        font-size: 12px;
+        line-height: 16px;
+
+        & a {
+          font-size: 12px;
+          line-height: 16px;
+        }
+      }
     }
 
     &-wrapper {
