@@ -17,7 +17,7 @@ export const StepTwoHeader = () => {
             Подаєш заявку на курс
           </div>
           <div className="steptwo-header-tags-tag">
-            <b>мИ:</b>
+            <b>МИ:</b>
             Проводимо лекції та практичні заняття
           </div>
           <div className="steptwo-header-tags-tag-green">
