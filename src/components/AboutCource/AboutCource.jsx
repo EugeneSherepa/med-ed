@@ -116,7 +116,7 @@ export const AboutCource = ({
                     </h5>
                   </div>
                   <a href="" className="button-primary">
-                    Почати навачання
+                    Почати навчання
                   </a>
                   <div className="about-course-wrapper-right-card-content">
                     <h6 className="about-course-wrapper-right-card-content-title">
