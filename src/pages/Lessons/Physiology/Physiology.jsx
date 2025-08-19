@@ -49,7 +49,7 @@ export const Physiology = () => {
       <Testimonials
         dpt={192}
         dpb={262}
-        title={'Викладач анатомії'}
+        title={'Викладач фізіології'}
         testimonials={testimonials}
       />
       <ReviewsSlider reviews={reviews} dpt={64} dpb={262} />

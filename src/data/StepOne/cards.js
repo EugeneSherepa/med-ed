@@ -31,14 +31,14 @@ const cards = [
   },
   {
     id: 4,
-    url: '',
+    url: '/about/medicine',
     image: stepOneMedicine,
     tag: 'інтенсив',
     caption: 'Крок-1',
     title: 'Медицина',
     text: '32 лекції і 32 практики, група 3-6 осіб',
     start: {
-      first: '/about/medicine',
+      first: '',
       second: 'січень',
     },
     price: '450грн',
@@ -53,7 +53,7 @@ const cards = [
     text: '31 лекція і 31 практика, група 6 осіб',
     start: {
       first: '',
-      second: 'січень',
+      second: 'грудень',
     },
     price: '450грн',
   },

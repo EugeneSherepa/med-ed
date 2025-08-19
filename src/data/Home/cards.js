@@ -70,7 +70,7 @@ const cards = [
     text: '31 лекція і 31 практика, група 6 осіб',
     start: {
       first: "",
-      second: 'січень',
+      second: 'грудень',
     },
     price: '450грн',
   },
@@ -78,7 +78,7 @@ const cards = [
     id: 6,
     url: "/step-two",
     image: stepTwoMedicine,
-    tag: 'груповий формат',
+    tag: 'інтенсив',
     caption: 'Крок-2',
     title: 'Медицина',
     text: '35 лекцій і 35 практик, група 6 осіб',

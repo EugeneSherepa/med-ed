@@ -50,7 +50,7 @@ export const Pathomorphology = () => {
       <Testimonials
         dpt={192}
         dpb={262}
-        title={'Викладач анатомії'}
+      title={'Викладач Патоморфології'}
         testimonials={testimonials}
       />
       <ReviewsSlider reviews={reviews} dpt={64} dpb={262} />

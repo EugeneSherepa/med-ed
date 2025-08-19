@@ -47,7 +47,7 @@ export const Pharmacology = () => {
       <Testimonials
         dpt={192}
         dpb={262}
-        title={'Викладач анатомії'}
+        title={'Викладач Фармакології'}
         testimonials={testimonials}
       />
       <ReviewsSlider reviews={reviews} dpt={64} dpb={262} />
