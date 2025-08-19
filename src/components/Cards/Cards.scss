@@ -32,6 +32,10 @@
     align-items: center;
     padding-bottom: 32px !important;
 
+    & .swiper-slide {
+      height: auto;
+    }
+
     &-center .swiper-wrapper {
       justify-content: center;
       gap: 204px;

@@ -4,19 +4,20 @@ import { BreakLine } from '../../../components/BreakLine/BreakLine';
 import { Cards } from '../../../components/Cards/Cards';
 import { Testimonials } from '../../../components/Testimonials/Testimonails';
 import { BottomBanner } from '../../../components/BottomBanner/BottomBanner';
+import { ReviewsSlider } from '../../../components/ReviewsSlider/ReviewsSlider';
 import { FaqCards } from '../../../components/FaqCards/FaqCards';
 import { Footer } from '../../../components/Footer/Footer';
 import cards from '../../../data/Lessons/Anatomy/cards';
-import rostislav from '../../../assets/mentors/rostislav-anatomiya.jpg';
+import reviews from '../../../data/Lessons/Pharmacology/reviews';
+import olesia from '../../../assets/mentors/olesia-pharmacology.jpg';
 import faqcards from '../../../data/Lessons/Anatomy/faqcards';
 
 const testimonials = [
   {
     id: 1,
-    image: rostislav,
-    title: 'Ростислав',
-    text: 'Перетворює нудні простирадла тексту на корисні малюнки, а складні теми розкладає на прості та зрозумілі інфоблоки',
-    author: 'Анатомія – це лав, коли її навчає Ростислав! ❤️',
+    image: olesia,
+    title: 'Олеся',
+    text:  ' — засновниця курсу, лікар-інтерн хірург',
   },
 ];
 
@@ -25,19 +26,19 @@ export const Pharmacology = () => {
     <>
       <Header />
       <LessonInfo
-        title={'Фізіологія'}
+        title={'ФАРМАКОЛОГІЯ'}
         text={
-          'Курс анатомії охоплює всі аспекти будови та функціонування людського тіла. Наш курс дає змогу студентам глибоко зрозуміти кожну систему організму, зосереджуючись на ключових темах, необхідних для складання КРОК 1'
+          'Курс охоплює основи дії ліків, їх класифікацію, фармакокінетику й фармакодинаміку з акцентом на клінічну практику — вибір терапії, побічки та взаємодії препаратів.'
         }
-        firstSem={'30 лекції з опорно-рухового апарату та спланхнології'}
-        secondSem={
-          '35 лекції з анатомії ЦНС, органів чуття, серця та судин і нервів тіла людини'
+        firstSem={'10 тем з загальної фармакології'}
+         bottomText={
+          'Матеріал лекцій та уроків itsmeded постійно оновлюється відповідно до найактуальніших клінічних рекомендацій. Для цього використовуються авторитетні ресурси, зокрема <b>AMBOSS</b>, <b>Osmosis</b> та <b>UpToDate</b>.'
         }
-        bottomText={
-          'Наш курс розроблений відповідно до офіційного тематичного плану університету, охоплюючи всі ключові теми, необхідні для успішного складання іспитів.'
+        courseBest={
+          '<li><b>Пояснюємо зрозуміло і надовго</b> — знання залишаться не тільки до іспиту, а й на все життя.</li><li><b>Клініка тут і зараз:</b>кожен препарат — це історія пацієнта, а не суха таблиця.</li><li><b>Авторські схеми:</b> мінімум хаосу, максимум логіки (навіть фармакокінетика стає дружньою).</li><li><b>Мнемоніки та лайфхаки:</b> побічки залишаться в голові навіть після інтернатури.</li><li><b>Інтерактив:</b> тести, кейси, розбір інструкцій і групові штурми — вчимося думати, а не зазубрювати</li><br>Адаптуємо уроки під тематичний план вашого ВНЗ.<br>'
         }
         caption={
-          '*Кожна тема курсу закріплюється тестами та практичними вправами, щоб ви відчували впевненість у своїх знаннях.'
+          'Кожна тема курсу закріплюється тестами та практичними вправами, щоб ви відчували впевненість у своїх знаннях.'
         }
       />
       <BreakLine />
@@ -48,6 +49,7 @@ export const Pharmacology = () => {
         title={'Викладач анатомії'}
         testimonials={testimonials}
       />
+      <ReviewsSlider reviews={reviews} dpt={64} dpb={262} />
       <BottomBanner />
       <FaqCards cardreviews={faqcards} />
       <Footer />

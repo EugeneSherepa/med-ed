@@ -1,7 +1,7 @@
 import './LessonInfo.scss';
 import textUnderline from '../../assets/text-marker.svg';
 
-export const LessonInfo = ({ title, text, firstSem, secondSem, bottomText, caption }) => {
+export const LessonInfo = ({ title, text, firstSem, secondSem, bottomText, courseBest, caption }) => {
   return (
     <div className="lessoninfo">
       <div className="page-width">
@@ -33,8 +33,10 @@ export const LessonInfo = ({ title, text, firstSem, secondSem, bottomText, capti
             {secondSem}
           </div>
         </div>
-        <div className='lessoninfo-bottom-text'>
-          {bottomText}
+        <div className='lessoninfo-bottom-text' dangerouslySetInnerHTML={{ __html: bottomText }} />
+        <div className='lessoninfo-bottom-best'>
+          <div className='lessoninfo-bottom-best-text'>Переваги курсу:</div>
+          <div dangerouslySetInnerHTML={{ __html: courseBest }} />
         </div>
         <div className='lessoninfo-bottom-caption'>
           {caption}

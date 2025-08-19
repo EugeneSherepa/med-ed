@@ -3,20 +3,28 @@ import { LessonInfo } from '../../../components/LessonInfo/LessonInfo';
 import { BreakLine } from '../../../components/BreakLine/BreakLine';
 import { Cards } from '../../../components/Cards/Cards';
 import { Testimonials } from '../../../components/Testimonials/Testimonails';
+import { ReviewsSlider } from '../../../components/ReviewsSlider/ReviewsSlider';
 import { BottomBanner } from '../../../components/BottomBanner/BottomBanner';
 import { FaqCards } from '../../../components/FaqCards/FaqCards';
 import { Footer } from '../../../components/Footer/Footer';
 import cards from '../../../data/Lessons/Anatomy/cards';
-import rostislav from '../../../assets/mentors/rostislav-anatomiya.jpg';
+import reviews from '../../../data/Lessons/Biochemistry/reviews';
+import nazrin from '../../../assets/mentors/nazrin-biochemistry.jpg';
+import valeria from '../../../assets/mentors/mentor-placeholder.png';
 import faqcards from '../../../data/Lessons/Anatomy/faqcards';
 
 const testimonials = [
   {
     id: 1,
-    image: rostislav,
-    title: 'Ростислав',
-    text: 'Перетворює нудні простирадла тексту на корисні малюнки, а складні теми розкладає на прості та зрозумілі інфоблоки',
-    author: 'Анатомія – це лав, коли її навчає Ростислав! ❤️',
+    image: nazrin,
+    title: 'Назрін ',
+    text: '— засновниця курсу, лікар-інтерн сімейної медицини',
+  },
+  {
+    id: 2,
+    image: valeria,
+    title: 'Валерія ',
+    text: '— студентка 4го курсу',
   },
 ];
 
@@ -25,29 +33,33 @@ export const Biochemistry = () => {
     <>
       <Header />
       <LessonInfo
-        title={'Фізіологія'}
+        title={'БІОХІМІЯ'}
         text={
-          'Курс анатомії охоплює всі аспекти будови та функціонування людського тіла. Наш курс дає змогу студентам глибоко зрозуміти кожну систему організму, зосереджуючись на ключових темах, необхідних для складання КРОК 1'
+          'Курс охоплює метаболічні процеси, біомолекули, ензимологію та біохімію тканин. Матеріал подано з акцентом на практичне застосування в медицині — для розуміння механізмів захворювань і їх лікування.'
         }
-        firstSem={'30 лекції з опорно-рухового апарату та спланхнології'}
+        firstSem={'13 тем з біохімії основних класів біомолекул'}
         secondSem={
-          '35 лекції з анатомії ЦНС, органів чуття, серця та судин і нервів тіла людини'
+          '20 тем зі спеціалізованої біохімії'
         }
         bottomText={
-          'Наш курс розроблений відповідно до офіційного тематичного плану університету, охоплюючи всі ключові теми, необхідні для успішного складання іспитів.'
+          'Матеріал лекцій та уроків itsmeded постійно оновлюється відповідно до найактуальніших клінічних рекомендацій. Для цього використовуються авторитетні ресурси, зокрема <b>AMBOSS</b>, <b>Osmosis</b> та <b>UpToDate</b>.'
+        }
+        courseBest={
+          '<li>Структорований та рожевий світ біохімії💅🏻</li><li>Авторські схеми для кращого розуміння метаболічних процесів білків, жирів, вуглеводів</li><li>Поєднання біохімії з клінічними дисциплінами</li><br>Адаптуємо уроки під тематичний план вашого ВНЗ.<br>'
         }
         caption={
-          '*Кожна тема курсу закріплюється тестами та практичними вправами, щоб ви відчували впевненість у своїх знаннях.'
+          'Кожна тема курсу закріплюється тестами та практичними вправами, щоб ви відчували впевненість у своїх знаннях.'
         }
       />
       <BreakLine />
-      <Cards cards={cards} title={'формат навчання та ціни'} />
+      <Cards cards={cards} title={'формат навчання та ціни'} text={"Ми займаємось за системою flipped classroom, тобто спочатку надсилаємо вам в чат запис лекції з тайм-кодами і презентацією, яку ви вдома переглядаєте самостійно, а потім вас вже запрошуємо на практичне заняття в зум (тривалістю година-півтори), де наш викладач буде вас опитувати, ви будете грати в ігри, вирішувати тести КРОК-1, STEP-1 і клінічні кейси, 3Д атлас Compete Anatomy.<br>Така система дозволяє запамʼятати і вивчити більший обʼєм інформації 🫂"} />
       <Testimonials
         dpt={192}
         dpb={262}
         title={'Викладач анатомії'}
         testimonials={testimonials}
       />
+      <ReviewsSlider reviews={reviews} dpt={64} dpb={262} />
       <BottomBanner />
       <FaqCards cardreviews={faqcards} />
       <Footer />
