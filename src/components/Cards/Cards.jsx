@@ -18,9 +18,9 @@ export const Cards = ({ title, text, textMobile, cards }) => {
           dangerouslySetInnerHTML={{ __html: textMobile }}
         />
       </div>
-      <div className="swiper-srapper page-width">
+      <div className="swiper-srapper page-width-left">
         <Swiper
-          slidesPerView={3}
+          slidesPerView={3.6}
           spaceBetween={78}
           mousewheel={{ forceToAxis: true }}
           modules={[Navigation, Mousewheel]}
@@ -32,7 +32,7 @@ export const Cards = ({ title, text, textMobile, cards }) => {
               slidesOffsetBefore: 24,
             },
             990: {
-              slidesPerView: 3,
+              slidesPerView: 3.6,
               spaceBetween: 78,
               centered: true,
             },

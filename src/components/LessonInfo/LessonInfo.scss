@@ -95,6 +95,31 @@
       line-height: 30px;
     }
 
+    &-best {
+      margin-bottom: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      font-size: 20px;
+      line-height: 22px;
+
+      &-text {
+        font-family: 'Eastman', sans-serif, serif;
+        font-size: 20px;
+        line-height: 22px;
+        font-weight: 700;
+        color: #252c3f;
+        text-transform: uppercase;
+      }
+
+      & li {
+        font-family: 'Eastman', sans-serif, serif;
+        font-size: 20px;
+        line-height: 30px;
+        font-weight: 400;
+      }
+    }
+
     &-caption {
       position: relative;
       font-family: $font-eastman;
@@ -198,6 +223,26 @@
         font-family: $font-eastman;
         font-size: 18px;
         line-height: 20px;
+      }
+
+      &-best {
+        margin-bottom: 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        font-size: 18px;
+        line-height: 20px;
+
+        &-text {
+          font-size: 18px;
+          line-height: 20px;
+        }
+
+        & li {
+          margin-bottom: 16px;
+          font-size: 18px;
+          line-height: 20px;
+        }
       }
 
       &-caption {
