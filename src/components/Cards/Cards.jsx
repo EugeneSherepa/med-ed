@@ -32,6 +32,7 @@ export const Cards = ({ title, text, textMobile, cards }) => {
               spaceBetween: 32,
               slidesOffsetAfter: 24,
               slidesOffsetBefore: 24,
+              slidesPerGroup: 1,
             },
             990: {
               slidesPerView: 3,

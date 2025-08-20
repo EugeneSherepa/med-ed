@@ -58,6 +58,10 @@
     & .swiper-srapper {
       padding: 0;
       margin-right: 8px;
+
+      &-buttons {
+        display: none;
+      }
     }
 
     &-title {
