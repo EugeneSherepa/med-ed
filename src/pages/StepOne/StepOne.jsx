@@ -9,7 +9,7 @@ import { Footer } from '../../components/Footer/Footer';
 import cards from '../../data/StepOne/cards';
 import team from '../../data/About/team';
 import testimonials from '../../data/Home/testimonials';
-import cardreviews from "../../data/Reviews/cards"
+import cardreviews from "../../data/StepOne/faqcards.js"
 
 export const StepOne = () => {
   return (

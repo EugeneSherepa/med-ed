@@ -4,6 +4,12 @@
   padding-top: var(--dpt);
   padding-bottom: var(--dpb);
 
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   &-title {
     margin-bottom: 40px;
     font-family: $font-artegra;
@@ -21,11 +27,8 @@
       cursor: grabbing;
     }
 
-    & .swiper-wrapper {
-      align-items: center;
-    }
-
     &-review {
+      min-height: 60vh;
       padding: 54px 24px;
       background: radial-gradient(
           73.92% 251.95% at 26.91% 46.73%,
@@ -42,16 +45,15 @@
         );
       border: 1px solid #d4d2e3;
       border-radius: 24px;
-      height: fit-content;
 
       &-wrapper {
+        min-height: 48vh;
         padding: 16px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         background-color: $white;
         border-radius: 8px;
-        height: fit-content;
 
         & img {
           margin-bottom: 24px;
@@ -71,10 +73,28 @@
         }
 
         &-text {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
           margin-bottom: 24px;
           font-family: $font-eastman;
           font-size: 18px;
           line-height: 20px;
+
+           & .read-more-btn {
+            cursor: pointer;
+              margin: 0;
+              padding: 0;
+              font-family: $font-eastman;
+              font-size: 16px;
+              line-height: 28px;
+              font-weight: 500;
+              color: #252C3F;
+              border: none;
+              background-color: transparent;
+              text-decoration: underline;
+              text-underline-offset: 3px;
+           }
         }
 
         &-author {
@@ -92,6 +112,10 @@
   .reviews-slider {
     padding-top: 124px;
     padding-bottom: 40px;
+
+    & .testimonials-section-wrapper-top-buttons {
+      display: none;
+    }
 
     & .page-width-left {
       margin-left: 0 !important;

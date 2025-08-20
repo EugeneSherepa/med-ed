@@ -39,9 +39,7 @@ export const FaqCards = ({ cardreviews }) => {
                   <div className="faq-cards-wrapper-card-top-caption">
                     відповідь
                   </div>
-                  <div className='faq-cards-wrapper-card-bottom-text-text'>
-                    {review.answer}
-                  </div>
+                  <div className='faq-cards-wrapper-card-bottom-text-text' dangerouslySetInnerHTML={{ __html: review.answer }} />
                 </div>
               </div>
             </SwiperSlide>

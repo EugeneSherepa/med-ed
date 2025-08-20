@@ -5,6 +5,21 @@
     padding-left: 8px;
     padding-top: 202px;
     padding-bottom: 202px;
+    overflow-x: auto !important;
+    padding-bottom: 56px;
+
+    &::-webkit-scrollbar-thumb {
+      height: 8px;
+      background-color: #252c3f80;
+      border-radius: 256px;
+      cursor: pointer;
+    }
+    &::-webkit-scrollbar {
+      height: 5px;
+      border-radius: 256px;
+      background-color: #252c3f66;
+      max-width: 1312px;
+    }
 
     &-card {
       cursor: pointer;
@@ -79,6 +94,10 @@
             line-height: 24px;
             font-weight: 500;
             color: #5a5365;
+
+            & a {
+              color: $primary-color;
+            }
           }
         }
       }

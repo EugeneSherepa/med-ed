@@ -171,6 +171,11 @@
         width: 68%;
       }
 
+      & .testimonials-section-wrapper-top-buttons {
+        justify-content: flex-end;
+        margin-bottom: 54px;
+      }
+
       &-title {
         margin-bottom: 16px;
         font-family: $font-eastman;
@@ -252,6 +257,10 @@
       flex-direction: column-reverse;
       width: 100%;
       gap: 0;
+
+      & .testimonials-section-wrapper-top-buttons {
+        display: none;
+      }
 
       &-left {
         width: fit-content;
