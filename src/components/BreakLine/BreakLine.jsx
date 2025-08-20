@@ -1,16 +1,23 @@
 import './BreakLine.scss';
 
-export const BreakLine = ({ title, text }) => {
+export const BreakLine = ({ dpt = 94, dpb = 172, title, text }) => {
   return (
-    <div className={title ? "breakline breakline-background-wrapper" : "breakline"}>
-      <div className="breakline-backrgound" >
+    <div
+      style={{
+        '--dpt': `${dpt}px`,
+        '--dpb': `${dpb}px`,
+      }}
+      className={title ? 'breakline breakline-background-wrapper' : 'breakline'}
+    >
+      <div className="breakline-backrgound">
         <div className="page-width">
           {title && text ? (
             <div className="breakline-wrapper">
-              <h1 className='breakline-wrapper-title'>
-                {title}
-              </h1>
-              <div className='breakline-wrapper-text' dangerouslySetInnerHTML={{ __html: text }}/>
+              <h1 className="breakline-wrapper-title">{title}</h1>
+              <div
+                className="breakline-wrapper-text"
+                dangerouslySetInnerHTML={{ __html: text }}
+              />
             </div>
           ) : (
             <h2 className="breakline-title">

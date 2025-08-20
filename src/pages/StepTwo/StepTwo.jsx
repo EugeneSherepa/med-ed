@@ -1,9 +1,9 @@
 import { Header } from '../../components/Header/Header';
-import { StepTwoHeader } from '../../components/StepTwoHeader/StepTwoHeader';
+import { BreakLine } from '../../components/BreakLine/BreakLine';
 import { AboutCource } from '../../components/AboutCource/AboutCource';
 import { BottomBanner } from '../../components/BottomBanner/BottomBanner';
 import { Footer } from '../../components/Footer/Footer';
-import heroImage from '../../assets/steps/step_one_medicine.png';
+import heroImage from '../../assets/step-two-hero.jpg';
 import team from '../../data/AboutCourse/MedicineStepTwo/team';
 import reviews from '../../data/AboutCourse/MedicineStepTwo/reviews';
 
@@ -24,7 +24,7 @@ export const StepTwo = () => {
   return (
     <>
       <Header />
-      <StepTwoHeader />
+      <BreakLine dpt={172} dpb={0} title={("Підготовка до крок-2")} text={"Ми допомагаємо засвоїти, а не зубрити навчальний матеріал<br>38 лекцій і 38 практичних занять – це твій шлях до успішного складання КРОК 2."}/>
       <AboutCource
         image={heroImage}
         title={'КРОК-2. Медицина'}

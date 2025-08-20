@@ -1,7 +1,8 @@
 @use '../../styles/variables' as *;
 
 .breakline {
-  padding: 94px 0 128px 0;
+  padding-top: var(--dpt);
+  padding-bottom: var(--dpb);
 
   &-backrgound {
     background-image: url('../../assets/breakline_background.png');
