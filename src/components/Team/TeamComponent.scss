@@ -9,6 +9,13 @@
     padding-bottom: var(--dpb) !important;
   }
 
+  &-component-warpper {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
   &-bottom {
     margin-top: 86px;
     display: flex;
@@ -60,7 +67,6 @@
   }
 
   &-subheading {
-    margin-bottom: 80px;
     font-family: $font-artegra;
     font-size: 32px;
     line-height: 48px;

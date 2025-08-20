@@ -8,7 +8,7 @@ import iconCaretDisaabled from '../../assets/icon-caret-swiper-disabled.svg';
 
 export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
   return (
-    <div className="page-width-left">
+    <div className="">
       <div
         className={showText ? 'team' : 'team team-padding'}
         style={{
@@ -16,99 +16,127 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
           '--dpb': `${dpb}px`,
         }}
       >
-        <div className="">
+        <div className="page-width">
           {showText && showText !== 'false' && (
-            <>
-              <h3 className="team-heading">Команда</h3>
-              <div className="team-subheading">З якою ти підкориш крок!</div>
-            </>
+            <div className="team-component-warpper">
+              <div>
+                <h3 className="team-heading">Команда</h3>
+                <div className="team-subheading">З якою ти підкориш крок!</div>
+              </div>
+              <div className="testimonials-section-wrapper-top-buttons">
+                <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
+                  <img src={iconCaret} className="active" />
+                  <img src={iconCaretDisaabled} className="disabled" />
+                </button>
+                <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next">
+                  <img src={iconCaret} className="active" />
+                  <img src={iconCaretDisaabled} className="disabled" />
+                </button>
+              </div>
+            </div>
           )}
         </div>
-        {showText ? (
-          <Swiper
-            slidesPerView={2.7}
-            spaceBetween={78}
-            mousewheel={{ forceToAxis: true }}
-            modules={[Navigation, Mousewheel]}
-            breakpoints={{
-              0: {
-                slidesPerView: 1.225,
-                spaceBetween: 24,
-                slidesOffsetAfter: 24,
-                slidesOffsetBefore: 24,
-              },
-              990: {
-                slidesPerView: 2.7,
-                spaceBetween: 32,
-                loop: false,
-              },
-            }}
-            className="mySwiper team-members"
-          >
-            {team.map((team_member) => (
-              <SwiperSlide key={team_member.id} className="team-members-member">
-                <div className="team-members-member-wrapper">
-                  <img
-                    src={team_member.image}
-                    alt={`${team_member.position} ${team_member.name}`}
-                  />
-                  <div className="team-members-member-wrapper-overlay">
-                    <h4 className="team-members-member-wrapper-overlay-heading">
-                      {team_member.name}
-                    </h4>
-                    <div className="team-members-member-wrapper-overlay-text">
-                      {team_member.position}
+        <div className="page-width-left">
+          {showText ? (
+            <Swiper
+              slidesPerView={2.7}
+              spaceBetween={78}
+              mousewheel={{ forceToAxis: true }}
+              modules={[Navigation, Mousewheel]}
+              navigation={{
+                nextEl: '.testimonials-section-wrapper-top-buttons-next',
+                prevEl: '.testimonials-section-wrapper-top-buttons-prev',
+              }}
+              breakpoints={{
+                0: {
+                  slidesPerView: 1.225,
+                  spaceBetween: 24,
+                  slidesOffsetAfter: 24,
+                  slidesOffsetBefore: 24,
+                },
+                990: {
+                  slidesPerView: 2.7,
+                  spaceBetween: 32,
+                  loop: false,
+                },
+              }}
+              className="mySwiper team-members"
+            >
+              {team.map((team_member) => (
+                <SwiperSlide
+                  key={team_member.id}
+                  className="team-members-member"
+                >
+                  <div className="team-members-member-wrapper">
+                    <img
+                      src={team_member.image}
+                      alt={`${team_member.position} ${team_member.name}`}
+                    />
+                    <div className="team-members-member-wrapper-overlay">
+                      <h4 className="team-members-member-wrapper-overlay-heading">
+                        {team_member.name}
+                      </h4>
+                      <div className="team-members-member-wrapper-overlay-text">
+                        {team_member.position}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        ) : (
-          <Swiper
-            slidesPerView={2.7}
-            spaceBetween={78}
-            mousewheel={{ forceToAxis: true }}
-            modules={[Navigation, Mousewheel]}
-            breakpoints={{
-              0: {
-                slidesPerView: 1.225,
-                spaceBetween: 24,
-                slidesOffsetAfter: 24,
-                slidesOffsetBefore: 24,
-              },
-              990: {
-                slidesPerView: 2.7,
-                spaceBetween: 32,
-                loop: false,
-              },
-            }}
-            navigation={{
-              nextEl: '.testimonials-section-wrapper-top-buttons-next',
-              prevEl: '.testimonials-section-wrapper-top-buttons-prev',
-            }}
-            className="page-width-left mySwiper team-members"
-          >
-            {team.map((team_member) => (
-              <SwiperSlide key={team_member.id} className="team-members-member">
-                <div className="team-members-member-wrapper">
-                  <img
-                    src={team_member.image}
-                    alt={`${team_member.position} ${team_member.name}`}
-                  />
-                  <div className="team-members-member-wrapper-overlay">
-                    <h4 className="team-members-member-wrapper-overlay-heading">
-                      {team_member.name}
-                    </h4>
-                    <div className="team-members-member-wrapper-overlay-text">
-                      {team_member.position}
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <Swiper
+              slidesPerView={2.7}
+              spaceBetween={78}
+              mousewheel={{ forceToAxis: true }}
+              modules={[Navigation, Mousewheel]}
+              navigation={{
+                nextEl: '.testimonials-section-wrapper-top-buttons-next',
+                prevEl: '.testimonials-section-wrapper-top-buttons-prev',
+              }}
+              breakpoints={{
+                0: {
+                  slidesPerView: 1.225,
+                  spaceBetween: 24,
+                  slidesOffsetAfter: 24,
+                  slidesOffsetBefore: 24,
+                },
+                990: {
+                  slidesPerView: 2.7,
+                  spaceBetween: 32,
+                  loop: false,
+                },
+              }}
+              navigation={{
+                nextEl: '.testimonials-section-wrapper-top-buttons-next',
+                prevEl: '.testimonials-section-wrapper-top-buttons-prev',
+              }}
+              className="page-width-left mySwiper team-members"
+            >
+              {team.map((team_member) => (
+                <SwiperSlide
+                  key={team_member.id}
+                  className="team-members-member"
+                >
+                  <div className="team-members-member-wrapper">
+                    <img
+                      src={team_member.image}
+                      alt={`${team_member.position} ${team_member.name}`}
+                    />
+                    <div className="team-members-member-wrapper-overlay">
+                      <h4 className="team-members-member-wrapper-overlay-heading">
+                        {team_member.name}
+                      </h4>
+                      <div className="team-members-member-wrapper-overlay-text">
+                        {team_member.position}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        )}
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
+        </div>
         {!showText && (
           <div className="page-width">
             <div className="team-bottom">
