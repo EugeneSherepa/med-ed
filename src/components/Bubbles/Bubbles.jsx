@@ -12,7 +12,7 @@ export const Bubbles = () => {
       <h2 className="page-width bubbles-title">
         Довіряють нам
         <br />
-        вже більше 348 студентів!
+        вже більше 1000 студентів!
       </h2>
       <div className='page-width bubbles-wrapper bubbles-wrapper-desktop'>
         <div className='bubbles-wrapper-first'>
