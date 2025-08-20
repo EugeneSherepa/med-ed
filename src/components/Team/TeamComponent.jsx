@@ -107,10 +107,6 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
                   loop: false,
                 },
               }}
-              navigation={{
-                nextEl: '.testimonials-section-wrapper-top-buttons-next',
-                prevEl: '.testimonials-section-wrapper-top-buttons-prev',
-              }}
               className="page-width-left mySwiper team-members"
             >
               {team.map((team_member) => (

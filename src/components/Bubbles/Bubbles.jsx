@@ -3,7 +3,7 @@ import bubbleFirst from '../../assets/bubble-first.svg';
 import bubbleSecond from '../../assets/bubble-second.svg';
 import bubbleThird from '../../assets/bubble-third.svg';
 import bubbleFirstMobile from '../../assets/bubble-first-mobile.svg';
-import bubbleSecondMobile from '../../assets/bubble-second-mobile.png';
+import bubbleSecondMobile from '../../assets/bubble-second-mobile.svg';
 import bubbleThirdMobile from '../../assets/bubble-third-mobile.svg';
 
 export const Bubbles = () => {
