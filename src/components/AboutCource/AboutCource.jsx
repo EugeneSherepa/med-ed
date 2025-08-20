@@ -132,7 +132,7 @@ export const AboutCource = ({
       </div>
       <div className="about-course-wrapper-content">
         {activeButton === 2 && (
-          <TeamComponent dpt={0} dpb={0} showText={'false'} team={team} />
+          <TeamComponent dpt={0} dpb={0} showText={'false'} team={team} showButtons={true} />
         )}
         {activeButton === 3 && (
           <ReviewsSlider dpt={0} dpb={0} showtitle={false} reviews={reviews} />

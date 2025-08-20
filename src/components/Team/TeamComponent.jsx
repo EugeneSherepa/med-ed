@@ -6,7 +6,7 @@ import { Navigation, Mousewheel } from 'swiper/modules';
 import iconCaret from '../../assets/icon-caret-swiper.svg';
 import iconCaretDisaabled from '../../assets/icon-caret-swiper-disabled.svg';
 
-export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
+export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team, showButtons = false }) => {
   return (
     <div className="">
       <div
@@ -39,16 +39,18 @@ export const TeamComponent = ({ dpt = 0, dpb = 172, showText, team }) => {
         <div className="page-width-left">
           {showText ? (
             <>
-              <div className="page-width testimonials-section-wrapper-top-buttons">
-                <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
-                  <img src={iconCaret} className="active" />
-                  <img src={iconCaretDisaabled} className="disabled" />
-                </button>
-                <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next">
-                  <img src={iconCaret} className="active" />
-                  <img src={iconCaretDisaabled} className="disabled" />
-                </button>
-              </div>
+              {showButtons && showButtons !== 'false' && (
+                <div className="page-width testimonials-section-wrapper-top-buttons">
+                  <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
+                    <img src={iconCaret} className="active" />
+                    <img src={iconCaretDisaabled} className="disabled" />
+                  </button>
+                  <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next">
+                    <img src={iconCaret} className="active" />
+                    <img src={iconCaretDisaabled} className="disabled" />
+                  </button>
+                </div>
+              )}
               <Swiper
                 slidesPerView={2.7}
                 spaceBetween={78}
