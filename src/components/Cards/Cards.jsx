@@ -58,7 +58,7 @@ export const Cards = ({ title, text, textMobile, cards }) => {
           ))}
         </Swiper>
         <div>
-          {cards.length > 1 && (
+          {cards.length > 3 && (
             <div className="swiper-srapper-buttons">
               <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
                 <img src={iconCaret} className="active" />
