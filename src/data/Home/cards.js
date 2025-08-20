@@ -58,7 +58,7 @@ const cards = [
       first: "",
       second: 'січень',
     },
-    price: '450грн',
+    price: '350грн',
   },
   {
     id: 5,
@@ -72,7 +72,7 @@ const cards = [
       first: "",
       second: 'грудень',
     },
-    price: '450грн',
+    price: '350грн',
   },
   {
     id: 6,
@@ -86,7 +86,7 @@ const cards = [
       first: "",
       second: 'січень',
     },
-    price: '450грн',
+    price: '350грн',
   },
 ];
 

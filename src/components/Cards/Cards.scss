@@ -3,6 +3,15 @@
 .cards-section {
   padding: 62px 0 86px 0;
 
+  & .swiper-srapper {
+    &-buttons {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      justify-content: flex-end;
+    }
+  }
+
   &-title {
     margin-bottom: 16px;
     font-size: 48px;
@@ -30,7 +39,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    padding-bottom: 32px !important;
+    padding-bottom: 40px !important;
 
     & .swiper-slide {
       height: auto;

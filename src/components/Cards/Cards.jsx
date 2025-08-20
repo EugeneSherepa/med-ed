@@ -3,6 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 import { Card } from '../Card/Card';
+import iconCaret from '../../assets/icon-caret-swiper.svg';
+import iconCaretDisaabled from '../../assets/icon-caret-swiper-disabled.svg';
 
 export const Cards = ({ title, text, textMobile, cards }) => {
   return (
@@ -35,9 +37,18 @@ export const Cards = ({ title, text, textMobile, cards }) => {
               slidesPerView: 3,
               spaceBetween: 78,
               centered: true,
+              slidesPerGroup: 3,
             },
           }}
-          className={cards.length > 2 ? "mySwiper cards-section-cards" : "mySwiper cards-section-cards cards-section-cards-center"}
+          navigation={{
+            nextEl: '.testimonials-section-wrapper-top-buttons-next',
+            prevEl: '.testimonials-section-wrapper-top-buttons-prev',
+          }}
+          className={
+            cards.length > 2
+              ? 'mySwiper cards-section-cards'
+              : 'mySwiper cards-section-cards cards-section-cards-center'
+          }
         >
           {cards.map((card) => (
             <SwiperSlide key={card.id} className="cards-section-cards-card">
@@ -45,6 +56,20 @@ export const Cards = ({ title, text, textMobile, cards }) => {
             </SwiperSlide>
           ))}
         </Swiper>
+        <div>
+          {cards.length > 1 && (
+            <div className="swiper-srapper-buttons">
+              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
+                <img src={iconCaret} className="active" />
+                <img src={iconCaretDisaabled} className="disabled" />
+              </button>
+              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next">
+                <img src={iconCaret} className="active" />
+                <img src={iconCaretDisaabled} className="disabled" />
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
