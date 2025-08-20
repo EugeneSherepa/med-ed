@@ -37,6 +37,10 @@
           height: 11.5px;
         }
       }
+
+      &:last-child {
+        color: #252c3f;
+      }
     }
   }
 
@@ -174,6 +178,11 @@
       & .testimonials-section-wrapper-top-buttons {
         justify-content: flex-end;
         margin-bottom: 54px;
+      }
+
+      & .reviews-slider-wrapper {
+        justify-content: flex-end;
+        margin-bottom: 0;
       }
 
       &-title {
