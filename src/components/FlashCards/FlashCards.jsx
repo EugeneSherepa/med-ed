@@ -17,9 +17,14 @@ export const FlashCards = () => {
         гістологію на патоморфології).
       </div>
       <div className="flashcards-wrapper">
-        <div className="flashcards-wrapper-photo">
+        <a
+          href="https://drive.google.com/file/d/1iVMrIod-jDoOWqvPFnK8Me4Spk-_lYlj/view?usp=sharing"
+          target="_blank"
+          className="flashcards-wrapper-photo"
+        >
           <img src={flashcard} alt="" />
-        </div>
+          <div className="flashcards-wrapper-photo-overlay">переглянути</div>
+        </a>
         <div className="flashcards-wrapper-text">
           <div className="flashcards-wrapper-text-item">
             <img src={heart} />

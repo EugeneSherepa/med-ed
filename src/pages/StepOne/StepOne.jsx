@@ -7,7 +7,7 @@ import { BottomBanner } from '../../components/BottomBanner/BottomBanner';
 import { FaqCards } from '../../components/FaqCards/FaqCards';
 import { Footer } from '../../components/Footer/Footer';
 import cards from '../../data/StepOne/cards';
-import team from '../../data/About/team';
+import team from '../../data/StepOne/team';
 import testimonials from '../../data/Home/testimonials';
 import cardreviews from "../../data/StepOne/faqcards.js"
 
@@ -17,7 +17,7 @@ export const StepOne = () => {
       <Header />
       <BreakLine title={("Підготовка до крок-1")} text={"Ми систематизували матеріали за принципом First Aid STEP 1 <br> і доповнили їх ресурсами Amboss, Osmosis та іншими визнаними джерелами. <br>Усі заняття супроводжуються тестами, які допоможуть вам закріпити отримані знання."}/>
       <Cards
-        title={'предмет'}
+        title={'спеціальність'}
         text={
           "Обирай, що підходить саме тобі. <br/>Ми зробили навчання зручним та результативним!"
         }
