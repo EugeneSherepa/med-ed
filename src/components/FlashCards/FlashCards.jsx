@@ -1,5 +1,5 @@
 import './FlashCards.scss';
-import flashcard from '../../assets/flashcard.png';
+import flashcard from '../../assets/gistology.png';
 import heart from '../../assets/heart-circle.png';
 
 export const FlashCards = () => {
