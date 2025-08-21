@@ -14,6 +14,8 @@ import { Pathomorphology } from '../pages/Lessons/Pathomorphology/Pathomorpholog
 import { Pharmacology } from '../pages/Lessons/Pharmacology/Pharmacology';
 import { Medicine } from '../pages/AboutCourse/Medicine/Medicine';
 import { Stomatology } from '../pages/AboutCourse/StepOneStomatology/Stomatology';
+import { FAQ } from '../pages/FAQ/FAQ';
+import { Policy } from '../pages/Policy/Policy';
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -33,6 +35,8 @@ const AppRouter = () => (
       <Route path="/lessons/pharmacology" element={<Pharmacology />} />
       <Route path="/about/medicine" element={<Medicine />} />
       <Route path="/about/stomatology" element={<Stomatology />} />
+      <Route path="/faq" element={<FAQ />} />
+      <Route path="/policy" element={<Policy />} />
     </Routes>
   </BrowserRouter>
 );

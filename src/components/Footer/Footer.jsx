@@ -67,7 +67,7 @@ export const Footer = () => {
               <ul className="footer-top-left-navigation-list">
                 <li className="footer-top-left-navigation-list-item">
                   <a
-                    href=""
+                    href="/faq"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     FAQ
@@ -83,7 +83,7 @@ export const Footer = () => {
                 </li>
                 <li className="footer-top-left-navigation-list-item">
                   <a
-                    href=""
+                    href="/policy"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     Політика конфіденційності
