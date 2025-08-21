@@ -29,11 +29,11 @@ export const Testimonials = ({
           <h3 className="testimonials-section-wrapper-top-heading">{title}</h3>
           {testimonials.length > 1 && (
             <div className="testimonials-section-wrapper-top-buttons">
-              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
+              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev testimonials-section-wrapper-buttons-prev">
                 <img src={iconCaret} className="active" />
                 <img src={iconCaretDisaabled} className="disabled" />
               </button>
-              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next">
+              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next testimonials-section-wrapper-buttons-next">
                 <img src={iconCaret} className="active" />
                 <img src={iconCaretDisaabled} className="disabled" />
               </button>
@@ -60,8 +60,8 @@ export const Testimonials = ({
             },
           }}
           navigation={{
-            nextEl: '.testimonials-section-wrapper-top-buttons-next',
-            prevEl: '.testimonials-section-wrapper-top-buttons-prev',
+            nextEl: '.testimonials-section-wrapper-buttons-next',
+            prevEl: '.testimonials-section-wrapper-buttons-prev',
           }}
           className="mySwiper testimonials-section-wrapper-testimonials"
         >

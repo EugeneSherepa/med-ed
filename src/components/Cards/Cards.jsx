@@ -42,8 +42,8 @@ export const Cards = ({ title, text, textMobile, cards }) => {
             },
           }}
           navigation={{
-            nextEl: '.testimonials-section-wrapper-top-buttons-next',
-            prevEl: '.testimonials-section-wrapper-top-buttons-prev',
+            nextEl: '.swiper-srapper-buttons-next',
+            prevEl: '.swiper-srapper-buttons-prev',
           }}
           className={
             cards.length > 2
@@ -60,11 +60,11 @@ export const Cards = ({ title, text, textMobile, cards }) => {
         <div>
           {cards.length > 3 && (
             <div className="swiper-srapper-buttons">
-              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
+              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev swiper-srapper-buttons-prev">
                 <img src={iconCaret} className="active" />
                 <img src={iconCaretDisaabled} className="disabled" />
               </button>
-              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next">
+              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next swiper-srapper-buttons-next">
                 <img src={iconCaret} className="active" />
                 <img src={iconCaretDisaabled} className="disabled" />
               </button>

@@ -30,11 +30,11 @@ export const TeamComponent = ({
                 <div className="team-subheading">З якою ти підкориш крок!</div>
               </div>
               <div className="testimonials-section-wrapper-top-buttons">
-                <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
+                <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev team-buttons-prev">
                   <img src={iconCaret} className="active" />
                   <img src={iconCaretDisaabled} className="disabled" />
                 </button>
-                <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next">
+                <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next team-buttons-next">
                   <img src={iconCaret} className="active" />
                   <img src={iconCaretDisaabled} className="disabled" />
                 </button>
@@ -45,11 +45,11 @@ export const TeamComponent = ({
         {showText && showButtons && showButtons !== 'false' && (
           <div className="page-width">
             <div className="testimonials-section-wrapper-top-buttons">
-              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
+              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev team-buttons-prev">
                 <img src={iconCaret} className="active" />
                 <img src={iconCaretDisaabled} className="disabled" />
               </button>
-              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next">
+              <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next team-buttons-next">
                 <img src={iconCaret} className="active" />
                 <img src={iconCaretDisaabled} className="disabled" />
               </button>
@@ -65,8 +65,8 @@ export const TeamComponent = ({
                 mousewheel={{ forceToAxis: true }}
                 modules={[Navigation, Mousewheel]}
                 navigation={{
-                  nextEl: '.testimonials-section-wrapper-top-buttons-next',
-                  prevEl: '.testimonials-section-wrapper-top-buttons-prev',
+                  nextEl: '.team-buttons-next',
+                  prevEl: '.team-buttons-prev',
                 }}
                 breakpoints={{
                   0: {
@@ -113,8 +113,8 @@ export const TeamComponent = ({
               mousewheel={{ forceToAxis: true }}
               modules={[Navigation, Mousewheel]}
               navigation={{
-                nextEl: '.testimonials-section-wrapper-top-buttons-next',
-                prevEl: '.testimonials-section-wrapper-top-buttons-prev',
+                nextEl: '.team-buttons-next',
+                prevEl: '.team-buttons-prev',
               }}
               breakpoints={{
                 0: {
@@ -171,11 +171,11 @@ export const TeamComponent = ({
                 впевнено на шляху до медичних вершин
               </div>
               <div className="team-bottom-third testimonials-section-wrapper-top-buttons">
-                <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
+                <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev team-buttons-prev">
                   <img src={iconCaret} className="active" />
                   <img src={iconCaretDisaabled} className="disabled" />
                 </button>
-                <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next">
+                <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next team-buttons-next">
                   <img src={iconCaret} className="active" />
                   <img src={iconCaretDisaabled} className="disabled" />
                 </button>

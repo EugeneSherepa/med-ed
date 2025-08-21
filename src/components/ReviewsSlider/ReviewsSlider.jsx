@@ -26,11 +26,11 @@ export const ReviewsSlider = ({ dpt = 184, dpb = 260, showtitle, reviews }) => {
           <h1 className="reviews-slider-title">Відгуки Студентів</h1>
         )}
         <div className="testimonials-section-wrapper-top-buttons">
-          <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev">
+          <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev reviews-slider-buttons-prev">
             <img src={iconCaret} className="active" />
             <img src={iconCaretDisaabled} className="disabled" />
           </button>
-          <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next">
+          <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-next reviews-slider-buttons-next">
             <img src={iconCaret} className="active" />
             <img src={iconCaretDisaabled} className="disabled" />
           </button>
@@ -52,8 +52,8 @@ export const ReviewsSlider = ({ dpt = 184, dpb = 260, showtitle, reviews }) => {
             },
           }}
           navigation={{
-            nextEl: '.testimonials-section-wrapper-top-buttons-next',
-            prevEl: '.testimonials-section-wrapper-top-buttons-prev',
+            nextEl: '.reviews-slider-buttons-next',
+            prevEl: '.reviews-slider-buttons-prev',
           }}
           className="mySwiper reviews-slider-wrapper"
         >
