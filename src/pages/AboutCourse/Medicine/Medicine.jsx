@@ -25,7 +25,7 @@ export const Medicine = () => {
       <Header />
       <AboutCource
         image={heroImage}
-        title={'КРОК-1 Медицина'}
+        title={'КРОК-1. Медицина'}
         team={team}
         reviews={reviews}
         content={content}

@@ -112,7 +112,7 @@ export const AboutCource = ({
                   />
                   <div className="about-course-wrapper-right-card-header">
                     <h5 className="about-course-wrapper-right-card-header-title">
-                      Курс {title}
+                      Курс <span dangerouslySetInnerHTML={{__html: title}}/>
                     </h5>
                   </div>
                   <a href="" className="button-primary">

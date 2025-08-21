@@ -25,7 +25,7 @@ export const Stomatology = () => {
       <Header />
       <AboutCource
         image={heroImage}
-        title={'КРОК-1 Стоматологія'}
+        title={'КРОК-1. Стоматологія'}
         team={team}
         reviews={reviews}
         content={content}
