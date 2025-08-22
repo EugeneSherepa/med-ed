@@ -10,6 +10,7 @@ export const TeamComponent = ({
   dpt = 0,
   dpb = 172,
   showText,
+  text = "З якою ти підкориш крок!",
   team,
   showButtons = false,
 }) => {
@@ -27,7 +28,7 @@ export const TeamComponent = ({
             <div className="team-component-warpper">
               <div>
                 <h3 className="team-heading">Команда</h3>
-                <div className="team-subheading">З якою ти підкориш крок!</div>
+                <div className="team-subheading">{text}</div>
               </div>
               <div className="testimonials-section-wrapper-top-buttons">
                 <button className="testimonials-section-wrapper-top-buttons-button testimonials-section-wrapper-top-buttons-prev team-buttons-prev">

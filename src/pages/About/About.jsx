@@ -16,7 +16,7 @@ export const About = () => {
       <AboutIconText />
       <AboutText />
       <BreakLine />
-      <TeamComponent showText={true} team={team} />
+      <TeamComponent showText={true} text = "З якою ти підкориш медичний!" team={team} />
       <BottomBannerSecond />
       <Footer />
     </>
