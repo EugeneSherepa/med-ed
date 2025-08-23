@@ -130,6 +130,7 @@
           border-radius: 4px;
           width: 100%;
           height: 100%;
+          object-fit: cover;
         }
 
         &-header {
@@ -266,6 +267,10 @@
       flex-direction: column-reverse;
       width: 100%;
       gap: 0;
+
+      & .button-secondary {
+        padding: 16px 8px;
+      }
 
       & .testimonials-section-wrapper-top-buttons {
         display: none;

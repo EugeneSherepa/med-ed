@@ -61,7 +61,11 @@
 
 @media screen and (max-width: 990px) {
   .testimonial {
+    display: flex;
+    flex-direction: column;
     border-radius: 32px;
+    padding-left: 16px;
+    padding-right: 16px;
     background: radial-gradient(
         73.92% 251.95% at 26.91% 46.73%,
         #f7b4d1 0%,
@@ -80,14 +84,32 @@
     backdrop-filter: blur(4px);
 
     &-image {
-      display: none;
+      padding: 8px;
+      margin-top: 18px;
+      display: flex;
+      background-color: #fff;
+      width: 100%;
+      height: fit-content;
+      aspect-ratio: unset;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      
+      & img {
+        height: fit-content;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+      }
     }
 
     &-information {
       margin: 18px;
+      margin-top: 0;
       background-color: $white;
       width: 100%;
       border-radius: 16px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
 
       &-wrapper {
         padding: 8px;

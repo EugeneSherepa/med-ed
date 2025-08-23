@@ -4,9 +4,9 @@ import logo from '../../assets/logo.png';
 import caret from '../../assets/icon-caret.svg';
 import burger from '../../assets/burger.svg';
 import close from '../../assets/icon-close.svg';
-import iconFacebook from '../../assets/facebook.svg';
+import iconFacebook from '../../assets/telegram.svg';
 import iconInstagram from '../../assets/instagram.svg';
-import iconLinkedin from '../../assets/linkedin.svg';
+import iconLinkedin from '../../assets/tiktok.svg';
 import iconYoutube from '../../assets/youtube.svg';
 import logoFooter from '../../assets/logo.png';
 import { useState, useEffect } from 'react';
@@ -190,7 +190,10 @@ export const Header = () => {
             </ul>
           </nav>
           <div className="header-wrapper-buttons">
-            <a href="https://t.me/its_meded?text=Привіт,%20хочу%20записатись%20на%20навчання%20до%20вас!" className="button-primary">
+            <a
+              href="https://t.me/its_meded?text=Привіт,%20хочу%20записатись%20на%20навчання%20до%20вас!"
+              className="button-primary"
+            >
               Почати навчання
             </a>
             <button
@@ -315,18 +318,12 @@ export const Header = () => {
               </button>
               <ul>
                 <li>
-                  <a
-                    className="mobile-menu-main-item-link"
-                    href="/step-one"
-                  >
+                  <a className="mobile-menu-main-item-link" href="/step-one">
                     КРОК-1
                   </a>
                 </li>
                 <li>
-                  <a
-                    className="mobile-menu-main-item-link"
-                    href="/step-two"
-                  >
+                  <a className="mobile-menu-main-item-link" href="/step-two">
                     КРОК-2
                   </a>
                 </li>
@@ -339,22 +336,34 @@ export const Header = () => {
             Слідкуйте за нами в соцмережах
             <ul className="mobile-menu-links-list">
               <li className="mobile-menu-links-list-item">
-                <a href="" className="mobile-menu-links-list-item-link">
-                  <img src={iconFacebook} alt="Facebook" />
+                <a
+                  href="https://t.me/itsmeded"
+                  className="mobile-menu-links-list-item-link"
+                >
+                  <img src={iconFacebook} alt="Telegram" />
                 </a>
               </li>
               <li className="mobile-menu-links-list-item">
-                <a href="" className="mobile-menu-links-list-item-link">
+                <a
+                  href="https://www.instagram.com/its_med_ed?igsh=OTR3a3BlOTY2eGg3"
+                  className="mobile-menu-links-list-item-link"
+                >
                   <img src={iconInstagram} alt="Instagram" />
                 </a>
               </li>
               <li className="mobile-menu-links-list-item">
-                <a href="" className="mobile-menu-links-list-item-link">
-                  <img src={iconLinkedin} alt="LinkedIn" />
+                <a
+                  href="https://www.tiktok.com/@its_med_ed?_t=ZM-8z6y5n1KeSE&_r=1"
+                  className="mobile-menu-links-list-item-link"
+                >
+                  <img src={iconLinkedin} alt="TikTok" />
                 </a>
               </li>
               <li className="mobile-menu-links-list-item">
-                <a href="" className="mobile-menu-links-list-item-link">
+                <a
+                  href="https://youtube.com/@its_med_ed?si=S_t0-hzMraIEttwR"
+                  className="mobile-menu-links-list-item-link"
+                >
                   <img src={iconYoutube} alt="Youtube" />
                 </a>
               </li>

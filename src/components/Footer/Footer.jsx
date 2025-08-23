@@ -114,7 +114,7 @@ export const Footer = () => {
                   target="_blank"
                   className="footer-bottom-icons-list-item-link"
                 >
-                  <img src={iconFacebook} alt="Facebook" />
+                  <img src={iconFacebook} alt="Telegram" />
                 </a>
               </li>
               <li className="footer-bottom-icons-list-item">
@@ -132,7 +132,7 @@ export const Footer = () => {
                   target="_blank"
                   className="footer-bottom-icons-list-item-link"
                 >
-                  <img src={iconLinkedin} alt="LinkedIn" />
+                  <img src={iconLinkedin} alt="TikTok" />
                 </a>
               </li>
               <li className="footer-bottom-icons-list-item">

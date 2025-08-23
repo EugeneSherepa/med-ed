@@ -1,25 +1,29 @@
 @use '../../styles/variables' as *;
 
 .faq-cards {
-  &-wrapper {
-    padding-left: 8px;
-    padding-top: 202px;
-    padding-bottom: 202px;
-    overflow-x: auto !important;
-    padding-bottom: 56px;
+  padding-top: 202px;
+  padding-bottom: 202px;
 
-    &::-webkit-scrollbar-thumb {
-      height: 8px;
-      background-color: #252c3f80;
-      border-radius: 256px;
-      cursor: pointer;
-    }
-    &::-webkit-scrollbar {
-      height: 5px;
-      border-radius: 256px;
-      background-color: #252c3f66;
-      max-width: 1312px;
-    }
+  &-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 24px;
+  }
+
+  &-title {
+    padding-top: 64px;
+    margin-bottom: 28px;
+    font-family: $font-artegra;
+    font-size: 48px;
+    line-height: 100%;
+    font-weight: 800;
+    color: #252C3F;
+  }
+
+  &-wrapper {
+    padding-left: 16px;
+    padding-bottom: 56px;
 
     &-card {
       cursor: pointer;
@@ -107,6 +111,9 @@
 
 @media screen and (max-width: 990px) {
   .faq-cards {
+    padding-top: 84px;
+    padding-bottom: 46px;
+
     & .page-width-left {
       margin-left: 0 !important;
       padding: 0 !important;
@@ -114,9 +121,6 @@
     }
 
     &-wrapper {
-      padding-top: 84px;
-      padding-bottom: 46px;
-
       &-card {
         &.swiper-slide-active {
           transition: 0.3s ease-in-out;

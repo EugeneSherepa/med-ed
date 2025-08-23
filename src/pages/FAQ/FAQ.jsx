@@ -7,7 +7,7 @@ export const FAQ = () => {
   return (
     <>
       <Header />
-      <FaqCards cardreviews={cardreviews} />
+      <FaqCards title={"FAQ"} cardreviews={cardreviews} />
       <Footer />
     </>
   );

@@ -4,7 +4,7 @@ import { Footer } from '../../../components/Footer/Footer';
 import team from '../../../data/AboutCourse/Medicine/team';
 import reviews from '../../../data/AboutCourse/Medicine/reviews';
 import heroImage from '../../../assets/step-one-medicine.webp';
-import cardImage from '../../../assets/steps/step_two_medicine.png';
+import cardImage from '../../../assets/steps/step_one_medicine.png';
 
 const content = {
   first_title: 'Опис курсу',

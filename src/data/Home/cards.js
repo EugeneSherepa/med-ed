@@ -1,7 +1,6 @@
 import stepOneMedicine from '../../assets/steps/step_one_medicine.png';
-import stepOneDentistry from '../../assets/steps/step_one_dentistry.png';
-import stepTwoMedicine from '../../assets/steps/step_two_medicine.png';
-import mentorOneImage from '../../assets/mentors/mentor-placeholder.png';
+import stepOneDentistry from '../../assets/steps/step_one_dentistry.jpg';
+import stepTwoMedicine from '../../assets/steps/step_two_medicine.jpg';
 
 const cards = [
   {

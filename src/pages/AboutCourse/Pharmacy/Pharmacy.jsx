@@ -6,7 +6,7 @@ import reviews from '../../../data/AboutCourse/Pharmacy/reviews';
 import heroImage from '../../../assets/pharmacy.png';
 import iconDoc from '../../../assets/icon-doc.svg';
 import iconPerson from '../../../assets/icon-person.svg';
-import cardImage from '../../../assets/steps/step_two_medicine.png';
+import cardImage from '../../../assets/steps/step_two_medicine.jpg';
 
 const tags = [
   {
