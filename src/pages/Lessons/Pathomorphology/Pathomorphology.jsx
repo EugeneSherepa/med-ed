@@ -9,7 +9,7 @@ import { FaqCards } from '../../../components/FaqCards/FaqCards';
 import { Footer } from '../../../components/Footer/Footer';
 import cards from '../../../data/Lessons/Anatomy/cards';
 import reviews from '../../../data/Lessons/Pathomorphology/reviews';
-import margo from '../../../assets/mentors/margo-patamarphology.jpg';
+import margo from '../../../assets/mentors/margo-patamarphology.webp';
 import faqcards from '../../../data/Lessons/Anatomy/faqcards';
 
 const testimonials = [
@@ -54,7 +54,7 @@ export const Pathomorphology = () => {
         testimonials={testimonials}
       />
       <ReviewsSlider reviews={reviews} dpt={64} dpb={262} />
-      <BottomBanner />
+      <BottomBanner link={"https://t.me/its_meded?text=Привіт!%20Хочу%20навчитися%20розпізнавати%20всі%20патологічні%20процеси!%20🔬%20Записуйте%20на%20патоморфологію!"} />
       <FaqCards cardreviews={faqcards} />
       <Footer />
     </>

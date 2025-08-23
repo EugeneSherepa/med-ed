@@ -11,8 +11,14 @@ export const MaterialsLine = () => {
               <br />
               ДО КРОКУ
             </h2>
-            <div className='materialsline-title-small'>З нашими збірниками!</div>
-            <a href="" className="button-primary-big materialsline-title-button">
+            <div className="materialsline-title-small">
+              З нашими збірниками!
+            </div>
+            <a
+              href="https://t.me/its_meded?text=Привіт!%20Хочу%20замовити%20ваші%20друковані%20матеріали!%20📚%20Розкажіть,%20що%20у%20вас%20є!"
+              target="_blank"
+              className="button-primary-big materialsline-title-button"
+            >
               Замовити
             </a>
           </div>

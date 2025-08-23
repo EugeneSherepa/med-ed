@@ -9,7 +9,7 @@ import { FaqCards } from '../../../components/FaqCards/FaqCards';
 import { Footer } from '../../../components/Footer/Footer';
 import cards from '../../../data/Lessons/Anatomy/cards';
 import reviews from '../../../data/Lessons/Physiology/reviews';
-import petro from '../../../assets/mentors/perto-phisioligy.jpg';
+import petro from '../../../assets/mentors/perto-phisioligy.webp';
 import faqcards from '../../../data/Lessons/Anatomy/faqcards';
 
 const testimonials = [
@@ -54,7 +54,7 @@ export const Physiology = () => {
         testimonials={testimonials}
       />
       <ReviewsSlider reviews={reviews} dpt={64} dpb={262} />
-      <BottomBanner />
+      <BottomBanner link={"https://t.me/its_meded?text=Привіт!%20Я%20готовий/а%20розібратись,%20як%20працює%20тіло%20до%20кожної%20клітинки.%20Хочу%20записатися%20на%20фізіологію!"} />
       <FaqCards cardreviews={faqcards} />
       <Footer />
     </>

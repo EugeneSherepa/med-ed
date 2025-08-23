@@ -9,7 +9,7 @@ import { FaqCards } from '../../../components/FaqCards/FaqCards';
 import { Footer } from '../../../components/Footer/Footer';
 import cards from '../../../data/Lessons/Anatomy/cards';
 import reviews from '../../../data/Lessons/Anatomy/reviews';
-import rostislav from '../../../assets/mentors/rostislav-anatomiya.jpg';
+import rostislav from '../../../assets/mentors/rostislav-anatomiya.webp';
 import faqcards from '../../../data/Lessons/Anatomy/faqcards';
 
 const testimonials = [
@@ -54,7 +54,7 @@ export const Anatomy = () => {
         testimonials={testimonials}
       />
       <ReviewsSlider reviews={reviews} dpt={64} dpb={262} />
-      <BottomBanner />
+      <BottomBanner link={"https://t.me/its_meded?text=Привіт!%20Готовий/а%20занурюватися%20у%20світ%20органів%20і%20систем!%20Записуйте%20мене%20на%20анатомію!"} />
       <FaqCards cardreviews={faqcards} />
       <Footer />
     </>

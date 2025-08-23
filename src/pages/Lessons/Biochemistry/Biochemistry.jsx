@@ -9,7 +9,7 @@ import { FaqCards } from '../../../components/FaqCards/FaqCards';
 import { Footer } from '../../../components/Footer/Footer';
 import cards from '../../../data/Lessons/Anatomy/cards';
 import reviews from '../../../data/Lessons/Biochemistry/reviews';
-import nazrin from '../../../assets/mentors/nazrin-biochemistry.jpg';
+import nazrin from '../../../assets/mentors/nazrin-biochemistry.webp';
 import valeria from '../../../assets/mentors/mentor-placeholder.png';
 import faqcards from '../../../data/Lessons/Anatomy/faqcards';
 
@@ -62,7 +62,7 @@ export const Biochemistry = () => {
         testimonials={testimonials}
       />
       <ReviewsSlider reviews={reviews} dpt={64} dpb={262} />
-      <BottomBanner />
+      <BottomBanner link={"https://t.me/its_meded?text=Привіт!%20Хочу%20зрозуміти%20всі%20молекулярні%20процеси%20в%20організмі!%20🧬%20Записуйте%20на%20біохімію!"} />
       <FaqCards cardreviews={faqcards} />
       <Footer />
     </>

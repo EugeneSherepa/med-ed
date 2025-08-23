@@ -5,7 +5,7 @@ import { FlashCards } from '../../components/FlashCards/FlashCards';
 import { MaterialsLine } from '../../components/MaterialsLine/MaterialsLine';
 import { Testimonials } from '../../components/Testimonials/Testimonails';
 import { Footer } from '../../components/Footer/Footer';
-import testimonials from '../../data/Home/testimonials';
+import testimonials from '../../data/Materials/testimonials';
 
 export const Materials = () => {
   return (

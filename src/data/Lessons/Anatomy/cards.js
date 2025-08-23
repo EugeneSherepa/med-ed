@@ -1,6 +1,6 @@
-import individual from '../../../assets/individ-lessons.png';
-import duo from '../../../assets/duo-lesson.png';
-import big from '../../../assets/big-group.png';
+import individual from '../../../assets/individ-lessons.webp';
+import duo from '../../../assets/duo-lesson.webp';
+import big from '../../../assets/big-group.webp';
 
 const cards = [
   {

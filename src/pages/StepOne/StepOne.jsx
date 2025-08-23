@@ -26,7 +26,7 @@ export const StepOne = () => {
       />
       <TeamComponent dpt={100} showText={true} team={team}/>
       <Testimonials testimonials={testimonials} />
-      <BottomBanner />
+      <BottomBanner link={"https://t.me/its_meded?text=Привіт!%20Мрію%20здати%20КРОК-1%20на%20відмінно!%20Записуйте%20мене%20на%20курс!"} />
       <FaqCards cardreviews={cardreviews} />
       <Footer />
     </>

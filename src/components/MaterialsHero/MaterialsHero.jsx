@@ -1,5 +1,5 @@
 import './MaterialsHero.scss';
-import photo from '../../assets/materials-image.jpg';
+import photo from '../../assets/materials-image.webp';
 
 export const MaterialsHero = () => {
   return (

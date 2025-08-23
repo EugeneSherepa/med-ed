@@ -190,7 +190,7 @@ export const Header = () => {
             </ul>
           </nav>
           <div className="header-wrapper-buttons">
-            <a href="" className="button-primary">
+            <a href="https://t.me/its_meded?text=Привіт,%20хочу%20записатись%20на%20навчання%20до%20вас!" className="button-primary">
               Почати навчання
             </a>
             <button

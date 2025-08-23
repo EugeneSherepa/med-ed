@@ -3,7 +3,7 @@ import { BreakLine } from '../../components/BreakLine/BreakLine';
 import { AboutCource } from '../../components/AboutCource/AboutCource';
 import { BottomBanner } from '../../components/BottomBanner/BottomBanner';
 import { Footer } from '../../components/Footer/Footer';
-import heroImage from '../../assets/step-two-hero.jpg';
+import heroImage from '../../assets/step-two-hero.webp';
 import team from '../../data/AboutCourse/MedicineStepTwo/team';
 import reviews from '../../data/AboutCourse/MedicineStepTwo/reviews';
 
@@ -35,7 +35,7 @@ export const StepTwo = () => {
         showBreadcrumbs={false}
         mpt={32}
       />
-      <BottomBanner />
+      <BottomBanner link={"https://t.me/its_meded?text=Привіт!%20Час%20здобути%20КРОК-2%20і%20стати%20справжнім%20лікарем!%20👨‍⚕️%20Хочу%20записатися%20на%20курс!"} />
       <Footer />
     </>
   );

@@ -1,22 +1,22 @@
-import mentorOneImage from '../../assets/mentors/inna-step-one-med.jpg';
-import mentorTwoImage from '../../assets/mentors/nika-step-one-med.jpg';
-import mentorThreeImage from '../../assets/mentors/ivanna-step-one-med.JPG';
+import mentorOneImage from '../../assets/mentors/inna-step-one-med.webp';
+import mentorTwoImage from '../../assets/mentors/nika-step-one-med.webp';
+import mentorThreeImage from '../../assets/mentors/ivanna-step-one-med.webp';
 import mentorFourImage from '../../assets/mentors/mentor-placeholder.png';
-import mentorFiveImage from '../../assets/mentors/bohdan-step-one-med.jpg';
-import mentorSixImage from '../../assets/mentors/viktor-step-one-med.jpg';
-import mentorSevenImage from '../../assets/mentors/maxim-step-one-med.jpg';
+import mentorFiveImage from '../../assets/mentors/bohdan-step-one-med.webp';
+import mentorSixImage from '../../assets/mentors/viktor-step-one-med.webp';
+import mentorSevenImage from '../../assets/mentors/maxim-step-one-med.webp';
 import mentorEightImage from '../../assets/mentors/mentor-placeholder.png';
 import mentorNineImage from '../../assets/mentors/mentor-placeholder-two.png';
 import mentorTenImage from '../../assets/mentors/mentor-placeholder-three.png';
-import mentorElevenImage from '../../assets/mentors/ivanna-step-two-med.jpg';
-import mentorTwelvImage from '../../assets/mentors/andrii-step-two-med.jpeg';
+import mentorElevenImage from '../../assets/mentors/ivanna-step-two-med.webp';
+import mentorTwelvImage from '../../assets/mentors/andrii-step-two-med.webp';
 import mentorThirteenImage from '../../assets/mentors/artem-step-two-med.JPEG';
-import rostislav from '../../assets/mentors/rostislav-anatomiya.jpg';
-import nazrin from '../../assets/mentors/nazrin-biochemistry.jpg';
+import rostislav from '../../assets/mentors/rostislav-anatomiya.webp';
+import nazrin from '../../assets/mentors/nazrin-biochemistry.webp';
 import valeria from '../../assets/mentors/mentor-placeholder.png';
-import margo from '../../assets/mentors/margo-patamarphology.jpg';
-import olesia from '../../assets/mentors/olesia-pharmacology.jpg';
-import petro from '../../assets/mentors/perto-phisioligy.jpg';
+import margo from '../../assets/mentors/margo-patamarphology.webp';
+import olesia from '../../assets/mentors/olesia-pharmacology.webp';
+import petro from '../../assets/mentors/perto-phisioligy.webp';
 
 const team = [
   {
@@ -136,7 +136,7 @@ const team = [
     position: 'лікар-інтерн внутрішньої медицини',
   },
   {
-    id: 3,
+    id: 14,
     image: mentorThirteenImage,
     name: 'Артем',
     position: 'лікар-інтерн сімейної медицини',

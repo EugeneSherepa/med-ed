@@ -15,6 +15,7 @@ export const AboutCource = ({
   cardImage,
   cardTitle,
   cardContent,
+  link,
   showCard = true,
   showBreadcrumbs = true,
   mpt = 112,
@@ -115,7 +116,7 @@ export const AboutCource = ({
                       Курс <span dangerouslySetInnerHTML={{__html: title}}/>
                     </h5>
                   </div>
-                  <a href="" className="button-primary">
+                  <a href={link ? link : "https://t.me/its_meded?text=Привіт!%20Мрію%20здати%20КРОК-1%20на%20відмінно!%20Записуйте%20мене%20на%20курс!"} className="button-primary">
                     Почати навчання
                   </a>
                   <div className="about-course-wrapper-right-card-content">

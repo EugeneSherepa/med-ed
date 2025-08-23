@@ -3,7 +3,7 @@ import { AboutCource } from '../../../components/AboutCource/AboutCource';
 import { Footer } from '../../../components/Footer/Footer';
 import team from '../../../data/AboutCourse/Medicine/team';
 import reviews from '../../../data/AboutCourse/Medicine/reviews';
-import heroImage from '../../../assets/step-one-medicine.jpg';
+import heroImage from '../../../assets/step-one-medicine.webp';
 import cardImage from '../../../assets/steps/step_two_medicine.png';
 
 const content = {
@@ -31,6 +31,7 @@ export const Medicine = () => {
         content={content}
         cardImage={cardImage}
         cardTitle={'Курс включає:'}
+        link={"https://t.me/its_meded?text=Привіт!%20Мрію%20здати%20КРОК-1%20на%20відмінно!%20Записуйте%20мене%20на%20курс%20з%20медицини!%20💪"}
         cardContent={
           '<li>Доступ до записів лекцій</li><li>Підтримку викладача</li><li>Підготовку до англомовної частини</li><li>Теми оновлені відповідно до вимог від ЦТ на 2026 рік</li>'
         }

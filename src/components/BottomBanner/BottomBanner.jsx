@@ -5,7 +5,7 @@ import secondBubble from '../../assets/BottomBannerBubbles/second.svg';
 import thirdBubble from '../../assets/BottomBannerBubbles/third.svg';
 import forthBubble from '../../assets/BottomBannerBubbles/forth.svg';
 
-export const BottomBanner = () => {
+export const BottomBanner = ({ link }) => {
   return (
     <div className="bottombanner">
       <img src={firstBubble} className="bottombanner-first" />
@@ -25,7 +25,7 @@ export const BottomBanner = () => {
           </h2>
           <h2 className="bottombanner-heading bottombanner-heading-mobile">
             <img src={secondBubble} className="bottombanner-second" />
-            НАВЧАЙСЯ ЛЕГКО{' '} <br/>
+            НАВЧАЙСЯ ЛЕГКО <br />
             <span className="bottombanner-heading-subheading">
               складай успішно!
               <div className="bottombanner-heading-subheading-underline">
@@ -46,11 +46,19 @@ export const BottomBanner = () => {
           <br />
           Весь необхідний матеріал в одному місці.
         </div>
-        <a href="" className="button-primary">
+        <a
+          href={
+            link
+              ? link
+              : 'https://t.me/its_meded?text=Привіт,%20хочу%20записатись%20на%20навчання%20до%20вас!'
+          }
+          target="_blank"
+          className="button-primary"
+        >
           Почати навчання
         </a>
-        <img src={thirdBubble} className='bottombanner-third' />
-        <img src={forthBubble} className='bottombanner-forth' />
+        <img src={thirdBubble} className="bottombanner-third" />
+        <img src={forthBubble} className="bottombanner-forth" />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-import mentorOneImage from '../../../assets/mentors/ivanna-step-two-med.jpg';
-import mentorTwoImage from '../../../assets/mentors/andrii-step-two-med.jpeg';
+import mentorOneImage from '../../../assets/mentors/ivanna-step-two-med.webp';
+import mentorTwoImage from '../../../assets/mentors/andrii-step-two-med.webp';
 import mentorThreeImage from '../../../assets/mentors/artem-step-two-med.JPEG';
 
 const team = [

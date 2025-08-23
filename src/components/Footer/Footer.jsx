@@ -1,7 +1,7 @@
 import './Footer.scss';
-import iconFacebook from '../../assets/facebook.svg';
+import iconFacebook from '../../assets/telegram.svg';
 import iconInstagram from '../../assets/instagram.svg';
-import iconLinkedin from '../../assets/linkedin.svg';
+import iconLinkedin from '../../assets/tiktok.svg';
 import iconYoutube from '../../assets/youtube.svg';
 import logo from '../../assets/logo.png';
 
@@ -92,10 +92,12 @@ export const Footer = () => {
               </ul>
             </nav>
             <div className="footer-top-left-heading">
-              <div className='footer-top-left-heading-heading'>
-                IT’s Med Ed
-              </div>
-              <img src={logo} alt="Med Ed" className='footer-top-left-heading-mobile' />
+              <div className="footer-top-left-heading-heading">IT’s Med Ed</div>
+              <img
+                src={logo}
+                alt="Med Ed"
+                className="footer-top-left-heading-mobile"
+              />
             </div>
           </div>
           <img src={logo} alt="Med Ed" />
@@ -107,22 +109,38 @@ export const Footer = () => {
           <div className="footer-bottom-icons">
             <ul className="footer-bottom-icons-list">
               <li className="footer-bottom-icons-list-item">
-                <a href="" className="footer-bottom-icons-list-item-link">
+                <a
+                  href="https://t.me/itsmeded"
+                  target="_blank"
+                  className="footer-bottom-icons-list-item-link"
+                >
                   <img src={iconFacebook} alt="Facebook" />
                 </a>
               </li>
               <li className="footer-bottom-icons-list-item">
-                <a href="" className="footer-bottom-icons-list-item-link">
+                <a
+                  href="https://www.instagram.com/its_med_ed?igsh=OTR3a3BlOTY2eGg3"
+                  target="_blank"
+                  className="footer-bottom-icons-list-item-link"
+                >
                   <img src={iconInstagram} alt="Instagram" />
                 </a>
               </li>
               <li className="footer-bottom-icons-list-item">
-                <a href="" className="footer-bottom-icons-list-item-link">
+                <a
+                  href="https://www.tiktok.com/@its_med_ed?_t=ZM-8z6y5n1KeSE&_r=1"
+                  target="_blank"
+                  className="footer-bottom-icons-list-item-link"
+                >
                   <img src={iconLinkedin} alt="LinkedIn" />
                 </a>
               </li>
               <li className="footer-bottom-icons-list-item">
-                <a href="" className="footer-bottom-icons-list-item-link">
+                <a
+                  href="https://youtube.com/@its_med_ed?si=S_t0-hzMraIEttwR"
+                  target="_blank"
+                  className="footer-bottom-icons-list-item-link"
+                >
                   <img src={iconYoutube} alt="Youtube" />
                 </a>
               </li>
