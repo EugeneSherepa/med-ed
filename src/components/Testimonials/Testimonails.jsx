@@ -5,6 +5,22 @@ import 'swiper/css';
 import { Testimonial } from '../Testimonial/Testimonial';
 import iconCaret from '../../assets/icon-caret-swiper.svg';
 import iconCaretDisaabled from '../../assets/icon-caret-swiper-disabled.svg';
+import { useState, useEffect } from 'react';
+
+const useIsMobile = (maxWidth = 990) => {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < maxWidth : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < maxWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [maxWidth]);
+
+  return isMobile;
+};
+
 
 export const Testimonials = ({
   dpt = 0,

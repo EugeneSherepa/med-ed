@@ -18,7 +18,7 @@
     font-size: 48px;
     line-height: 100%;
     font-weight: 800;
-    color: #252C3F;
+    color: #252c3f;
   }
 
   &-wrapper {
@@ -113,6 +113,10 @@
   .faq-cards {
     padding-top: 84px;
     padding-bottom: 46px;
+
+    &-buttons {
+      display: none;
+    }
 
     & .page-width-left {
       margin-left: 0 !important;

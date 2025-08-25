@@ -138,6 +138,10 @@
   .team {
     padding-bottom: 84px;
 
+    &-component-warpper {
+      margin-bottom: 0;
+    }
+
     &-padding {
       padding-top: 112px;
       padding-bottom: 84px !important;
@@ -190,7 +194,7 @@
     }
 
     &-subheading {
-      margin-bottom: 36px;
+      margin-bottom: 24px;
       font-size: 22px;
       line-height: 32px;
     }
