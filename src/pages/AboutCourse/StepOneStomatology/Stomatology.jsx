@@ -3,7 +3,7 @@ import { AboutCource } from '../../../components/AboutCource/AboutCource';
 import { Footer } from '../../../components/Footer/Footer';
 import team from '../../../data/AboutCourse/Stomatology/team';
 import reviews from '../../../data/AboutCourse/Stomatology/reviews';
-import heroImage from '../../../assets/pharmacy.png';
+import heroImage from '../../../assets/stomatology.jpg';
 import cardImage from '../../../assets/steps/step_one_medicine.png';
 
 const content = {

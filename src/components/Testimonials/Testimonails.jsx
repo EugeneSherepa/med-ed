@@ -21,7 +21,6 @@ const useIsMobile = (maxWidth = 990) => {
   return isMobile;
 };
 
-
 export const Testimonials = ({
   dpt = 0,
   dpb = 212,
