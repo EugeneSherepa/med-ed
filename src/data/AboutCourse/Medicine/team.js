@@ -8,46 +8,52 @@ import mentorSevenImage from '../../../assets/mentors/maxim-step-one-med.webp';
 
 const team = [
   {
-    id: 1,
-    image: mentorOneImage,
-    name: "Інна",
-    position: "засновниця курсу, викладачка фармакології ЛДМУ"
-  },
-  {
     id: 2,
-    image: mentorTwoImage,
-    name: "Ніка",
-    position: "лікар-інтерн невролог"
+    image: mentorOneImage,
+    name: 'Інна',
+    position:
+      'Покаже тобі КРОК-1 як топ-колаборацію базових дисциплін та інтеграцію їх у клінічне мислення.',
   },
   {
     id: 3,
-    image: mentorThreeImage,
-    name: "Іванна",
-    position: "лікар-інтерн внутрішньої медицини"
+    image: mentorTwoImage,
+    name: 'Ніка',
+    position:
+      'Готує до КРОК так, щоб кожна тема звучала як живий клінічний випадок.',
   },
   {
     id: 4,
-    image: mentorFourImage,
-    name: "Катерина",
-    position: "студентка 6го курсу"
+    image: mentorThreeImage,
+    name: 'Іванна',
+    position: 'лікар-інтерн внутрішньої медицини',
   },
   {
     id: 5,
-    image: mentorFiveImage,
-    name: "Богдан",
-    position: "лікар-інтерн внутрішньої медицини"
+    image: mentorFourImage,
+    name: 'Катерина',
+    position:
+      'Витримка — її trademark, адже буде розбирати кейси, поки все не стане на 100% зрозумілим.',
   },
   {
     id: 6,
-    image: mentorSixImage,
-    name: "Віктор",
-    position: "лікар-інтерн хірург"
+    image: mentorFiveImage,
+    name: 'Богдан',
+    position:
+      'Готує до КРОК-1 у команді з хвостатою помічницею — вона відповідає за позитивні емоції, я Богдан твої високі бали!',
   },
   {
     id: 7,
+    image: mentorSixImage,
+    name: 'Віктор',
+    position:
+      'Вчить розбиратись в питаннях КРОК, хірургії та динозаврах! Що це якщо не підготовка на всі випадки життя?',
+  },
+  {
+    id: 8,
     image: mentorSevenImage,
-    name: "Максим",
-    position: "лікар-інтерн анестезіолог"
+    name: 'Максим',
+    position:
+      'Поєднує міжнародні джерела, сучасні інструменти й власний досвід, аби КРОК-1 став твоєю перемогою, а не стресом.',
   },
 ];
 
