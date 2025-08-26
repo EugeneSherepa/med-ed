@@ -263,6 +263,7 @@
     }
 
     &-wrapper {
+      margin-bottom: 0;
       display: flex;
       flex-direction: column-reverse;
       width: 100%;
@@ -310,6 +311,10 @@
       }
 
       &-content {
+        & .reviews-slider {
+          padding-top: 0 !important;
+        }
+
         &-wrapper {
           width: fit-content;
         }
