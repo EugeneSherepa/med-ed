@@ -1,5 +1,13 @@
 @use '../../styles/variables' as *;
 
+.team-members-member-wrapper-overlay {
+  will-change: opacity;
+}
+
+.team-members-member-wrapper img {
+  will-change: transform;
+}
+
 .team {
   padding-top: var(--dpt);
   padding-bottom: var(--dpb);
@@ -153,7 +161,7 @@
     }
 
     &-members {
-      & .swiper-slide-active {
+      & .swiper-slide-fully-visible {
         .team-members-member-wrapper-overlay {
           opacity: 1;
           transition: 0.3s ease-in-out;
