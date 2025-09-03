@@ -2,7 +2,7 @@ import './TeamComponent.scss';
 import '../Testimonials/Testimonials.scss';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Mousewheel } from 'swiper/modules';
+import { Navigation, Mousewheel, Virtual } from 'swiper/modules';
 import iconCaret from '../../assets/icon-caret-swiper.svg';
 import iconCaretDisaabled from '../../assets/icon-caret-swiper-disabled.svg';
 
@@ -64,11 +64,12 @@ export const TeamComponent = ({
                 slidesPerView={2.7}
                 spaceBetween={78}
                 mousewheel={{ forceToAxis: true }}
-                modules={[Navigation, Mousewheel]}
+                modules={[Navigation, Mousewheel, Virtual]}
                 navigation={{
                   nextEl: '.team-buttons-next',
                   prevEl: '.team-buttons-prev',
                 }}
+                virtual
                 breakpoints={{
                   0: {
                     slidesPerView: 1.225,
@@ -93,6 +94,8 @@ export const TeamComponent = ({
                       <img
                         src={team_member.image}
                         alt={`${team_member.position} ${team_member.name}`}
+                        className="swiper-lazy"
+                        loading="lazy"
                       />
                       <div className="team-members-member-wrapper-overlay">
                         <h4 className="team-members-member-wrapper-overlay-heading">
@@ -112,7 +115,8 @@ export const TeamComponent = ({
               slidesPerView={2.7}
               spaceBetween={78}
               mousewheel={{ forceToAxis: true }}
-              modules={[Navigation, Mousewheel]}
+              modules={[Navigation, Mousewheel, Virtual]}
+              virtual
               navigation={{
                 nextEl: '.team-buttons-next',
                 prevEl: '.team-buttons-prev',
@@ -141,6 +145,8 @@ export const TeamComponent = ({
                     <img
                       src={team_member.image}
                       alt={`${team_member.position} ${team_member.name}`}
+                      className="swiper-lazy"
+                      loading="lazy"
                     />
                     <div className="team-members-member-wrapper-overlay">
                       <h4 className="team-members-member-wrapper-overlay-heading">
