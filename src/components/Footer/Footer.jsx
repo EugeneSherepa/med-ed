@@ -83,6 +83,14 @@ export const Footer = () => {
                 </li>
                 <li className="footer-top-left-navigation-list-item">
                   <a
+                    href="/public-offer"
+                    className="footer-top-left-navigation-list-item-link"
+                  >
+                    Публічна Оферта
+                  </a>
+                </li>
+                <li className="footer-top-left-navigation-list-item">
+                  <a
                     href="/policy"
                     className="footer-top-left-navigation-list-item-link"
                   >
@@ -91,16 +99,18 @@ export const Footer = () => {
                 </li>
               </ul>
             </nav>
-            <div className="footer-top-left-heading">
+            <a href="/" className="footer-top-left-heading">
               <div className="footer-top-left-heading-heading">IT’s Med Ed</div>
               <img
                 src={logo}
                 alt="Med Ed"
                 className="footer-top-left-heading-mobile"
               />
-            </div>
+            </a>
           </div>
-          <img src={logo} alt="Med Ed" />
+          <a href="/" className='footer-top-left-heading-second'>
+            <img src={logo} alt="Med Ed" />
+          </a>
         </div>
         <div className="footer-bottom">
           <div className="footer-bottom-text">

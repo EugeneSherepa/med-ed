@@ -16,6 +16,7 @@ import { Medicine } from '../pages/AboutCourse/Medicine/Medicine';
 import { Stomatology } from '../pages/AboutCourse/StepOneStomatology/Stomatology';
 import { FAQ } from '../pages/FAQ/FAQ';
 import { Policy } from '../pages/Policy/Policy';
+import { PublicOffer } from '../pages/PublicOffer/PublicOffer';
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -37,6 +38,7 @@ const AppRouter = () => (
       <Route path="/about/stomatology" element={<Stomatology />} />
       <Route path="/faq" element={<FAQ />} />
       <Route path="/policy" element={<Policy />} />
+      <Route path="/public-offer" element={<PublicOffer />} />
     </Routes>
   </BrowserRouter>
 );
