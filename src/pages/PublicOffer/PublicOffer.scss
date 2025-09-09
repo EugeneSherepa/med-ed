@@ -29,7 +29,7 @@
     margin-bottom: 24px;
     font-family: $font-fixel;
     font-size: 20px;
-    line-height: 100%;
+    line-height: 125%;
     font-weight: 400;
     color: $primary-color;
   }
@@ -44,25 +44,11 @@
     color: $primary-color;
   }
 
-  & ul li {
+  & li {
     font-family: $font-fixel;
     font-size: 20px;
     line-height: 120%;
     font-weight: 400;
     color: $primary-color;
-
-    &::marker {
-      font-size: 10px;
-    }
-  }
-
-  & a {
-    font-family: $font-eastman;
-    font-size: 20px;
-    line-height: 100%;
-    color: #252c3f;
-    text-decoration: none;
-    text-decoration: underline;
-    text-underline-offset: 2px;
   }
 }
