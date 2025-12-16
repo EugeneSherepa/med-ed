@@ -1,5 +1,5 @@
-import stepOneMedicine from '../../assets/steps/step_one_medicine.png';
-import stepOneDentistry from '../../assets/steps/step_one_dentistry.jpg';
+import stepOneMedicine from '../../assets/steps/step_one_medicine.webp';
+import stepOneDentistry from '../../assets/steps/step_one_dentistry.webp';
 
 const cards = [
   {
@@ -9,7 +9,7 @@ const cards = [
     tag: 'груповий формат',
     caption: 'Крок-1',
     title: 'Медицина',
-    text: '32 лекції і 32 практики, група 3-6 осіб',
+    text: '32 лекції і 32 практики, група 6-7 осіб',
     start: {
       first: 'жовтень - 1 потік',
       second: 'січень - 2 потік',
@@ -23,7 +23,7 @@ const cards = [
     tag: 'груповий формат',
     caption: 'Крок-1',
     title: 'Стоматологія',
-    text: '31 лекція і 31 практика, група 6 осіб',
+    text: '31 лекція і 31 практика, група 6-7 осіб',
     start: {
       first: 'вересень',
       second: '',

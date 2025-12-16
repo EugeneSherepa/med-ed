@@ -1,5 +1,5 @@
-import stepOneMedicine from '../../assets/steps/step_one_medicine.png';
-import stepOneDentistry from '../../assets/steps/step_one_dentistry.jpg';
+import stepOneMedicine from '../../assets/steps/step_one_medicine.webp';
+import stepOneDentistry from '../../assets/steps/step_one_dentistry.webp';
 import stepTwoMedicine from '../../assets/steps/step_two_medicine.jpg';
 
 const cards = [
@@ -40,7 +40,7 @@ const cards = [
     title: 'Медицина',
     text: '35 лекцій і 35 практик, група 6 осіб',
     start: {
-      first: "січень",
+      first: "вересень",
       second: '',
     },
     price: '450грн',
@@ -83,7 +83,7 @@ const cards = [
     text: '35 тем, чат з викладачем',
     start: {
       first: "",
-      second: 'січень',
+      second: 'грудень',
     },
     price: '350грн',
   },
