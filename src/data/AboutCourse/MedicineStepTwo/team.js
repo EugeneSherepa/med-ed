@@ -1,6 +1,6 @@
 import mentorOneImage from '../../../assets/mentors/ivanna-step-two-med.webp';
 import mentorTwoImage from '../../../assets/mentors/andrii-step-two-med.webp';
-import mentorThreeImage from '../../../assets/mentors/artem-step-two-med.JPEG';
+import mentorThreeImage from '../../../assets/mentors/artem-step-two-med.webp';
 
 const team = [
   {

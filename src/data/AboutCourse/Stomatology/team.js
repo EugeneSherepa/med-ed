@@ -1,6 +1,6 @@
-import mentorOneImage from '../../../assets/mentors/mentor-placeholder.png';
-import mentorTwoImage from '../../../assets/mentors/mentor-placeholder-two.png';
-import mentorThreeImage from '../../../assets/mentors/mentor-placeholder-three.png';
+import mentorOneImage from '../../../assets/mentors/oleksander-step-one-stomatology.webp';
+import mentorTwoImage from '../../../assets/mentors/kateruna-step-one.webp';
+import mentorThreeImage from '../../../assets/mentors/victoria-step-one-stomatology.webp';
 
 const team = [
   {
