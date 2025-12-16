@@ -1,16 +1,16 @@
 import mentorOneImage from '../../assets/mentors/inna-step-one-med.webp';
 import mentorTwoImage from '../../assets/mentors/nika-step-one-med.webp';
 import mentorThreeImage from '../../assets/mentors/ivanna-step-one-med.webp';
-import mentorFourImage from '../../assets/mentors/mentor-placeholder.png';
+import mentorFourImage from '../../assets/mentors/kateruna-step-one.webp';
 import mentorFiveImage from '../../assets/mentors/bohdan-step-one-med.webp';
 import mentorSixImage from '../../assets/mentors/viktor-step-one-med.webp';
 import mentorSevenImage from '../../assets/mentors/maxim-step-one-med.webp';
-import mentorEightImage from '../../assets/mentors/mentor-placeholder.png';
-import mentorNineImage from '../../assets/mentors/mentor-placeholder-two.png';
-import mentorTenImage from '../../assets/mentors/mentor-placeholder-three.png';
+import mentorEightImage from '../../assets/mentors/oleksander-step-one-stomatology.webp';
+import mentorNineImage from '../../assets/mentors/vyacheslav.webp';
+import mentorTenImage from '../../assets/mentors/victoria-step-one-stomatology.webp';
 import mentorElevenImage from '../../assets/mentors/ivanna-step-two-med.webp';
 import mentorTwelvImage from '../../assets/mentors/andrii-step-two-med.webp';
-import mentorThirteenImage from '../../assets/mentors/artem-step-two-med.JPEG';
+import mentorThirteenImage from '../../assets/mentors/artem-step-two-med.webp';
 import rostislav from '../../assets/mentors/rostislav-anatomiya.webp';
 import nazrin from '../../assets/mentors/nazrin-biochemistry.webp';
 import valeria from '../../assets/mentors/mentor-placeholder.png';
@@ -32,12 +32,6 @@ const team = [
     name: 'Назрін',
     position:
       'має суперсилу: робити з хаосу молекул чітку картину. Її секрет — показати, як біохімія пов’язана з медициною.',
-  },
-  {
-    id: 102,
-    image: valeria,
-    name: 'Валерія',
-    position: 'перетворює біохімічні процеси на зрозумілі історії.',
   },
   {
     id: 103,
@@ -111,7 +105,7 @@ const team = [
   {
     id: 10,
     image: mentorNineImage,
-    name: 'Катерина',
+    name: 'В’ячеслав',
     position: 'Навчить логічно мислити та допоможе структурувати трирічний обсяг знань так, щоб ти впевнено склав КРОК-1!',
   },
   {
