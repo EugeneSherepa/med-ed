@@ -6,7 +6,7 @@ import mentorFiveImage from '../../assets/mentors/bohdan-step-one-med.webp';
 import mentorSixImage from '../../assets/mentors/viktor-step-one-med.webp';
 import mentorSevenImage from '../../assets/mentors/maxim-step-one-med.webp';
 import mentorEightImage from '../../assets/mentors/oleksander-step-one-stomatology.webp';
-import mentorNineImage from '../../assets/mentors/kateruna-step-one.webp';
+import mentorNineImage from '../../assets/mentors/vyacheslav.webp';
 import mentorTenImage from '../../assets/mentors/victoria-step-one-stomatology.webp';
 
 const team = [
@@ -68,7 +68,7 @@ const team = [
   {
     id: 10,
     image: mentorNineImage,
-    name: 'Катерина',
+    name: 'В’ячеслав',
     position:
       'Навчить логічно мислити та допоможе структурувати трирічний обсяг знань так, щоб ти впевнено склав КРОК-1!',
   },
