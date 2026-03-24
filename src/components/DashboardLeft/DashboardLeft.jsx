@@ -23,7 +23,6 @@ export const DashboardLeft = ({ currentLink }) => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Hide header if scrolling down past 50px, otherwise show it
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
         setShowHeader(false);
       } else {

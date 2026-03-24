@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import "./Account.scss";
 import { DashboardLeft } from "../DashboardLeft/DashboardLeft";
+import { useNavigate } from "react-router-dom";
 import { api } from "../../api";
 
 export const AccountPage = () => {
@@ -26,7 +27,9 @@ export const AccountPage = () => {
   const [isSavingPassword, setIsSavingPassword] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+  const navigate = useNavigate();
+
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
   const getImageUrl = (path) => {
     if (!path) return null;
@@ -169,6 +172,17 @@ export const AccountPage = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await api.post("/auth/logout");
+    } catch (error) {
+      console.error("Помилка при виході з системи:", error);
+    } finally {
+      localStorage.removeItem("accessToken");
+      navigate("/");
+    }
+  };
+
   if (isLoading) return <div className="account-loading">Завантаження...</div>;
 
   return (
@@ -306,6 +320,18 @@ export const AccountPage = () => {
               {isSavingProfile ? "Збереження..." : "Зберегти зміни"}
             </button>
           </form>
+
+          <div
+            className="logout-wrapper"
+          >
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="button-pink"
+            >
+              Вийти з акаунту
+            </button>
+          </div>
 
           {serverData?.hasPassword && (
             <form
