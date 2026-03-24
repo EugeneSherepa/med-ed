@@ -88,7 +88,23 @@
   }
 }
 
+.logout-wrapper {
+  margin-top: 24px;
+  padding: 24px;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  justify-content: flex-end;
+}
+
 @media screen and (max-width: 990px) {
+  .logout-wrapper {
+    padding: 0;
+    margin-top: 24px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    justify-content: flex-start;
+  }
+
   .account {
     margin-top: 80px;
 

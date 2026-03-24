@@ -326,6 +326,23 @@ export const Header = () => {
             </div>
           )}
 
+          <div className="mobile-menu-log">
+            {isAuthenticated ? (
+              <Link to="/account" className="button-primary">
+                Акаунт
+              </Link>
+            ) : (
+              <>
+                <Link to="/login" className="button-secondary-thin">
+                  Увійти
+                </Link>
+                <Link to="/register" className="button-primary">
+                  Зареєструватись
+                </Link>
+              </>
+            )}
+          </div>
+
           {activeSubmenu === "steps" && (
             <div className="mobile-submenu">
               <button
@@ -351,43 +368,6 @@ export const Header = () => {
           )}
         </div>
         <div className="mobile-menu-footer">
-          <div className="mobile-menu-links">
-            Слідкуйте за нами в соцмережах
-            <ul className="mobile-menu-links-list">
-              <li className="mobile-menu-links-list-item">
-                <a
-                  href="https://t.me/itsmeded"
-                  className="mobile-menu-links-list-item-link"
-                >
-                  <img src={iconFacebook} alt="Telegram" />
-                </a>
-              </li>
-              <li className="mobile-menu-links-list-item">
-                <a
-                  href="https://www.instagram.com/its_med_ed?igsh=OTR3a3BlOTY2eGg3"
-                  className="mobile-menu-links-list-item-link"
-                >
-                  <img src={iconInstagram} alt="Instagram" />
-                </a>
-              </li>
-              <li className="mobile-menu-links-list-item">
-                <a
-                  href="https://www.tiktok.com/@its_med_ed?_t=ZM-8z6y5n1KeSE&_r=1"
-                  className="mobile-menu-links-list-item-link"
-                >
-                  <img src={iconLinkedin} alt="TikTok" />
-                </a>
-              </li>
-              <li className="mobile-menu-links-list-item">
-                <a
-                  href="https://youtube.com/@its_med_ed?si=S_t0-hzMraIEttwR"
-                  className="mobile-menu-links-list-item-link"
-                >
-                  <img src={iconYoutube} alt="Youtube" />
-                </a>
-              </li>
-            </ul>
-          </div>
           <div className="page-width">
             <div className="footer-top">
               <div className="footer-top-left">
@@ -400,6 +380,43 @@ export const Header = () => {
                     alt="Med Ed"
                     className="footer-top-left-heading-mobile"
                   />
+                </div>
+                <div className="mobile-menu-links">
+                  Слідкуйте за нами в соцмережах
+                  <ul className="mobile-menu-links-list">
+                    <li className="mobile-menu-links-list-item">
+                      <a
+                        href="https://t.me/itsmeded"
+                        className="mobile-menu-links-list-item-link"
+                      >
+                        <img src={iconFacebook} alt="Telegram" />
+                      </a>
+                    </li>
+                    <li className="mobile-menu-links-list-item">
+                      <a
+                        href="https://www.instagram.com/its_med_ed?igsh=OTR3a3BlOTY2eGg3"
+                        className="mobile-menu-links-list-item-link"
+                      >
+                        <img src={iconInstagram} alt="Instagram" />
+                      </a>
+                    </li>
+                    <li className="mobile-menu-links-list-item">
+                      <a
+                        href="https://www.tiktok.com/@its_med_ed?_t=ZM-8z6y5n1KeSE&_r=1"
+                        className="mobile-menu-links-list-item-link"
+                      >
+                        <img src={iconLinkedin} alt="TikTok" />
+                      </a>
+                    </li>
+                    <li className="mobile-menu-links-list-item">
+                      <a
+                        href="https://youtube.com/@its_med_ed?si=S_t0-hzMraIEttwR"
+                        className="mobile-menu-links-list-item-link"
+                      >
+                        <img src={iconYoutube} alt="Youtube" />
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
               <img src={logoFooter} alt="Med Ed" />
