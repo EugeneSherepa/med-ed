@@ -1,15 +1,16 @@
-import './Header.scss';
-import '../Footer/Footer.scss';
-import logo from '../../assets/logo.png';
-import caret from '../../assets/icon-caret.svg';
-import burger from '../../assets/burger.svg';
-import close from '../../assets/icon-close.svg';
-import iconFacebook from '../../assets/telegram.svg';
-import iconInstagram from '../../assets/instagram.svg';
-import iconLinkedin from '../../assets/tiktok.svg';
-import iconYoutube from '../../assets/youtube.svg';
-import logoFooter from '../../assets/logo.png';
-import { useState, useEffect } from 'react';
+import "./Header.scss";
+import "../Footer/Footer.scss";
+import logo from "../../assets/logo.png";
+import caret from "../../assets/icon-caret.svg";
+import burger from "../../assets/burger.svg";
+import close from "../../assets/icon-close.svg";
+import iconFacebook from "../../assets/telegram.svg";
+import iconInstagram from "../../assets/instagram.svg";
+import iconLinkedin from "../../assets/tiktok.svg";
+import iconYoutube from "../../assets/youtube.svg";
+import logoFooter from "../../assets/logo.png";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // It's better to use Link for routing!
 
 export const Header = () => {
   const [prepareOpened, setPrepareOpened] = useState(false);
@@ -18,6 +19,9 @@ export const Header = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [menuOpened, setMenuOpened] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
+
+  // Check if the user is authenticated by looking for the token
+  const isAuthenticated = Boolean(localStorage.getItem("accessToken"));
 
   const PrepareToggle = () => {
     setPrepareOpened((prev) => !prev);
@@ -34,9 +38,9 @@ export const Header = () => {
       const newState = !prev;
 
       if (newState) {
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
       } else {
-        document.body.style.overflow = '';
+        document.body.style.overflow = "";
       }
 
       return newState;
@@ -58,20 +62,25 @@ export const Header = () => {
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
   return (
     <>
-      <header className={`header ${showHeader ? 'visible' : 'hidden'}`}>
+      <header className={`header ${showHeader ? "visible" : "hidden"}`}>
         <div className="header-wrapper">
-          <a href="/" className="header-wrapper-logo">
+          <Link
+            to="/"
+            className={`header-wrapper-logo ${isAuthenticated ? "auth-layout" : ""}`}
+          >
             <img src={logo} alt="Med ed logo" />
             <div className="header-wrapper-logo-text">IT’s Med Ed</div>
-          </a>
-          <nav className="header-wrapper-navigation">
+          </Link>
+          <nav
+            className={`header-wrapper-navigation ${isAuthenticated ? "auth-layout" : ""}`}
+          >
             <ul className="header-wrapper-navigation-items">
               <li className="header-wrapper-navigation-items-item">
                 <a
@@ -90,12 +99,12 @@ export const Header = () => {
                   <img
                     src={caret}
                     alt="caret icon"
-                    className={`${prepareOpened ? 'open' : ''}`}
+                    className={`${prepareOpened ? "open" : ""}`}
                   />
                 </a>
                 <div
                   className={`header-wrapper-navigation-items-item-link-dropdown ${
-                    prepareOpened ? 'open' : ''
+                    prepareOpened ? "open" : ""
                   }`}
                 >
                   <ul className="header-wrapper-navigation-items-item-link-dropdown-list">
@@ -151,12 +160,12 @@ export const Header = () => {
                   <img
                     src={caret}
                     alt="caret icon"
-                    className={`${stepsOpened ? 'open' : ''}`}
+                    className={`${stepsOpened ? "open" : ""}`}
                   />
                 </a>
                 <div
                   className={`header-wrapper-navigation-items-item-link-dropdown ${
-                    stepsOpened ? 'open' : ''
+                    stepsOpened ? "open" : ""
                   }`}
                 >
                   <ul className="header-wrapper-navigation-items-item-link-dropdown-list">
@@ -188,24 +197,34 @@ export const Header = () => {
                 </a>
               </li>
             </ul>
+            <div className="header-wrapper-buttons">
+              <div className="header-wrapper-buttons-wrapper">
+                {isAuthenticated ? (
+                  <Link to="/account" className="button-primary">
+                    Акаунт
+                  </Link>
+                ) : (
+                  <>
+                    <Link to="/login" className="button-secondary-thin">
+                      Увійти
+                    </Link>
+                    <Link to="/register" className="button-primary">
+                      Зареєструватись
+                    </Link>
+                  </>
+                )}
+              </div>
+              <button
+                className="header-wrapper-buttons-burger"
+                onClick={menuToggle}
+              >
+                <img src={burger} alt="Burger Menu" />
+              </button>
+            </div>
           </nav>
-          <div className="header-wrapper-buttons">
-            <a
-              href="https://t.me/its_meded?text=Привіт,%20хочу%20записатись%20на%20навчання%20до%20вас!"
-              className="button-primary"
-            >
-              Почати навчання
-            </a>
-            <button
-              className="header-wrapper-buttons-burger"
-              onClick={menuToggle}
-            >
-              <img src={burger} alt="Burger Menu" />
-            </button>
-          </div>
         </div>
       </header>
-      <div className={`mobile-menu ${menuOpened ? 'open' : ''}`}>
+      <div className={`mobile-menu ${menuOpened ? "open" : ""}`}>
         <div>
           <div className={`header header-mobile visible`}>
             <div className="header-wrapper">
@@ -228,14 +247,14 @@ export const Header = () => {
               <div className="mobile-submenu-button">Меню</div>
               <li
                 className="mobile-menu-main-item"
-                onClick={() => setActiveSubmenu('prepare')}
+                onClick={() => setActiveSubmenu("prepare")}
               >
                 Підготовка до пар
                 <img src={caret} />
               </li>
               <li
                 className="mobile-menu-main-item"
-                onClick={() => setActiveSubmenu('steps')}
+                onClick={() => setActiveSubmenu("steps")}
               >
                 Іспити
                 <img src={caret} />
@@ -253,7 +272,7 @@ export const Header = () => {
             </ul>
           )}
 
-          {activeSubmenu === 'prepare' && (
+          {activeSubmenu === "prepare" && (
             <div className="mobile-submenu">
               <button
                 className="mobile-submenu-button"
@@ -307,7 +326,7 @@ export const Header = () => {
             </div>
           )}
 
-          {activeSubmenu === 'steps' && (
+          {activeSubmenu === "steps" && (
             <div className="mobile-submenu">
               <button
                 className="mobile-submenu-button"

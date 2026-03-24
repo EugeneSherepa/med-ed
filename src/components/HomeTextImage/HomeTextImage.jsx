@@ -1,5 +1,5 @@
 import './HomeTextImage.scss';
-import photo from '../../assets/home-new-hero.jpg';
+import photo from '../../assets/home-new-hero.webp';
 import bubble from '../../assets/home-image-text-bubble.svg';
 
 export const HomeTextImage = () => {
