@@ -1,5 +1,5 @@
-@use './_variables.scss' as *;
-@use './fonts' as *;
+@use "./_variables.scss" as *;
+@use "./fonts" as *;
 
 :root {
   box-sizing: border-box;
@@ -29,7 +29,7 @@ h4,
 h5,
 h6,
 p {
-  font-family: 'Artegra Sans';
+  font-family: "Artegra Sans";
   margin: 0;
 }
 
@@ -50,6 +50,42 @@ p {
   margin-left: calc(50vw - 1440px / 2) !important;
   padding: 0 64px !important;
   padding-right: 0 !important;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.button-pink {
+  cursor: pointer;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-family: $font-fixel;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 700;
+  border: 2px solid $pink-default;
+  border-radius: 12px;
+  color: $white;
+  background-color: $pink-default;
+  text-decoration: none;
+  transition: 0.3s ease-in-out;
+
+  @media screen and (min-width: 990px) {
+    &:hover {
+      transition: 0.3s ease-in-out;
+      border-color: $pink-active;
+      background-color: $pink-active;
+    }
+
+    &:active {
+      transition: 0.3s ease-in-out;
+      border-color: $pink-active;
+      background: $pink-active;
+    }
+  }
 }
 
 .button-primary {
@@ -131,6 +167,74 @@ p {
   line-height: 16px;
   font-weight: 700;
   border: 2px solid $primary-color;
+  border-radius: 30px;
+  color: $primary-color;
+  background-color: transparent;
+  text-decoration: none;
+  transition: 0.3s ease-in-out;
+
+  @media screen and (min-width: 990px) {
+    &:hover {
+      background-color: $primary-color;
+      color: $white;
+      transition: 0.3s ease-in-out;
+    }
+
+    &:active {
+      transition: 0.3s ease-in-out;
+      border-color: #252c3f8f;
+      background: #252c3f8f;
+      box-shadow: 0px 2px 3px 0px #0000004d inset;
+      box-shadow: 0px 6px 10px 4px #00000026 inset;
+    }
+  }
+}
+
+.button-secondary-edge {
+  cursor: pointer;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-family: $font-eastman;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 700;
+  border: 2px solid $primary-color;
+  border-radius: 12px;
+  color: $primary-color;
+  background-color: transparent;
+  text-decoration: none;
+  transition: 0.3s ease-in-out;
+
+  @media screen and (min-width: 990px) {
+    &:hover {
+      background-color: $primary-color;
+      color: $white;
+      transition: 0.3s ease-in-out;
+    }
+
+    &:active {
+      transition: 0.3s ease-in-out;
+      border-color: #252c3f8f;
+      background: #252c3f8f;
+      box-shadow: 0px 2px 3px 0px #0000004d inset;
+      box-shadow: 0px 6px 10px 4px #00000026 inset;
+    }
+  }
+}
+
+.button-secondary-thin {
+  cursor: pointer;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-family: $font-eastman;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 700;
+  border: 1px solid $primary-color;
   border-radius: 30px;
   color: $primary-color;
   background-color: transparent;
