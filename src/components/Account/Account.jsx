@@ -26,10 +26,12 @@ export const AccountPage = () => {
   const [isSavingPassword, setIsSavingPassword] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
   const getImageUrl = (path) => {
     if (!path) return null;
     if (path.startsWith("http") || path.startsWith("blob:")) return path;
-    return `http://localhost:3000${path}`;
+    return `${API_URL}${path}`;
   };
 
   useEffect(() => {
