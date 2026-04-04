@@ -2,7 +2,14 @@ import "../../styles/AuthForm.scss";
 import logo from "../../assets/logo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../api"; // Make sure the path to your api.js is correct
+import { api } from "../../api";
+import {
+  INSTITUTIONS,
+  FACULTIES,
+  COURSES,
+  GOALS,
+} from "../../constants/formOptions";
+import customCaret from "../../assets/icon-caret-dropdown.svg";
 
 export const CompleteProfile = () => {
   const [institution, setInstitution] = useState("");
@@ -21,7 +28,6 @@ export const CompleteProfile = () => {
     setIsLoading(true);
 
     try {
-      // Send the completed data to your existing PATCH route
       await api.patch("/users/profile", {
         institution,
         faculty,
@@ -29,7 +35,6 @@ export const CompleteProfile = () => {
         goal,
       });
 
-      // Success! Send them to their account page
       navigate("/account");
     } catch (error) {
       const msg =
@@ -69,47 +74,94 @@ export const CompleteProfile = () => {
 
         <div className="auth-form-wrapper-field">
           <label htmlFor="institution">Навчальний заклад</label>
-          <input
-            id="institution"
-            type="text"
-            placeholder="Введіть назву"
-            value={institution}
-            onChange={(e) => setInstitution(e.target.value)}
-            required
-          />
+          <div className="select-wrapper">
+            <select
+              id="institution"
+              value={institution}
+              onChange={(e) => setInstitution(e.target.value)}
+              required
+            >
+              <option value="" disabled>
+                Оберіть навчальний заклад
+              </option>
+              {Object.entries(INSTITUTIONS).map(([city, unis]) => (
+                <optgroup key={city} label={city}>
+                  {unis.map((uni) => (
+                    <option key={uni} value={uni}>
+                      {uni}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+            <img src={customCaret} alt="" className="select-caret" />
+          </div>
         </div>
+
         <div className="auth-form-wrapper-field">
           <label htmlFor="faculty">Факультет</label>
-          <input
-            id="faculty"
-            type="text"
-            placeholder="Введіть факультет"
-            value={faculty}
-            onChange={(e) => setFaculty(e.target.value)}
-            required
-          />
+          <div className="select-wrapper">
+            <select
+              id="faculty"
+              value={faculty}
+              onChange={(e) => setFaculty(e.target.value)}
+              required
+            >
+              <option value="" disabled>
+                Оберіть факультет
+              </option>
+              {FACULTIES.map((f) => (
+                <option key={f} value={f}>
+                  {f}
+                </option>
+              ))}
+            </select>
+            <img src={customCaret} alt="" className="select-caret" />
+          </div>
         </div>
+
         <div className="auth-form-wrapper-field">
           <label htmlFor="course">Курс</label>
-          <input
-            id="course"
-            type="text"
-            placeholder="Введіть курс"
-            value={course}
-            onChange={(e) => setCourse(e.target.value)}
-            required
-          />
+          <div className="select-wrapper">
+            <select
+              id="course"
+              value={course}
+              onChange={(e) => setCourse(e.target.value)}
+              required
+            >
+              <option value="" disabled>
+                Оберіть курс
+              </option>
+              {COURSES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+            <img src={customCaret} alt="" className="select-caret" />
+          </div>
         </div>
+
         <div className="auth-form-wrapper-field">
           <label htmlFor="goal">Навчальна мета</label>
-          <input
-            id="goal"
-            type="text"
-            placeholder="Введіть навчальну мету"
-            value={goal}
-            onChange={(e) => setGoal(e.target.value)}
-            required
-          />
+          <div className="select-wrapper">
+            <select
+              id="goal"
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+              required
+            >
+              <option value="" disabled>
+                Оберіть навчальну мету
+              </option>
+              {GOALS.map((g) => (
+                <option key={g} value={g}>
+                  {g}
+                </option>
+              ))}
+            </select>
+            <img src={customCaret} alt="" className="select-caret" />
+          </div>
         </div>
 
         <button

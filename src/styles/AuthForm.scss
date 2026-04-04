@@ -100,6 +100,39 @@
         }
       }
 
+      & select {
+        position: relative;
+        width: 100%;
+        padding: 12px 16px;
+        min-height: 46px;
+        padding-right: 42px !important;
+        font-family: $font-fixel;
+        font-size: 16px;
+        line-height: 100%;
+        font-weight: 400;
+        color: $primary-color;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        background-image:
+          linear-gradient(#fff, #fff),
+          radial-gradient(
+            73.92% 251.95% at 26.91% 46.73%,
+            #f7b4d1 0%,
+            #e3cee1 23.19%,
+            #dbd0f7 44.5%,
+            #b1d4e0 97%
+          );
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        &::placeholder {
+          color: $gray;
+        }
+      }
+
       &-password {
         &-input {
           position: relative;
@@ -198,6 +231,21 @@
       text-underline-offset: 2px;
     }
   }
+}
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select-caret {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
 }
 
 @media screen and (max-width: 990px) {
