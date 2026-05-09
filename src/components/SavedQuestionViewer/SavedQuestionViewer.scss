@@ -1,0 +1,12 @@
+@use "../../styles/variables" as *;
+
+.svq-header {
+  grid-template-columns: auto 1fr auto !important;
+}
+
+.svq-progress-label {
+  font-family: $font-fixel;
+  font-size: 14px;
+  color: $gray;
+  white-space: nowrap;
+}

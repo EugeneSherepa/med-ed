@@ -1,0 +1,237 @@
+@use "../../styles/variables" as *;
+
+.admin-list-container {
+  padding: 40px;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+.admin-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+
+  h2 {
+    font-family: $font-fixel;
+    color: #252c3f;
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+  }
+}
+
+// 🗃️ TABLE STYLING
+.admin-table {
+  width: 100%;
+  background: $white;
+  border-radius: 16px;
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+
+  thead {
+    background-color: #f3f4f6;
+
+    th {
+      padding: 16px 24px;
+      text-align: left;
+      font-family: $font-fixel;
+      font-weight: 600;
+      font-size: 14px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: 0.2s ease;
+
+      &:hover {
+        background-color: #f9fafb;
+      }
+
+      &:last-child td {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      padding: 16px 24px;
+      font-family: $font-fixel;
+      font-size: 15px;
+      color: #374151;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: middle;
+
+      // Type Badge (База vs Буклет)
+      .type-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        &.base {
+          background-color: #e0e7ff;
+          color: #4338ca;
+        }
+
+        &.booklet {
+          background-color: #ecfdf5;
+          color: #059669;
+        }
+
+        &.amps {
+          background-color: #fff0f6;
+          color: #c2185b;
+        }
+      }
+
+      .test-title {
+        font-weight: 500;
+        color: #111827;
+      }
+    }
+  }
+}
+
+// 🛠️ ACTION BUTTONS
+.admin-table-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-family: $font-fixel;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: 0.2s ease;
+
+    &.edit {
+      background-color: #f3f4f6;
+      color: #4b5563;
+
+      &:hover {
+        background-color: #e5e7eb;
+        color: #111827;
+      }
+    }
+
+    &.questions {
+      background-color: #eff6ff;
+      color: #1d4ed8;
+
+      &:hover {
+        background-color: #dbeafe;
+        color: #1e3a8a;
+      }
+    }
+
+    &.delete {
+      width: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px; // Square icon button
+      background-color: #fef2f2;
+      color: #dc2626;
+      margin-left: auto;
+
+      &:hover {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+    }
+  }
+}
+
+// 📱 MOBILE RESPONSIVENESS
+@media screen and (max-width: 1024px) {
+  .admin-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap; // Keeps table from squishing too much
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .admin-list-container {
+    padding: 24px;
+  }
+
+  .admin-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+// Add this inside your .admin-table tbody td nested rules in AdminTestsList.scss
+
+.status-dropdown-wrapper {
+  position: relative;
+  width: fit-content;
+
+  // Custom caret icon for the select
+  &::after {
+    content: "▼";
+    font-size: 10px;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+}
+
+.status-select {
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: $font-fixel;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 6px 32px 6px 12px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: 0.2s ease;
+
+  &.draft {
+    background-color: #f3f4f6;
+    color: #6b7280;
+
+    &:hover {
+      background-color: #e5e7eb;
+    }
+  }
+
+  &.published {
+    background-color: #ecfdf5;
+    color: #059669;
+
+    &:hover {
+      background-color: #d1fae5;
+    }
+  }
+}

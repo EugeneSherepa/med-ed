@@ -228,10 +228,10 @@ export const Header = () => {
         <div>
           <div className={`header header-mobile visible`}>
             <div className="header-wrapper">
-              <a href="/" className="header-wrapper-logo">
+              <Link to="/" className="header-wrapper-logo">
                 <img src={logo} alt="Med ed logo" />
                 <div className="header-wrapper-logo-text">IT’s Med Ed</div>
-              </a>
+              </Link>
               <div className="header-wrapper-buttons">
                 <button
                   className="header-wrapper-buttons-burger"

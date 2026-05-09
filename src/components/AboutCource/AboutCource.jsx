@@ -4,6 +4,7 @@ import { ReviewsSlider } from '../ReviewsSlider/ReviewsSlider';
 import breadcrumbIcon from '../../assets/icon-breadcrumb.svg';
 import cardDot from '../../assets/card-dot.svg';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export const AboutCource = ({
   image,
@@ -39,7 +40,7 @@ export const AboutCource = ({
               </div>
             </div>
             <div className="about-course-breadcrumbs-item">
-              <a href="/step-one">Підготовка до КРОК-1</a>
+              <Link to="/step-one">Підготовка до КРОК-1</Link>
             </div>
             <div className="about-course-breadcrumbs-item">
               <div className="about-course-breadcrumbs-item-image">

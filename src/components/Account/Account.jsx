@@ -50,8 +50,6 @@ export const AccountPage = () => {
         const response = await api.get("/users/profile");
         const data = response.data;
 
-        console.log("Profile Data:", response.data);
-
         setServerData(data);
 
         setName(data.name || "");

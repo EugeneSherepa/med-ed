@@ -23,21 +23,26 @@ export const LoginForm = () => {
       const error = searchParams.get("error");
 
       if (token) {
+        // 1. Save the token
         localStorage.setItem("accessToken", token);
+        
+        // 2. Clean up the URL
         window.history.replaceState({}, document.title, "/login");
 
         try {
           const response = await api.get("/users/profile");
           const user = response.data;
 
+          // 🚀 FIX: Use window.location.href instead of navigate()
+          // This forces a full page reload so AuthContext reads the new token!
           if (user.institution === "Не вказано") {
-            navigate("/complete-profile");
+            window.location.href = "/complete-profile";
           } else {
-            navigate("/account");
+            window.location.href = "/account";
           }
         } catch (err) {
           console.error("Failed to fetch profile during social login", err);
-          navigate("/login");
+          window.location.href = "/login"; // Force reload on error too
         }
       }
 
@@ -47,7 +52,7 @@ export const LoginForm = () => {
     };
 
     handleSocialLogin();
-  }, [searchParams, navigate]);
+  }, [searchParams]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,7 +66,10 @@ export const LoginForm = () => {
       });
 
       localStorage.setItem("accessToken", response.data.accessToken);
-      navigate("/account");
+      
+      // 🚀 For standard login, we also recommend a hard reload if you're facing role sync issues
+      window.location.href = "/account";
+      
     } catch (error) {
       const msg =
         error.response?.data?.message || "Неправильний email або пароль";
@@ -77,10 +85,7 @@ export const LoginForm = () => {
     window.location.href = `${API_URL}/auth/google`;
   };
 
-  const handleFacebookLogin = () => {
-    window.location.href = `${API_URL}/auth/facebook`;
-  };
-
+  // ... (The rest of your JSX remains exactly the same)
   return (
     <div className="auth-form">
       <Link to="/" className="auth-form-logo">
@@ -88,12 +93,8 @@ export const LoginForm = () => {
         <div className="auth-form-logo-text">IT’s Med Ed</div>
       </Link>
       <form className="auth-form-wrapper" onSubmit={handleSubmit}>
-        <div className="auth-form-wrapper-title">
-          З поверненням, бджілко! 🐝
-        </div>
-        <div className="auth-form-wrapper-text">
-          Авторизуйся, щоб продовжити навчання
-        </div>
+        <div className="auth-form-wrapper-title">З поверненням, бджілко! 🐝</div>
+        <div className="auth-form-wrapper-text">Авторизуйся, щоб продовжити навчання</div>
 
         {errorMessage && (
           <div style={{ color: "red", marginBottom: "16px", fontSize: "14px" }}>
@@ -140,11 +141,7 @@ export const LoginForm = () => {
             </button>
           </div>
         </div>
-        <button
-          type="submit"
-          className="button-pink w-100"
-          disabled={isLoading}
-        >
+        <button type="submit" className="button-pink w-100" disabled={isLoading}>
           {isLoading ? "Завантаження..." : "Увійти"}
         </button>
 
@@ -154,40 +151,11 @@ export const LoginForm = () => {
           <div className="auth-form-wrapper-alt-line"></div>
         </div>
 
-        <div
-          style={{
-            marginTop: "24px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "12px",
-          }}
-        >
-          <button
-            type="button"
-            onClick={handleGoogleLogin}
-            className="auth-form-wrapper-alt-button"
-          >
+        <div style={{ marginTop: "24px", display: "flex", flexDirection: "column", gap: "12px" }}>
+          <button type="button" onClick={handleGoogleLogin} className="auth-form-wrapper-alt-button">
             Вхід через аккаунт
             <img src={google} alt="google" />
           </button>
-          {/* <button
-            type="button"
-            onClick={handleFacebookLogin}
-            style={{
-              padding: "10px",
-              borderRadius: "8px",
-              border: "1px solid #1877F2",
-              background: "#1877F2",
-              color: "#fff",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "8px",
-            }}
-          >
-            Facebook
-          </button> */}
         </div>
       </form>
       <div className="auth-form-bottom">

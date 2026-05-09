@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./DashboardLeft.scss";
 import logo from "../../assets/logo.png";
 import main from "../../assets/main-dashboard.svg";
@@ -9,8 +10,16 @@ import accountWhite from "../../assets/account-white.svg";
 import account from "../../assets/account.svg";
 import burger from "../../assets/burger.svg";
 import close from "../../assets/icon-close.svg";
+import searchIcon from "../../assets/icon-search.svg";
+import heartCircle from "../../assets/heart-circle.svg";
 
-export const DashboardLeft = ({ currentLink }) => {
+export const DashboardLeft = ({
+  currentLink,
+  showMobileSearch = false,
+  searchQuery = "",
+  onSearchChange,
+  searchPlaceholder = "Пошук...",
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -33,7 +42,7 @@ export const DashboardLeft = ({ currentLink }) => {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -42,16 +51,38 @@ export const DashboardLeft = ({ currentLink }) => {
   return (
     <>
       <div className={`mobile-header ${showHeader ? "" : "hidden"}`}>
-        <button className="mobile-header-hamburger" onClick={toggleMenu}>
-          <img src={burger} alt="Burger Menu" />
-        </button>
-        <div className="mobile-header-actions">
-          <a href="/saved" className="mobile-header-saved-icon">
-            <img src={bookmark} alt="Bookmark" />
-          </a>
-          <a href="/account" className="mobile-header-action-icon">
-            <img src={accountWhite} alt="Account" />
-          </a>
+        {/* Top row of mobile header */}
+        <div
+          className="mobile-header-top"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            gap: "18px",
+          }}
+        >
+          <button className="mobile-header-hamburger" onClick={toggleMenu}>
+            <img src={burger} alt="Burger Menu" />
+          </button>
+          {showMobileSearch && (
+            <div className="mobile-header-search-wrapper">
+              <input
+                type="text"
+                placeholder={searchPlaceholder}
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+              />
+              <img src={searchIcon} alt="search" className="search-icon" />
+            </div>
+          )}
+          <div className="mobile-header-actions">
+            <Link to="/saved" className="mobile-header-saved-icon">
+              <img src={bookmark} alt="Bookmark" />
+            </Link>
+            <Link to="/account" className="mobile-header-action-icon">
+              <img src={accountWhite} alt="Account" />
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -61,24 +92,24 @@ export const DashboardLeft = ({ currentLink }) => {
             <img src={close} alt="Colse Button" />
           </button>
           <div className="left-panel-mobile-actions">
-            <a href="/saved" className="mobile-header-saved-icon">
+            <Link to="/saved" className="mobile-header-saved-icon">
               <img src={bookmark} alt="Bookmark" />
-            </a>
-            <a href="/account" className="mobile-header-action-icon">
+            </Link>
+            <Link to="/account" className="mobile-header-action-icon">
               <img src={accountWhite} alt="Account" />
-            </a>
+            </Link>
           </div>
         </div>
 
-        <a href="/" className="left-panel-logo">
+        <Link to="/" className="left-panel-logo">
           <img src={logo} alt="Med ed logo" />
           <div className="left-panel-logo-text">IT’s Med Ed</div>
-        </a>
+        </Link>
 
         <ul className="left-panel-links">
           <li className="left-panel-links-link">
-            <a
-              href="/"
+            <Link
+              to="/"
               className={
                 currentLink === "" || currentLink === "/"
                   ? "left-panel-links-link-current"
@@ -91,12 +122,12 @@ export const DashboardLeft = ({ currentLink }) => {
                 alt="Main"
               />
               Головна
-            </a>
+            </Link>
           </li>
 
           <li className="left-panel-links-link">
-            <a
-              href="/booklets"
+            <Link
+              to="/booklets"
               className={
                 currentLink === "/booklets"
                   ? "left-panel-links-link-current"
@@ -109,12 +140,12 @@ export const DashboardLeft = ({ currentLink }) => {
                 alt="Booklets"
               />
               Буклети
-            </a>
+            </Link>
           </li>
 
           <li className="left-panel-links-link">
-            <a
-              href="/bases"
+            <Link
+              to="/bases"
               className={
                 currentLink === "/bases" ? "left-panel-links-link-current" : ""
               }
@@ -125,12 +156,28 @@ export const DashboardLeft = ({ currentLink }) => {
                 alt="Bases"
               />
               Бази
-            </a>
+            </Link>
+          </li>
+
+          <li className="left-panel-links-link">
+            <Link
+              to="/amps"
+              className={
+                currentLink === "/amps" ? "left-panel-links-link-current" : ""
+              }
+            >
+              <img
+                src={heartCircle}
+                className="left-panel-links-link-image"
+                alt="AMPS"
+              />
+              АМПС
+            </Link>
           </li>
 
           <li className="left-panel-links-link desktop-only-link">
-            <a
-              href="/saved"
+            <Link
+              to="/saved"
               className={
                 currentLink === "/saved" ? "left-panel-links-link-current" : ""
               }
@@ -140,13 +187,13 @@ export const DashboardLeft = ({ currentLink }) => {
                 className="left-panel-links-link-image"
                 alt="Saved"
               />
-              Збереженні
-            </a>
+              Збережені
+            </Link>
           </li>
 
           <li className="left-panel-links-link">
-            <a
-              href="/account"
+            <Link
+              to="/account"
               className={
                 currentLink === "/account"
                   ? "left-panel-links-link-current"
@@ -159,7 +206,7 @@ export const DashboardLeft = ({ currentLink }) => {
                 alt="Account"
               />
               Профіль
-            </a>
+            </Link>
           </li>
         </ul>
 
@@ -171,7 +218,9 @@ export const DashboardLeft = ({ currentLink }) => {
             24/7 відповідає на найпоширеніші запитання про курси, оплату та
             навчання.
           </p>
-          <button className="left-panel-support-btn button-pink">Написати</button>
+          <button className="left-panel-support-btn button-pink">
+            Написати
+          </button>
         </div>
       </div>
 
