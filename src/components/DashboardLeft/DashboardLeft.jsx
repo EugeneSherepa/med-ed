@@ -11,7 +11,6 @@ import account from "../../assets/account.svg";
 import burger from "../../assets/burger.svg";
 import close from "../../assets/icon-close.svg";
 import searchIcon from "../../assets/icon-search.svg";
-import heartCircle from "../../assets/heart-circle.svg";
 
 export const DashboardLeft = ({
   currentLink,
@@ -167,7 +166,7 @@ export const DashboardLeft = ({
               }
             >
               <img
-                src={heartCircle}
+                src={folder}
                 className="left-panel-links-link-image"
                 alt="AMPS"
               />

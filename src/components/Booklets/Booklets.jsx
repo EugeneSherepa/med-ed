@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useMemo } from "react";
 import { DashboardLeft } from "../DashboardLeft/DashboardLeft";
+import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import { api } from "../../api";
 import "./Booklets.scss";
 import cardDot from "../../assets/card-dot-white.svg";
@@ -27,6 +28,28 @@ export const BookletsPage = () => {
   const [filterType, setFilterType] = useState("");
 
   const navigate = useNavigate();
+
+  const [modalConfig, setModalConfig] = useState({
+    isOpen: false,
+    title: "",
+    subtitle: "",
+    confirmText: "Окей",
+    cancelText: "",
+    onConfirm: () => {},
+  });
+
+  const closeModal = () => setModalConfig((prev) => ({ ...prev, isOpen: false }));
+
+  const showNotification = (title, subtitle) => {
+    setModalConfig({
+      isOpen: true,
+      title,
+      subtitle,
+      confirmText: "Окей",
+      cancelText: "",
+      onConfirm: closeModal,
+    });
+  };
 
   useEffect(() => {
     const fetchBookletsData = async () => {
@@ -86,7 +109,7 @@ export const BookletsPage = () => {
       navigate(`/test/${testId}`);
     } catch (error) {
       console.error("Error starting test:", error);
-      alert("Не вдалося розпочати тест. Спробуйте ще раз.");
+      showNotification("Помилка", "Не вдалося розпочати тест. Спробуйте ще раз.");
     }
   };
 
@@ -166,6 +189,15 @@ export const BookletsPage = () => {
 
   return (
     <div className="booklets">
+      <ConfirmModal
+        isOpen={modalConfig.isOpen}
+        title={modalConfig.title}
+        subtitle={modalConfig.subtitle}
+        confirmText={modalConfig.confirmText}
+        cancelText={modalConfig.cancelText}
+        onConfirm={modalConfig.onConfirm}
+        onCancel={closeModal}
+      />
       <DashboardLeft
         currentLink="/booklets"
         showMobileSearch={true}
@@ -285,7 +317,7 @@ export const BookletsPage = () => {
         ) : filteredTests.length === 0 ? (
           <div className="booklets-empty">
             🔍 На жаль, у цьому розділі поки що немає буклетів.
-            <br /> активно працюємо над їхнім додаванням — заходьте трохи
+            <br /> Ми Активно працюємо над їхнім додаванням — заходьте трохи
             згодом!
           </div>
         ) : (

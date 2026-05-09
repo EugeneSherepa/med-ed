@@ -49,6 +49,12 @@
     resize: none;
   }
 
+  &-error {
+    color: #ef4444;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
   .modal-actions {
     display: flex;
     gap: 12px;
