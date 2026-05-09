@@ -75,7 +75,8 @@ export const AdminQuestionsManager = () => {
   // ➕ Add Option
   const handleAddOption = () => {
     if (formData.options.length >= letters.length) {
-      return alert("Досягнуто максимальної кількості варіантів.");
+      showNotification("Ліміт варіантів", "Досягнуто максимальної кількості варіантів.");
+      return;
     }
     setFormData({
       ...formData,
@@ -118,10 +119,22 @@ export const AdminQuestionsManager = () => {
     title: "",
     subtitle: "",
     confirmText: "",
+    cancelText: "",
     onConfirm: null,
   });
 
-  const closeModal = () => setModalConfig({ ...modalConfig, isOpen: false });
+  const closeModal = () => setModalConfig((prev) => ({ ...prev, isOpen: false }));
+
+  const showNotification = (title, subtitle) => {
+    setModalConfig({
+      isOpen: true,
+      title,
+      subtitle,
+      confirmText: "Окей",
+      cancelText: "",
+      onConfirm: closeModal,
+    });
+  };
 
   const handleDeleteClick = (e, id) => {
     e.stopPropagation();
@@ -139,7 +152,7 @@ export const AdminQuestionsManager = () => {
           closeModal();
         } catch (error) {
           console.error("Error deleting question:", error);
-          alert("Помилка видалення.");
+          showNotification("Помилка", "Не вдалося видалити питання. Спробуйте пізніше.");
         }
       },
     });
@@ -148,17 +161,19 @@ export const AdminQuestionsManager = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.options.some((opt) => !opt.text.trim())) {
-      return alert("Будь ласка, заповніть усі варіанти відповідей.");
+      showNotification("Помилка валідації", "Будь ласка, заповніть усі варіанти відповідей.");
+      return;
     }
     if (formData.options.length < 2) {
-      return alert("Питання повинно мати мінімум 2 варіанти відповіді.");
+      showNotification("Помилка валідації", "Питання повинно мати мінімум 2 варіанти відповіді.");
+      return;
     }
 
     setIsSaving(true);
     try {
       if (activeQuestionId) {
         await api.patch(`/tests/questions/${activeQuestionId}`, formData);
-        alert("Питання оновлено!");
+        showNotification("Збережено", "Питання успішно оновлено!");
       } else {
         await api.post(`/tests/${testId}/questions`, formData);
         setFormData(emptyForm);
@@ -166,7 +181,7 @@ export const AdminQuestionsManager = () => {
       fetchQuestions();
     } catch (error) {
       console.error("Error saving question:", error);
-      alert("Помилка при збереженні.");
+      showNotification("Помилка", "Не вдалося зберегти питання. Спробуйте пізніше.");
     } finally {
       setIsSaving(false);
     }
@@ -181,6 +196,7 @@ export const AdminQuestionsManager = () => {
         title={modalConfig.title}
         subtitle={modalConfig.subtitle}
         confirmText={modalConfig.confirmText}
+        cancelText={modalConfig.cancelText}
         onConfirm={modalConfig.onConfirm}
         onCancel={closeModal}
       />

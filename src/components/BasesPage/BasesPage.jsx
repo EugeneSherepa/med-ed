@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useMemo } from "react";
 import { DashboardLeft } from "../DashboardLeft/DashboardLeft";
+import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import { api } from "../../api";
 import "./BasesPage.scss";
 import saveIcon from "../../assets/bookmark.svg";
@@ -26,6 +27,28 @@ export const BasesPage = () => {
   const [filterType, setFilterType] = useState("");
 
   const navigate = useNavigate();
+
+  const [modalConfig, setModalConfig] = useState({
+    isOpen: false,
+    title: "",
+    subtitle: "",
+    confirmText: "Окей",
+    cancelText: "",
+    onConfirm: () => {},
+  });
+
+  const closeModal = () => setModalConfig((prev) => ({ ...prev, isOpen: false }));
+
+  const showNotification = (title, subtitle) => {
+    setModalConfig({
+      isOpen: true,
+      title,
+      subtitle,
+      confirmText: "Окей",
+      cancelText: "",
+      onConfirm: closeModal,
+    });
+  };
 
   useEffect(() => {
     const fetchBasesData = async () => {
@@ -85,7 +108,7 @@ export const BasesPage = () => {
       navigate(`/test/${baseId}`);
     } catch (error) {
       console.error("Error starting test:", error);
-      alert("Не вдалося розпочати тест. Спробуйте ще раз.");
+      showNotification("Помилка", "Не вдалося розпочати тест. Спробуйте ще раз.");
     }
   };
 
@@ -148,6 +171,15 @@ export const BasesPage = () => {
 
   return (
     <div className="bases">
+      <ConfirmModal
+        isOpen={modalConfig.isOpen}
+        title={modalConfig.title}
+        subtitle={modalConfig.subtitle}
+        confirmText={modalConfig.confirmText}
+        cancelText={modalConfig.cancelText}
+        onConfirm={modalConfig.onConfirm}
+        onCancel={closeModal}
+      />
       <DashboardLeft
         currentLink="/bases"
         showMobileSearch={true}

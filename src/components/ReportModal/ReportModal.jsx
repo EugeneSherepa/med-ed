@@ -6,10 +6,12 @@ export const ReportModal = ({ isOpen, onClose, questionId, testId }) => {
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError("");
     try {
       await api.post("/reports", {
         comment,
@@ -23,7 +25,7 @@ export const ReportModal = ({ isOpen, onClose, questionId, testId }) => {
         setComment("");
       }, 2000);
     } catch (error) {
-      alert("Не вдалося надіслати скаргу. Спробуйте пізніше.");
+      setSubmitError("Не вдалося надіслати скаргу. Спробуйте пізніше.");
     } finally {
       setIsSubmitting(false);
     }
@@ -50,6 +52,9 @@ export const ReportModal = ({ isOpen, onClose, questionId, testId }) => {
                 placeholder="Наприклад: Неправильна відповідь у базі, помилка в тексті..."
                 required
               />
+              {submitError && (
+                <p className="report-modal-error">{submitError}</p>
+              )}
               <div className="modal-actions">
                 <button type="button" onClick={onClose} className="btn-cancel">Скасувати</button>
                 <button type="submit" disabled={isSubmitting} className="btn-submit">
