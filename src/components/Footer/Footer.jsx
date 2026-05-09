@@ -1,4 +1,5 @@
 import './Footer.scss';
+import { Link } from 'react-router-dom';
 import iconFacebook from '../../assets/telegram.svg';
 import iconInstagram from '../../assets/instagram.svg';
 import iconLinkedin from '../../assets/tiktok.svg';
@@ -14,103 +15,103 @@ export const Footer = () => {
             <nav className="footer-top-left-navigation">
               <ul className="footer-top-left-navigation-list">
                 <li className="footer-top-left-navigation-list-item">
-                  <a
-                    href="/about-us"
+                  <Link
+                    to="/about-us"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     Про нас
-                  </a>
+                  </Link>
                 </li>
                 <li className="footer-top-left-navigation-list-item">
-                  <a
-                    href="/team"
+                  <Link
+                    to="/team"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     Команда
-                  </a>
+                  </Link>
                 </li>
                 <li className="footer-top-left-navigation-list-item">
-                  <a
-                    href="/reviews"
+                  <Link
+                    to="/reviews"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     Відгуки
-                  </a>
+                  </Link>
                 </li>
               </ul>
               <ul className="footer-top-left-navigation-list">
                 <li className="footer-top-left-navigation-list-item">
-                  <a
-                    href="/step-one"
+                  <Link
+                    to="/step-one"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     КРОК-1
-                  </a>
+                  </Link>
                 </li>
                 <li className="footer-top-left-navigation-list-item">
-                  <a
-                    href="/step-two"
+                  <Link
+                    to="/step-two"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     КРОК-2
-                  </a>
+                  </Link>
                 </li>
                 <li className="footer-top-left-navigation-list-item">
-                  <a
-                    href="/materials"
+                  <Link
+                    to="/materials"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     Матеріали
-                  </a>
+                  </Link>
                 </li>
               </ul>
               <ul className="footer-top-left-navigation-list">
                 <li className="footer-top-left-navigation-list-item">
-                  <a
-                    href="/faq"
+                  <Link
+                    to="/faq"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     FAQ
-                  </a>
+                  </Link>
                 </li>
                 <li className="footer-top-left-navigation-list-item">
-                  <a
-                    href="/contact"
+                  <Link
+                    to="/contact"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     Зв’язок з нами
-                  </a>
+                  </Link>
                 </li>
                 <li className="footer-top-left-navigation-list-item">
-                  <a
-                    href="/public-offer"
+                  <Link
+                    to="/public-offer"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     Публічна Оферта
-                  </a>
+                  </Link>
                 </li>
                 <li className="footer-top-left-navigation-list-item">
-                  <a
-                    href="/policy"
+                  <Link
+                    to="/policy"
                     className="footer-top-left-navigation-list-item-link"
                   >
                     Політика конфіденційності
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
-            <a href="/" className="footer-top-left-heading">
+            <Link to="/" className="footer-top-left-heading">
               <div className="footer-top-left-heading-heading">IT’s Med Ed</div>
               <img
                 src={logo}
                 alt="Med Ed"
                 className="footer-top-left-heading-mobile"
               />
-            </a>
+            </Link>
           </div>
-          <a href="/" className='footer-top-left-heading-second'>
+          <Link to="/" className="footer-top-left-heading-second">
             <img src={logo} alt="Med Ed" />
-          </a>
+          </Link>
         </div>
         <div className="footer-bottom">
           <div className="footer-bottom-text">

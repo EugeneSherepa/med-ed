@@ -3,7 +3,7 @@ import logo from "../../assets/logo.png";
 import passwordHidden from "../../assets/icon-password-hidden.svg";
 import passwordShow from "../../assets/icon-password-show.svg";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   INSTITUTIONS,
   FACULTIES,
@@ -83,8 +83,6 @@ export const RegistrationForm = () => {
             : data.message;
           throw new Error(errorMessage || "Сталася помилка при реєстрації");
         }
-
-        console.log("Registration successful! Access Token:", data.accessToken);
         localStorage.setItem("accessToken", data.accessToken);
         navigate("/account");
       } catch (error) {
@@ -98,10 +96,10 @@ export const RegistrationForm = () => {
 
   return (
     <div className="auth-form">
-      <a href="/" className="auth-form-logo">
+      <Link to="/" className="auth-form-logo">
         <img src={logo} alt="Med ed logo" />
         <div className="auth-form-logo-text">IT’s Med Ed</div>
-      </a>
+      </Link>
 
       <form className="auth-form-wrapper" onSubmit={handleSubmit}>
         <div
@@ -287,12 +285,12 @@ export const RegistrationForm = () => {
 
         <div className="auth-form-wrapper-policy">
           Створюючи обліковий запис, ви підтверджуєте ознайомлення з{" "}
-          <a href="/policy">Політикою конфіденційності</a>.
+          <Link to="/policy">Політикою конфіденційності</Link>.
         </div>
       </form>
 
       <div className="auth-form-bottom">
-        Вже є аккаунт? <a href="/login">Увійти</a>
+        Вже є аккаунт? <Link to="/login">Увійти</Link>
       </div>
     </div>
   );

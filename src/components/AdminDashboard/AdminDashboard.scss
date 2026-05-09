@@ -1,0 +1,215 @@
+@use "../../styles/variables" as *;
+
+.admin-dashboard {
+  padding: 32px;
+
+  &-header {
+    margin-bottom: 32px;
+
+    h2 {
+      font-family: $font-fixel;
+      color: #252c3f;
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+    }
+
+    p {
+      color: #6b7280;
+      font-family: $font-fixel;
+      font-size: 15px;
+      margin: 0;
+    }
+  }
+
+  &-section {
+    margin-top: 32px;
+  }
+}
+
+.admin-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background-color: $white;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f3f4f6;
+
+  .stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+
+    &.blue {
+      background: #e0f2fe;
+      color: #0284c7;
+    }
+    &.pink {
+      background: #fdf2f8;
+      color: #db2777;
+    }
+    &.green {
+      background: #dcfce3;
+      color: #16a34a;
+    }
+    &.purple {
+      background: #f3e8ff;
+      color: #9333ea;
+    }
+  }
+
+  .stat-info {
+    display: flex;
+    flex-direction: column;
+
+    .stat-label {
+      font-family: $font-fixel;
+      color: #6b7280;
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-family: $font-fixel;
+      color: #111827;
+      font-size: 28px;
+      font-weight: 700;
+    }
+  }
+}
+
+.admin-dashboard-banner {
+  background: linear-gradient(135deg, #f7b4d1 0%, #f18cb6 100%);
+  border-radius: 16px;
+  padding: 32px;
+  color: $white;
+
+  .banner-content {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .banner-number {
+    font-family: $font-fixel;
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .banner-text {
+    h3 {
+      font-family: $font-fixel;
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0 0 4px 0;
+    }
+
+    p {
+      font-family: $font-fixel;
+      font-size: 14px;
+      margin: 0;
+      opacity: 0.9;
+    }
+  }
+}
+
+.admin-loading,
+.admin-error {
+  padding: 32px;
+  font-family: $font-fixel;
+  color: #6b7280;
+}
+
+// New Icons Colors
+.stat-icon.yellow {
+  background: #fef9c3;
+  color: #a16207;
+}
+.stat-icon.red {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+// Growth badge next to numbers
+.stat-growth {
+  font-size: 13px;
+  color: #16a34a;
+  font-weight: 600;
+  background: #dcfce7;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+// Split the bottom area into two columns
+.admin-dashboard-bottom {
+  display: grid;
+  grid-template-columns: 2fr 1fr; // Table gets 2/3, Demographics gets 1/3
+  gap: 24px;
+  margin-top: 32px;
+
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: 1fr; // Stacks on smaller screens
+  }
+}
+
+.admin-dashboard-section {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+
+  h3 {
+    margin: 0 0 16px 0;
+    font-family: "Fixel", sans-serif;
+    font-size: 18px;
+    color: #111827;
+  }
+}
+
+// Minimal list styling for the Demographics
+.course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.course-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-radius: 12px;
+  font-weight: 500;
+
+  .course-name {
+    color: #374151;
+  }
+  .course-count {
+    color: #6b7280;
+    font-size: 14px;
+  }
+}
+
+.text-muted {
+  color: #6b7280;
+}
