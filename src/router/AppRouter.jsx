@@ -1,4 +1,13 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
+// ── Always-loaded ─────────────────────────────────────────────────
+import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
+import { RoleProtectedRoute } from "../components/RoleProtectedRoute/RoleProtectedRoute";
+import { PublicRoute } from "../components/PublicRoute/PublicRoute";
+
+// ── Public marketing pages ────────────────────────────────────────
 import { Home } from "../pages/Home/Home";
 import { About } from "../pages/About/About";
 import { Materials } from "../pages/Materials/Materials";
@@ -16,28 +25,81 @@ import { Medicine } from "../pages/AboutCourse/Medicine/Medicine";
 import { Stomatology } from "../pages/AboutCourse/StepOneStomatology/Stomatology";
 import { FAQ } from "../pages/FAQ/FAQ";
 import { Policy } from "../pages/Policy/Policy";
+import { PublicOffer } from "../pages/PublicOffer/PublicOffer";
+
+// ── Auth pages ────────────────────────────────────────────────────
 import { Login } from "../pages/Login/Login";
 import { Registration } from "../pages/Registration/Registration";
+import { CompleteProfile } from "../components/CompleteProfile/CompleteProfile";
+
+// ── Student pages ─────────────────────────────────────────────────
 import { Account } from "../pages/Account/Account";
 import { Booklets } from "../pages/Booklets/Booklets";
 import { Bases } from "../pages/Bases/Bases";
-import { Admin } from "../pages/Admin/Admin";
-import { AdminTestForm } from "../components/AdminTestForm/AdminTestForm";
-import { AdminTestsList } from "../components/AdminTestsList/AdminTestsList";
-import { PublicOffer } from "../pages/PublicOffer/PublicOffer";
-import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
-import { RoleProtectedRoute } from "../components/RoleProtectedRoute/RoleProtectedRoute";
-import { PublicRoute } from "../components/PublicRoute/PublicRoute";
-import { CompleteProfile } from "../components/CompleteProfile/CompleteProfile";
-import { TestPage } from "../components/TestPage/TestPage";
-import { AdminUsersList } from "../components/AdminUsersList/AdminUsersList.jsx";
-import { AdminDashboard } from "../components/AdminDashboard/AdminDashboard";
-import { AdminQuestionsManager } from "../components/AdminQuestionsManager/AdminQuestionsManager";
-import { AdminReportsList } from "../components/AdminReportsList/AdminReportsList";
+import { Amps } from "../pages/Amps/Amps";
 import { Saved } from "../pages/Saved/Saved";
 import { SavedDetail } from "../pages/Saved/SavedDetail";
-import { Amps } from "../pages/Amps/Amps";
-import { useAuth } from "../context/AuthContext";
+import { TestPage } from "../components/TestPage/TestPage";
+
+// ── Admin shell + pages (lazy — large, admin-only) ────────────────
+const Admin = lazy(() =>
+  import("../pages/Admin/Admin").then((m) => ({ default: m.Admin })),
+);
+const AdminDashboard = lazy(() =>
+  import("../components/AdminDashboard/AdminDashboard").then((m) => ({
+    default: m.AdminDashboard,
+  })),
+);
+const AdminTestsList = lazy(() =>
+  import("../components/AdminTestsList/AdminTestsList").then((m) => ({
+    default: m.AdminTestsList,
+  })),
+);
+const AdminTestForm = lazy(() =>
+  import("../components/AdminTestForm/AdminTestForm").then((m) => ({
+    default: m.AdminTestForm,
+  })),
+);
+const AdminQuestionsManager = lazy(() =>
+  import("../components/AdminQuestionsManager/AdminQuestionsManager").then(
+    (m) => ({ default: m.AdminQuestionsManager }),
+  ),
+);
+const AdminUsersList = lazy(() =>
+  import("../components/AdminUsersList/AdminUsersList").then((m) => ({
+    default: m.AdminUsersList,
+  })),
+);
+const AdminUserDetail = lazy(() =>
+  import("../components/AdminUserDetail/AdminUserDetail").then((m) => ({
+    default: m.AdminUserDetail,
+  })),
+);
+const AdminReportsList = lazy(() =>
+  import("../components/AdminReportsList/AdminReportsList").then((m) => ({
+    default: m.AdminReportsList,
+  })),
+);
+const AdminTestAnalytics = lazy(() =>
+  import("../components/AdminTestAnalytics/AdminTestAnalytics").then((m) => ({
+    default: m.AdminTestAnalytics,
+  })),
+);
+
+const AdminLoader = () => (
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "100vh",
+      color: "#6b7280",
+      fontFamily: "sans-serif",
+    }}
+  >
+    Завантаження...
+  </div>
+);
 
 const AppRouter = () => {
   const { currentUser, isLoading } = useAuth();
@@ -45,6 +107,7 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public marketing */}
         <Route path="/" element={<Home />} />
         <Route path="/about-us" element={<About />} />
         <Route path="/materials" element={<Materials />} />
@@ -64,6 +127,7 @@ const AppRouter = () => {
         <Route path="/policy" element={<Policy />} />
         <Route path="/public-offer" element={<PublicOffer />} />
 
+        {/* Auth */}
         <Route
           path="/register"
           element={
@@ -81,6 +145,7 @@ const AppRouter = () => {
           }
         />
 
+        {/* Protected student pages */}
         <Route
           path="/complete-profile"
           element={
@@ -154,24 +219,89 @@ const AppRouter = () => {
           }
         />
 
+        {/* Admin (lazy-loaded — admin-only, large bundle) */}
         <Route
           path="/admin"
           element={
             <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
-              <Admin currentUser={currentUser} />
+              <Suspense fallback={<AdminLoader />}>
+                <Admin currentUser={currentUser} />
+              </Suspense>
             </RoleProtectedRoute>
           }
         >
-          <Route index element={<AdminDashboard />} />
-          <Route path="tests" element={<AdminTestsList />} />
-          <Route path="reports" element={<AdminReportsList />} />
-          <Route path="tests/new" element={<AdminTestForm />} />
-          <Route path="tests/:testId/edit" element={<AdminTestForm />} />
+          <Route
+            index
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminDashboard />
+              </Suspense>
+            }
+          />
+          <Route
+            path="tests"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminTestsList />
+              </Suspense>
+            }
+          />
+          <Route
+            path="reports"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminReportsList />
+              </Suspense>
+            }
+          />
+          <Route
+            path="tests/new"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminTestForm />
+              </Suspense>
+            }
+          />
+          <Route
+            path="tests/:testId/edit"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminTestForm />
+              </Suspense>
+            }
+          />
           <Route
             path="tests/:testId/questions"
-            element={<AdminQuestionsManager />}
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminQuestionsManager />
+              </Suspense>
+            }
           />
-          <Route path="users" element={<AdminUsersList />} />
+          <Route
+            path="tests/:testId/analytics"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminTestAnalytics />
+              </Suspense>
+            }
+          />
+          <Route
+            path="users"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminUsersList />
+              </Suspense>
+            }
+          />
+          <Route
+            path="users/:userId"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminUserDetail />
+              </Suspense>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>

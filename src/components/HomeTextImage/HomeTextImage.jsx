@@ -9,7 +9,7 @@ export const HomeTextImage = () => {
       <div className="page-width">
         <div className="home-it">
           <div className="page-width">
-            <img src={photo} alt="Our team photo" />
+            <img src={photo} alt="Our team photo" loading="lazy" decoding="async" />
             <h2 className="home-it-title">IT’s Med Ed</h2>
           </div>
           <div className="home-it-text">

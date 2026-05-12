@@ -10,6 +10,7 @@ import iconCaretDropdown from "../../assets/icon-caret-dropdown.svg";
 import iconCaret from "../../assets/icon-caret-swiper-disabled.svg";
 import iconCaretButton from "../../assets/icon-caret-button.svg";
 import iconCaretButtonWhite from "../../assets/icon-caret-button-white.svg";
+import iconBookmark from "../../assets/bookmark.svg";
 import iconBookmarkFilled from "../../assets/bookmark-filled.svg";
 import iconCorrect from "../../assets/icon-correct.svg";
 import iconIncorrect from "../../assets/icon-incorrect.svg";
@@ -40,6 +41,7 @@ export const SavedQuestionViewer = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [swiperInstance, setSwiperInstance] = useState(null);
+  const [unsavedIds, setUnsavedIds] = useState(new Set());
 
   const testId = getTestIdFromSlug(slug);
 
@@ -69,24 +71,20 @@ export const SavedQuestionViewer = () => {
     setAnswers((prev) => ({ ...prev, [questionId]: optionId }));
   };
 
-  const handleUnsave = async () => {
+  const handleToggleSave = async () => {
     const qId = currentQuestion.id;
     try {
-      await api.delete(`/saved-questions/${qId}`);
-      const newQuestions = questions.filter((q) => q.id !== qId);
-      if (newQuestions.length === 0) {
-        navigate("/saved", { replace: true });
-        return;
+      if (unsavedIds.has(qId)) {
+        await api.post("/saved-questions", { questionId: qId });
+        setUnsavedIds((prev) => {
+          const next = new Set(prev);
+          next.delete(qId);
+          return next;
+        });
+      } else {
+        await api.delete(`/saved-questions/${qId}`);
+        setUnsavedIds((prev) => new Set(prev).add(qId));
       }
-      setQuestions(newQuestions);
-      setCurrentQuestionIndex((prev) =>
-        prev >= newQuestions.length ? newQuestions.length - 1 : prev,
-      );
-      setAnswers((prev) => {
-        const next = { ...prev };
-        delete next[qId];
-        return next;
-      });
     } catch (err) {
       console.error(err);
     }
@@ -178,11 +176,15 @@ export const SavedQuestionViewer = () => {
               <div className="test-question-card">
                 <div className="test-question-card-tools">
                   <button
-                    className="test-question-card-tools-btn saved"
-                    onClick={handleUnsave}
-                    title="Видалити зі збережених"
+                    className={`test-question-card-tools-btn ${unsavedIds.has(currentQuestion.id) ? "" : "saved"}`}
+                    onClick={handleToggleSave}
+                    title={unsavedIds.has(currentQuestion.id) ? "Зберегти" : "Видалити зі збережених"}
                   >
-                    <img src={iconBookmarkFilled} alt="Збережено" /> Збережено
+                    <img
+                      src={unsavedIds.has(currentQuestion.id) ? iconBookmark : iconBookmarkFilled}
+                      alt="Зберегти"
+                    />
+                    {unsavedIds.has(currentQuestion.id) ? "Зберегти" : "Збережено"}
                   </button>
                 </div>
 

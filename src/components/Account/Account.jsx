@@ -219,27 +219,36 @@ export const AccountPage = () => {
             style={{ marginBottom: "32px" }}
           >
             <div className="account-wrapper-form-photo">
-              <img
-                src={photoPreview}
-                alt="Profile Avatar"
-                onClick={() => fileInputRef.current.click()}
-              />
               <div>
-                <button
-                  type="button"
+                <img
+                  src={photoPreview}
+                  alt="Profile Avatar"
                   onClick={() => fileInputRef.current.click()}
-                  className="account-wrapper-form-photo-button"
-                >
-                  Змінити фото
-                </button>
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handlePhotoChange}
-                  accept="image/png, image/jpeg, image/jpg, image/webp"
-                  style={{ display: "none" }}
                 />
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current.click()}
+                    className="account-wrapper-form-photo-button"
+                  >
+                    Змінити фото
+                  </button>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handlePhotoChange}
+                    accept="image/png, image/jpeg, image/jpg, image/webp"
+                    style={{ display: "none" }}
+                  />
+                </div>
               </div>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="button-pink"
+              >
+                Вийти з акаунту
+              </button>
             </div>
 
             <h5 className="account-wrapper-form-title">Особиста інформація</h5>
@@ -374,16 +383,6 @@ export const AccountPage = () => {
               {isSavingProfile ? "Збереження..." : "Зберегти зміни"}
             </button>
           </form>
-
-          <div className="logout-wrapper">
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="button-pink"
-            >
-              Вийти з акаунту
-            </button>
-          </div>
 
           {serverData?.hasPassword && (
             <form

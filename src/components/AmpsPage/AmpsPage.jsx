@@ -55,6 +55,7 @@ export const AmpsPage = () => {
       subtitle,
       confirmText: "Окей",
       cancelText: "",
+      showIcon: false,
       onConfirm: closeModal,
     });
   };
@@ -175,6 +176,7 @@ export const AmpsPage = () => {
         subtitle={modalConfig.subtitle}
         confirmText={modalConfig.confirmText}
         cancelText={modalConfig.cancelText}
+        showIcon={modalConfig.showIcon ?? true}
         onConfirm={modalConfig.onConfirm}
         onCancel={closeModal}
       />
@@ -296,7 +298,7 @@ export const AmpsPage = () => {
         ) : filteredTests.length === 0 ? (
           <div className="booklets-empty">
             🔍 На жаль, у цьому розділі поки що немає тестів АМПС.
-            <br /> Ми Активно працюємо над їхнім додаванням — заходьте трохи
+            <br /> Ми активно працюємо над їхнім додаванням — заходьте трохи
             згодом!
           </div>
         ) : (

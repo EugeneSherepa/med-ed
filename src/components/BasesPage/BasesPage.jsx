@@ -46,6 +46,7 @@ export const BasesPage = () => {
       subtitle,
       confirmText: "Окей",
       cancelText: "",
+      showIcon: false,
       onConfirm: closeModal,
     });
   };
@@ -177,6 +178,7 @@ export const BasesPage = () => {
         subtitle={modalConfig.subtitle}
         confirmText={modalConfig.confirmText}
         cancelText={modalConfig.cancelText}
+        showIcon={modalConfig.showIcon ?? true}
         onConfirm={modalConfig.onConfirm}
         onCancel={closeModal}
       />

@@ -34,7 +34,7 @@ export const Testimonial = ({ testimonial }) => {
   return (
     <div className="testimonial">
       <div className="testimonial-image">
-        <img src={image} alt={`Студент(ка) ${author}`} />
+        <img src={image} alt={`Студент(ка) ${author}`} loading="lazy" decoding="async" />
       </div>
       <div className="testimonial-information">
         <div className="testimonial-information-wrapper">

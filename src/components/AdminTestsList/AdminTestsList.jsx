@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { api } from "../../api";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import "./AdminTestsList.scss";
@@ -7,12 +7,9 @@ import "./AdminTestsList.scss";
 export const AdminTestsList = () => {
   const [tests, setTests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortConfig, setSortConfig] = useState({
-    key: "id",
-    direction: "descending",
-  });
+  const [sortConfig, setSortConfig] = useState({ key: "id", direction: "descending" });
+  const [duplicatingId, setDuplicatingId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -25,8 +22,7 @@ export const AdminTestsList = () => {
     onConfirm: () => {},
   });
 
-  const closeModal = () =>
-    setModalConfig((prev) => ({ ...prev, isOpen: false }));
+  const closeModal = () => setModalConfig((prev) => ({ ...prev, isOpen: false }));
 
   const fetchTests = async () => {
     try {
@@ -40,9 +36,7 @@ export const AdminTestsList = () => {
     }
   };
 
-  useEffect(() => {
-    fetchTests();
-  }, []);
+  useEffect(() => { fetchTests(); }, []);
 
   const showNotification = (title, subtitle) => {
     setModalConfig({
@@ -51,6 +45,7 @@ export const AdminTestsList = () => {
       subtitle,
       confirmText: "Окей",
       cancelText: "",
+      showIcon: false,
       onConfirm: closeModal,
     });
   };
@@ -59,8 +54,7 @@ export const AdminTestsList = () => {
     setModalConfig({
       isOpen: true,
       title: "Видалити цей тест?",
-      subtitle:
-        "Це також видалить усі питання та спроби користувачів! Цю дію не можна скасувати.",
+      subtitle: "Це також видалить усі питання та спроби користувачів! Цю дію не можна скасувати.",
       confirmText: "Видалити",
       cancelText: "Скасувати",
       onConfirm: async () => {
@@ -70,13 +64,41 @@ export const AdminTestsList = () => {
           showNotification("Видалено", "Тест успішно видалено з бази даних.");
         } catch (error) {
           console.error("Error deleting test", error);
-          showNotification(
-            "Помилка",
-            "Не вдалося видалити тест. Спробуйте пізніше.",
-          );
+          showNotification("Помилка", "Не вдалося видалити тест. Спробуйте пізніше.");
         }
       },
     });
+  };
+
+  const handleDuplicate = async (id) => {
+    setDuplicatingId(id);
+    try {
+      const res = await api.post(`/admin/tests/${id}/duplicate`);
+      setTests((prev) => [res.data, ...prev]);
+      showNotification("Скопійовано", "Тест продубльовано як чернетку.");
+    } catch (error) {
+      console.error("Error duplicating test", error);
+      showNotification("Помилка", "Не вдалося продублювати тест.");
+    } finally {
+      setDuplicatingId(null);
+    }
+  };
+
+  const handleExportResults = (test) => {
+    const token = localStorage.getItem("accessToken");
+    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
+    const url = `${baseUrl}/admin/export/tests/${test.id}/results`;
+    fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => res.blob())
+      .then((blob) => {
+        const objectUrl = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = objectUrl;
+        a.download = `test-${test.id}-results.csv`;
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+      })
+      .catch(() => showNotification("Помилка", "Не вдалося завантажити файл."));
   };
 
   const handleStatusChange = async (id, newStatus) => {
@@ -92,7 +114,6 @@ export const AdminTestsList = () => {
     }
   };
 
-  // 🚀 Sorting handler
   const handleSort = (key) => {
     let direction = "ascending";
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
@@ -101,17 +122,15 @@ export const AdminTestsList = () => {
     setSortConfig({ key, direction });
   };
 
-  // 🚀 Derived state: Filtered and Sorted tests
   const processedTests = useMemo(() => {
-    // 1. Filter
     let filtered = tests;
     if (searchQuery) {
       const lowerQuery = searchQuery.toLowerCase();
       filtered = tests.filter((test) => {
         const searchString = `
-          ${test.title || ""} 
-          ${test.year || ""} 
-          ${test.category || ""} 
+          ${test.title || ""}
+          ${test.year || ""}
+          ${test.category || ""}
           ${test.examType || ""}
           ${test.type === "BASE" ? "База base" : test.type === "AMPS" ? "АМПС amps" : "Буклет booklet"}
         `.toLowerCase();
@@ -119,38 +138,30 @@ export const AdminTestsList = () => {
       });
     }
 
-    // 2. Sort
     if (sortConfig.key) {
       filtered.sort((a, b) => {
         let aValue = a[sortConfig.key];
         let bValue = b[sortConfig.key];
 
-        // Custom extractors for nested or computed values
         if (sortConfig.key === "title") {
           aValue = a.type === "BASE" ? a.title : `${a.year}`;
           bValue = b.type === "BASE" ? b.title : `${b.year}`;
-          // AMPS also uses year-based sorting (handled by the else branch above)
         } else if (sortConfig.key === "questionsCount") {
           aValue = a._count?.questions || a.questions?.length || 0;
           bValue = b._count?.questions || b.questions?.length || 0;
         }
 
-        // Handle nulls safely
         aValue = aValue ?? "";
         bValue = bValue ?? "";
 
-        // String comparison
         if (typeof aValue === "string" && typeof bValue === "string") {
           return sortConfig.direction === "ascending"
             ? aValue.localeCompare(bValue)
             : bValue.localeCompare(aValue);
         }
 
-        // Number/Boolean comparison
-        if (aValue < bValue)
-          return sortConfig.direction === "ascending" ? -1 : 1;
-        if (aValue > bValue)
-          return sortConfig.direction === "ascending" ? 1 : -1;
+        if (aValue < bValue) return sortConfig.direction === "ascending" ? -1 : 1;
+        if (aValue > bValue) return sortConfig.direction === "ascending" ? 1 : -1;
         return 0;
       });
     }
@@ -158,7 +169,6 @@ export const AdminTestsList = () => {
     return filtered;
   }, [tests, searchQuery, sortConfig]);
 
-  // Helper for rendering sort arrows
   const getSortIcon = (key) => {
     if (sortConfig.key !== key) return " ↕";
     return sortConfig.direction === "ascending" ? " ▲" : " ▼";
@@ -178,7 +188,6 @@ export const AdminTestsList = () => {
         </button>
       </div>
 
-      {/* 🚀 Search Input */}
       <div className="admin-search-bar" style={{ marginBottom: "20px" }}>
         <input
           type="text"
@@ -198,51 +207,31 @@ export const AdminTestsList = () => {
       <table className="admin-table">
         <thead>
           <tr>
-            {/* 🚀 Clickable headers for sorting */}
             <th onClick={() => handleSort("id")} style={{ cursor: "pointer" }}>
               ID{getSortIcon("id")}
             </th>
-            <th
-              onClick={() => handleSort("type")}
-              style={{ cursor: "pointer" }}
-            >
+            <th onClick={() => handleSort("type")} style={{ cursor: "pointer" }}>
               Тип{getSortIcon("type")}
             </th>
-            <th
-              onClick={() => handleSort("title")}
-              style={{ cursor: "pointer" }}
-            >
+            <th onClick={() => handleSort("title")} style={{ cursor: "pointer" }}>
               Назва / Рік{getSortIcon("title")}
             </th>
-            <th
-              onClick={() => handleSort("category")}
-              style={{ cursor: "pointer" }}
-            >
+            <th onClick={() => handleSort("category")} style={{ cursor: "pointer" }}>
               Факультет{getSortIcon("category")}
             </th>
-            <th
-              onClick={() => handleSort("examType")}
-              style={{ cursor: "pointer" }}
-            >
+            <th onClick={() => handleSort("examType")} style={{ cursor: "pointer" }}>
               Іспит{getSortIcon("examType")}
             </th>
-            <th
-              onClick={() => handleSort("status")}
-              style={{ cursor: "pointer" }}
-            >
+            <th onClick={() => handleSort("status")} style={{ cursor: "pointer" }}>
               Статус{getSortIcon("status")}
             </th>
-            <th
-              onClick={() => handleSort("questionsCount")}
-              style={{ cursor: "pointer" }}
-            >
+            <th onClick={() => handleSort("questionsCount")} style={{ cursor: "pointer" }}>
               Питань{getSortIcon("questionsCount")}
             </th>
             <th>Дії</th>
           </tr>
         </thead>
         <tbody>
-          {/* 🚀 Changed tests.map to processedTests.map */}
           {processedTests.length === 0 ? (
             <tr>
               <td colSpan="8" style={{ textAlign: "center", padding: "30px" }}>
@@ -272,9 +261,7 @@ export const AdminTestsList = () => {
                     <select
                       className={`status-select ${test.status === "PUBLISHED" ? "published" : "draft"}`}
                       value={test.status || "DRAFT"}
-                      onChange={(e) =>
-                        handleStatusChange(test.id, e.target.value)
-                      }
+                      onChange={(e) => handleStatusChange(test.id, e.target.value)}
                     >
                       <option value="DRAFT">Чернетка</option>
                       <option value="PUBLISHED">Активний</option>
@@ -291,11 +278,28 @@ export const AdminTestsList = () => {
                   </button>
                   <button
                     className="action-btn questions"
-                    onClick={() =>
-                      navigate(`/admin/tests/${test.id}/questions`)
-                    }
+                    onClick={() => navigate(`/admin/tests/${test.id}/questions`)}
                   >
                     ☰ Питання
+                  </button>
+                  <button
+                    className="action-btn analytics"
+                    onClick={() => navigate(`/admin/tests/${test.id}/analytics`)}
+                  >
+                    📊 Аналітика
+                  </button>
+                  <button
+                    className="action-btn duplicate"
+                    disabled={duplicatingId === test.id}
+                    onClick={() => handleDuplicate(test.id)}
+                  >
+                    {duplicatingId === test.id ? "…" : "⧉ Дублювати"}
+                  </button>
+                  <button
+                    className="action-btn export"
+                    onClick={() => handleExportResults(test)}
+                  >
+                    ↓ CSV
                   </button>
                   <button
                     className="action-btn delete"
@@ -316,6 +320,7 @@ export const AdminTestsList = () => {
         subtitle={modalConfig.subtitle}
         confirmText={modalConfig.confirmText}
         cancelText={modalConfig.cancelText}
+        showIcon={modalConfig.showIcon ?? true}
         onConfirm={modalConfig.onConfirm}
         onCancel={closeModal}
       />

@@ -32,6 +32,10 @@ export const AdminQuestionsManager = () => {
   };
 
   const [formData, setFormData] = useState(emptyForm);
+  const [importMode, setImportMode] = useState(false);
+  const [importText, setImportText] = useState("");
+  const [isImporting, setIsImporting] = useState(false);
+  const [importError, setImportError] = useState("");
 
   // 🇺🇦 Extended Ukrainian Alphabet for dynamic options
   const letters = ["А", "Б", "В", "Г", "Д", "Е", "Є", "Ж", "З", "И"];
@@ -101,6 +105,41 @@ export const AdminQuestionsManager = () => {
   const handleAddNewClick = () => {
     setActiveQuestionId(null);
     setFormData(emptyForm);
+    setImportMode(false);
+  };
+
+  const handleImport = async () => {
+    setImportError("");
+    let parsed;
+    try {
+      parsed = JSON.parse(importText.trim());
+      if (!Array.isArray(parsed)) parsed = [parsed];
+    } catch {
+      setImportError("Невалідний JSON. Перевірте формат і спробуйте знову.");
+      return;
+    }
+    const invalid = parsed.find(
+      (q) => !q.text || !Array.isArray(q.options) || q.options.length < 2,
+    );
+    if (invalid) {
+      setImportError("Кожне питання повинно мати 'text' та мінімум 2 варіанти в 'options'.");
+      return;
+    }
+    setIsImporting(true);
+    try {
+      const res = await api.post(`/admin/tests/${testId}/import-questions`, {
+        questions: parsed,
+      });
+      setImportText("");
+      setImportMode(false);
+      fetchQuestions();
+      showNotification("Імпорт завершено", `Додано ${res.data.created} питань успішно!`);
+    } catch (err) {
+      console.error(err);
+      setImportError("Помилка сервера. Перевірте дані і спробуйте знову.");
+    } finally {
+      setIsImporting(false);
+    }
   };
 
   const handleEditClick = (q) => {
@@ -132,6 +171,7 @@ export const AdminQuestionsManager = () => {
       subtitle,
       confirmText: "Окей",
       cancelText: "",
+      showIcon: false,
       onConfirm: closeModal,
     });
   };
@@ -197,6 +237,7 @@ export const AdminQuestionsManager = () => {
         subtitle={modalConfig.subtitle}
         confirmText={modalConfig.confirmText}
         cancelText={modalConfig.cancelText}
+        showIcon={modalConfig.showIcon ?? true}
         onConfirm={modalConfig.onConfirm}
         onCancel={closeModal}
       />
@@ -217,6 +258,12 @@ export const AdminQuestionsManager = () => {
             onClick={handleAddNewClick}
           >
             + Додати питання
+          </button>
+          <button
+            className="btn-import-toggle full-width"
+            onClick={() => { setImportMode(true); setActiveQuestionId(null); setImportError(""); }}
+          >
+            ↑ Імпорт JSON
           </button>
 
           <div className="admin-qm-list">
@@ -244,13 +291,59 @@ export const AdminQuestionsManager = () => {
 
         {/* 📝 MAIN FORM */}
         <main className="admin-qm-main">
-          <h3>
+          {importMode && (
+            <div className="import-panel">
+              <h3>Імпорт питань з JSON</h3>
+              <p className="import-hint">
+                Вставте масив питань у форматі JSON. Кожен елемент повинен мати{" "}
+                <code>text</code> та <code>options</code> (масив з{" "}
+                <code>text</code> і <code>isCorrect</code>).
+              </p>
+              <details className="import-example">
+                <summary>Приклад формату</summary>
+                <pre>{`[
+  {
+    "text": "Текст питання",
+    "explanation": "Пояснення (необов'язково)",
+    "options": [
+      { "text": "Варіант А", "isCorrect": true },
+      { "text": "Варіант Б", "isCorrect": false },
+      { "text": "Варіант В", "isCorrect": false },
+      { "text": "Варіант Г", "isCorrect": false }
+    ]
+  }
+]`}</pre>
+              </details>
+              <textarea
+                className="import-textarea"
+                rows={16}
+                placeholder='[{ "text": "...", "options": [...] }]'
+                value={importText}
+                onChange={(e) => { setImportText(e.target.value); setImportError(""); }}
+              />
+              {importError && <p className="import-error">{importError}</p>}
+              <div className="import-actions">
+                <button
+                  className="button-pink-small"
+                  onClick={handleImport}
+                  disabled={isImporting || !importText.trim()}
+                >
+                  {isImporting ? "Імпортую..." : "Імпортувати питання"}
+                </button>
+                <button className="btn-cancel-import" onClick={() => setImportMode(false)}>
+                  Скасувати
+                </button>
+              </div>
+            </div>
+          )}
+
+          {!importMode && <h3>
             {activeQuestionId
               ? `Редагування питання #${questions.findIndex((q) => q.id === activeQuestionId) + 1}`
               : "Створення нового питання"}
-          </h3>
+          </h3>}
 
-          <form onSubmit={handleSubmit} className="admin-qm-form">
+          {!importMode && <form onSubmit={handleSubmit} className="admin-qm-form">
             <div className="form-group full-width">
               <label>Текст питання *</label>
               <textarea
@@ -356,7 +449,7 @@ export const AdminQuestionsManager = () => {
                   ? "Оновити питання"
                   : "Створити та додати наступне"}
             </button>
-          </form>
+          </form>}
         </main>
       </div>
     </div>

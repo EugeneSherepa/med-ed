@@ -21,86 +21,25 @@
   }
 }
 
-// 🗃️ TABLE STYLING
-.admin-table {
-  width: 100%;
-  background: $white;
-  border-radius: 16px;
-  border-collapse: separate;
-  border-spacing: 0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
+// Type Badge (overrides/extensions for tests list context)
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
 
-  thead {
-    background-color: #f3f4f6;
+  &.base    { background-color: #e0e7ff; color: #4338ca; }
+  &.booklet { background-color: #ecfdf5; color: #059669; }
+  &.amps    { background-color: #fff0f6; color: #c2185b; }
+}
 
-    th {
-      padding: 16px 24px;
-      text-align: left;
-      font-family: $font-fixel;
-      font-weight: 600;
-      font-size: 14px;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-bottom: 1px solid #e5e7eb;
-    }
-  }
-
-  tbody {
-    tr {
-      transition: 0.2s ease;
-
-      &:hover {
-        background-color: #f9fafb;
-      }
-
-      &:last-child td {
-        border-bottom: none;
-      }
-    }
-
-    td {
-      padding: 16px 24px;
-      font-family: $font-fixel;
-      font-size: 15px;
-      color: #374151;
-      border-bottom: 1px solid #e5e7eb;
-      vertical-align: middle;
-
-      // Type Badge (База vs Буклет)
-      .type-badge {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-
-        &.base {
-          background-color: #e0e7ff;
-          color: #4338ca;
-        }
-
-        &.booklet {
-          background-color: #ecfdf5;
-          color: #059669;
-        }
-
-        &.amps {
-          background-color: #fff0f6;
-          color: #c2185b;
-        }
-      }
-
-      .test-title {
-        font-weight: 500;
-        color: #111827;
-      }
-    }
-  }
+.test-title {
+  font-weight: 500;
+  color: #111827;
 }
 
 // 🛠️ ACTION BUTTONS
@@ -142,12 +81,35 @@
       }
     }
 
+    &.analytics {
+      background-color: #f0fdf4;
+      color: #16a34a;
+
+      &:hover { background-color: #dcfce7; }
+    }
+
+    &.duplicate {
+      background-color: #fefce8;
+      color: #ca8a04;
+
+      &:hover { background-color: #fef9c3; }
+      &:disabled { opacity: 0.5; cursor: not-allowed; }
+    }
+
+    &.export {
+      background-color: #f8fafc;
+      color: #475569;
+      border-color: #e2e8f0;
+
+      &:hover { background-color: #f1f5f9; }
+    }
+
     &.delete {
       width: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 8px; // Square icon button
+      padding: 8px;
       background-color: #fef2f2;
       color: #dc2626;
       margin-left: auto;
@@ -161,14 +123,6 @@
 }
 
 // 📱 MOBILE RESPONSIVENESS
-@media screen and (max-width: 1024px) {
-  .admin-table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap; // Keeps table from squishing too much
-  }
-}
-
 @media screen and (max-width: 768px) {
   .admin-list-container {
     padding: 24px;

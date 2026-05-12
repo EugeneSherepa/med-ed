@@ -255,14 +255,15 @@ export const AdminTestForm = () => {
       </form>
 
       {/* 🚀 Render the custom modal logic */}
-      <ConfirmModal 
+      <ConfirmModal
         isOpen={modalConfig.isOpen}
         title={modalConfig.title}
         subtitle={modalConfig.subtitle}
         confirmText={modalConfig.confirmText}
         cancelText={modalConfig.cancelText}
+        showIcon={modalConfig.showIcon ?? true}
         onConfirm={modalConfig.onConfirm}
-        onCancel={modalConfig.cancelText ? closeModal : undefined} // Only allow cancel if cancelText exists
+        onCancel={modalConfig.cancelText ? closeModal : undefined}
       />
     </div>
   );
