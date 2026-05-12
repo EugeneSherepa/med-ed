@@ -198,7 +198,6 @@ export const TestPage = () => {
     }
   };
 
-  // 🚀 Logic for finalizing the test (with modal)
   const openSubmitModal = () => {
     setModalConfig({
       isOpen: true,
@@ -212,7 +211,6 @@ export const TestPage = () => {
 
   const handleSubmitTest = () => doSubmit(answers);
 
-  // 🚀 Logic for restarting the test (with modal)
   const openRestartModal = () => {
     setModalConfig({
       isOpen: true,
@@ -241,7 +239,6 @@ export const TestPage = () => {
     }
   };
 
-  // 🚀 Logic for exiting an active test
   const handleBackClick = () => {
     if (isCompleted || Object.keys(answers).length === 0) {
       navigate(backUrl);

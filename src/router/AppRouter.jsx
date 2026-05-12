@@ -2,12 +2,10 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-// ── Always-loaded ─────────────────────────────────────────────────
 import { ProtectedRoute } from "../components/ProtectedRoute/ProtectedRoute";
 import { RoleProtectedRoute } from "../components/RoleProtectedRoute/RoleProtectedRoute";
 import { PublicRoute } from "../components/PublicRoute/PublicRoute";
 
-// ── Public marketing pages ────────────────────────────────────────
 import { Home } from "../pages/Home/Home";
 import { About } from "../pages/About/About";
 import { Materials } from "../pages/Materials/Materials";
@@ -27,12 +25,10 @@ import { FAQ } from "../pages/FAQ/FAQ";
 import { Policy } from "../pages/Policy/Policy";
 import { PublicOffer } from "../pages/PublicOffer/PublicOffer";
 
-// ── Auth pages ────────────────────────────────────────────────────
 import { Login } from "../pages/Login/Login";
 import { Registration } from "../pages/Registration/Registration";
 import { CompleteProfile } from "../components/CompleteProfile/CompleteProfile";
 
-// ── Student pages ─────────────────────────────────────────────────
 import { Account } from "../pages/Account/Account";
 import { Booklets } from "../pages/Booklets/Booklets";
 import { Bases } from "../pages/Bases/Bases";
@@ -41,7 +37,6 @@ import { Saved } from "../pages/Saved/Saved";
 import { SavedDetail } from "../pages/Saved/SavedDetail";
 import { TestPage } from "../components/TestPage/TestPage";
 
-// ── Admin shell + pages (lazy — large, admin-only) ────────────────
 const Admin = lazy(() =>
   import("../pages/Admin/Admin").then((m) => ({ default: m.Admin })),
 );

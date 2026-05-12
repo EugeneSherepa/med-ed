@@ -21,7 +21,6 @@
   }
 }
 
-// Type Badge (overrides/extensions for tests list context)
 .type-badge {
   display: inline-flex;
   align-items: center;
@@ -42,7 +41,6 @@
   color: #111827;
 }
 
-// 🛠️ ACTION BUTTONS
 .admin-table-actions {
   display: flex;
   align-items: center;
@@ -122,7 +120,6 @@
   }
 }
 
-// 📱 MOBILE RESPONSIVENESS
 @media screen and (max-width: 768px) {
   .admin-list-container {
     padding: 24px;
@@ -139,13 +136,11 @@
   }
 }
 
-// Add this inside your .admin-table tbody td nested rules in AdminTestsList.scss
 
 .status-dropdown-wrapper {
   position: relative;
   width: fit-content;
 
-  // Custom caret icon for the select
   &::after {
     content: "▼";
     font-size: 10px;

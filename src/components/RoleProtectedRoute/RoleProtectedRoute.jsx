@@ -6,7 +6,6 @@ export const RoleProtectedRoute = ({ children, allowedRoles }) => {
 
   if (isLoading) return <div className="loading-screen">Перевірка...</div>;
 
-  // If there is no user logged in, we tell you right on the screen.
   if (!currentUser) {
     return (
       <div style={{ padding: "50px", textAlign: "center", fontFamily: "sans-serif" }}>
@@ -17,8 +16,6 @@ export const RoleProtectedRoute = ({ children, allowedRoles }) => {
     );
   }
 
-  // 🚀 THE DEBUGGER SCREEN
-  // If your role doesn't match, we stop here and show you the exact data.
   if (!allowedRoles.includes(currentUser.role)) {
     return (
       <div style={{ padding: "40px", maxWidth: "600px", margin: "40px auto", fontFamily: "sans-serif", border: "2px solid #ef4444", borderRadius: "12px", backgroundColor: "#fef2f2" }}>
@@ -45,6 +42,5 @@ export const RoleProtectedRoute = ({ children, allowedRoles }) => {
     );
   }
 
-  // If the roles match, render the Admin panel normally!
   return children;
 };

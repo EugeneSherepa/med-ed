@@ -90,7 +90,6 @@ export const AdminUsersList = () => {
     const a = document.createElement("a");
     a.href = url;
     a.download = "users.csv";
-    // Pass JWT via query param isn't ideal but works for file downloads
     fetch(url, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => res.blob())
       .then((blob) => {
@@ -102,7 +101,6 @@ export const AdminUsersList = () => {
       .catch(() => showNotification("Помилка", "Не вдалося завантажити файл."));
   };
 
-  // Unique courses from user list for filter dropdown
   const courseOptions = useMemo(() => {
     const courses = [...new Set(users.map((u) => u.course).filter(Boolean))].sort();
     return courses;

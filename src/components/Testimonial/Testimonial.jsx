@@ -5,14 +5,12 @@ import "../Testimonials/Testimonials.scss";
 export const Testimonial = ({ testimonial }) => {
   const { image, title, text, author } = testimonial;
 
-  // Mobile detection
   const [isMobile, setIsMobile] = useState(
     typeof window !== "undefined" ? window.innerWidth < 990 : false
   );
   const [expanded, setExpanded] = useState(false);
-  const wordLimit = 30; // adjust as needed
+  const wordLimit = 30;
 
-  // Update on window resize
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 990);
     window.addEventListener("resize", handleResize);

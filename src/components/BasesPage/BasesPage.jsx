@@ -129,14 +129,12 @@ export const BasesPage = () => {
 
       const matchesSearch = title.includes(searchQuery.toLowerCase());
 
-      // 2. Dropdown Checks
       const matchesExam = filterExam ? base.examType === filterExam : true;
       const matchesCategory = filterCategory
         ? base.category === filterCategory
         : true;
       const matchesType = filterType ? base.language === filterType : true;
 
-      // 3. Status Check
       let matchesStatus = true;
       if (filterStatus === "COMPLETED") matchesStatus = status === "COMPLETED";
       if (filterStatus === "IN_PROGRESS")
@@ -300,7 +298,6 @@ export const BasesPage = () => {
               const totalQuestions =
                 base._count?.questions || base.questions?.length || 0;
 
-              // 🚀 Progress specific calculations
               const scorePercent = attempt?.scorePercentage || 0;
               const completionPercent =
                 totalQuestions > 0

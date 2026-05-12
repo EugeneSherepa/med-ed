@@ -4,7 +4,6 @@
   padding: 32px;
 }
 
-// ── Header ────────────────────────────────────────────────────────
 .user-detail-header {
   display: flex;
   align-items: center;
@@ -79,7 +78,6 @@
   &.admin   { background: #fee2e2; color: #dc2626; }
 }
 
-// ── Top Row ───────────────────────────────────────────────────────
 .ud-top-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -91,7 +89,6 @@
   }
 }
 
-// ── Sections ─────────────────────────────────────────────────────
 .ud-section {
   background: #fff;
   border: 1px solid #f3f4f6;
@@ -110,7 +107,6 @@
   }
 }
 
-// ── Info Grid ────────────────────────────────────────────────────
 .ud-info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -138,7 +134,6 @@
   color: #1f2937;
 }
 
-// ── Stats Grid ───────────────────────────────────────────────────
 .ud-stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -170,7 +165,6 @@
   color: #6b7280;
 }
 
-// ── Table Helpers ────────────────────────────────────────────────
 .ud-empty {
   font-family: $font-fixel;
   color: #9ca3af;

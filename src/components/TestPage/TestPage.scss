@@ -18,7 +18,6 @@
     }
   }
 
-  // 🚀 CSS Grid Header Structure
   &-header {
     margin-bottom: 60px;
     width: 100%;
@@ -301,7 +300,7 @@
       }
 
       &-footer {
-        display: none; // Hidden on desktop
+        display: none;
       }
     }
   }
@@ -548,7 +547,7 @@
 }
 
 .test-mobile-action-footer {
-  display: none; // Hidden on desktop
+  display: none;
 }
 
 .test-labs-modal-content {
@@ -637,12 +636,12 @@
       grid-row: 2 / 3;
 
       &-bar {
-        max-width: 100%; // Make bar full width
+        max-width: 100%;
       }
     }
 
     &-right {
-      display: none; // Hides desktop button
+      display: none;
     }
   }
 
@@ -651,7 +650,6 @@
     justify-content: space-between;
   }
 
-  // 🚀 Shows Button at the bottom
   .test-mobile-action-footer {
     display: block;
     margin-top: 32px;
@@ -663,7 +661,6 @@
     }
   }
 
-  // 🚀 Bottom Sheet Labs Modal
   .test-labs-modal {
     position: absolute;
     bottom: 0;
@@ -675,10 +672,10 @@
     padding: 24px;
 
     &-header {
-      justify-content: center; // Center the title on mobile
+      justify-content: center;
       &-close {
         display: none;
-      } // Hide top right close icon
+      }
     }
 
     &-body {

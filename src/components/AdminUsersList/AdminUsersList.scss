@@ -1,6 +1,5 @@
 @use "../../styles/variables" as *;
 
-// Include your existing .admin-list-container and .admin-table styles here if they aren't globally available!
 
 .admin-list-header {
   display: flex;
@@ -16,7 +15,6 @@
     font-weight: 600;
   }
 
-  // 🔍 Search Bar Styling
   .admin-search-bar {
     position: relative;
     width: 300px;
@@ -58,7 +56,6 @@
   font-size: 14px;
 }
 
-// 🛡️ Role Dropdown Styling
 .role-select {
   appearance: none;
   -webkit-appearance: none;
@@ -93,7 +90,6 @@
   }
 }
 
-// ── Toolbar (filters + export) ───────────────────────────────────
 .users-toolbar {
   display: flex;
   align-items: center;

@@ -26,7 +26,6 @@
   }
 }
 
-// ── Refresh button ──────────────────────────────────
 .dash-refresh-btn {
   flex-shrink: 0;
   padding: 8px 16px;
@@ -42,7 +41,6 @@
   &:hover { background: #f9fafb; }
 }
 
-// ── Open Reports Alert ──────────────────────────────
 .dash-alert {
   display: flex;
   align-items: center;
@@ -73,7 +71,6 @@
   }
 }
 
-// ── KPI Cards Grid ──────────────────────────────────
 .admin-dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -168,7 +165,6 @@
   white-space: nowrap;
 }
 
-// ── Content Health Strip ────────────────────────────
 .dash-content-strip {
   display: flex;
   gap: 12px;
@@ -204,7 +200,6 @@
   }
 }
 
-// ── Pass Rate Breakdown ─────────────────────────────
 .dash-section {
   background: #fff;
   border-radius: 16px;
@@ -274,7 +269,6 @@
   }
 }
 
-// ── Bottom layout ───────────────────────────────────
 .admin-dashboard-bottom {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -308,7 +302,6 @@
   }
 }
 
-// ── Live Feed ───────────────────────────────────────
 .text-truncate {
   max-width: 180px;
   white-space: nowrap;
@@ -345,7 +338,6 @@
   &-progress  { background: #eff6ff; color: #1d4ed8; }
 }
 
-// ── Recent Users ────────────────────────────────────
 .dash-users-list {
   display: flex;
   flex-direction: column;
@@ -409,7 +401,6 @@
   flex-shrink: 0;
 }
 
-// ── Demographics ────────────────────────────────────
 .course-list {
   display: flex;
   flex-direction: column;
@@ -429,7 +420,6 @@
   .course-count { font-size: 13px; color: #6b7280; }
 }
 
-// ── Shared ──────────────────────────────────────────
 .admin-loading,
 .admin-error {
   padding: 32px;
@@ -439,7 +429,6 @@
 
 .text-muted { color: #6b7280; }
 
-// ── Admin table (shared, must live here so /admin loads it first) ──
 .admin-table {
   width: 100%;
   background: $white;
@@ -484,7 +473,6 @@
     }
   }
 
-  // Responsive
   @media screen and (max-width: 1280px) {
     display: block;
     overflow-x: auto;

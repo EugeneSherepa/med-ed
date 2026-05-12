@@ -18,7 +18,6 @@ export const AdminQuestionsManager = () => {
 
   const [activeQuestionId, setActiveQuestionId] = useState(null);
 
-  // 🚀 Updated: Default to 4 options
   const emptyForm = {
     text: "",
     explanation: "",
@@ -37,7 +36,6 @@ export const AdminQuestionsManager = () => {
   const [isImporting, setIsImporting] = useState(false);
   const [importError, setImportError] = useState("");
 
-  // 🇺🇦 Extended Ukrainian Alphabet for dynamic options
   const letters = ["А", "Б", "В", "Г", "Д", "Е", "Є", "Ж", "З", "И"];
 
   const fetchQuestions = async () => {
@@ -61,7 +59,6 @@ export const AdminQuestionsManager = () => {
     fetchQuestions();
   }, [testId]);
 
-  // 🖱️ Dynamic Option Handlers
   const handleOptionTextChange = (index, value) => {
     const newOptions = [...formData.options];
     newOptions[index].text = value;
@@ -76,7 +73,6 @@ export const AdminQuestionsManager = () => {
     setFormData({ ...formData, options: newOptions });
   };
 
-  // ➕ Add Option
   const handleAddOption = () => {
     if (formData.options.length >= letters.length) {
       showNotification("Ліміт варіантів", "Досягнуто максимальної кількості варіантів.");
@@ -88,12 +84,10 @@ export const AdminQuestionsManager = () => {
     });
   };
 
-  // ➖ Remove Option
   const handleRemoveOption = (indexToRemove) => {
     setFormData((prev) => {
       const newOptions = prev.options.filter((_, i) => i !== indexToRemove);
 
-      // Safety check: if they deleted the correct option, make the first remaining one correct
       if (prev.options[indexToRemove].isCorrect && newOptions.length > 0) {
         newOptions[0].isCorrect = true;
       }
