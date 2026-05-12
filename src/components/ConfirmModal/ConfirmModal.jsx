@@ -7,6 +7,7 @@ export const ConfirmModal = ({
   subtitle,
   confirmText = "Підтвердити",
   cancelText = "Скасувати",
+  showIcon = true,
   onConfirm,
   onCancel,
 }) => {
@@ -18,9 +19,11 @@ export const ConfirmModal = ({
         className="confirm-modal-content"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="confirm-modal-icon">
-          <img src={Caution} alt="" />
-        </div>
+        {showIcon && (
+          <div className="confirm-modal-icon">
+            <img src={Caution} alt="" />
+          </div>
+        )}
 
         <h3 className="confirm-modal-title">{title}</h3>
         {subtitle && <p className="confirm-modal-subtitle">{subtitle}</p>}

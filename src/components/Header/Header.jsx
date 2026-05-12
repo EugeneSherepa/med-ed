@@ -10,7 +10,7 @@ import iconLinkedin from "../../assets/tiktok.svg";
 import iconYoutube from "../../assets/youtube.svg";
 import logoFooter from "../../assets/logo.png";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // It's better to use Link for routing!
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const [prepareOpened, setPrepareOpened] = useState(false);
@@ -20,7 +20,6 @@ export const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
 
-  // Check if the user is authenticated by looking for the token
   const isAuthenticated = Boolean(localStorage.getItem("accessToken"));
 
   const PrepareToggle = () => {

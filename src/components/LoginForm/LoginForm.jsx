@@ -23,18 +23,14 @@ export const LoginForm = () => {
       const error = searchParams.get("error");
 
       if (token) {
-        // 1. Save the token
         localStorage.setItem("accessToken", token);
         
-        // 2. Clean up the URL
         window.history.replaceState({}, document.title, "/login");
 
         try {
           const response = await api.get("/users/profile");
           const user = response.data;
 
-          // 🚀 FIX: Use window.location.href instead of navigate()
-          // This forces a full page reload so AuthContext reads the new token!
           if (user.institution === "Не вказано") {
             window.location.href = "/complete-profile";
           } else {
@@ -67,7 +63,6 @@ export const LoginForm = () => {
 
       localStorage.setItem("accessToken", response.data.accessToken);
       
-      // 🚀 For standard login, we also recommend a hard reload if you're facing role sync issues
       window.location.href = "/account";
       
     } catch (error) {
@@ -85,7 +80,6 @@ export const LoginForm = () => {
     window.location.href = `${API_URL}/auth/google`;
   };
 
-  // ... (The rest of your JSX remains exactly the same)
   return (
     <div className="auth-form">
       <Link to="/" className="auth-form-logo">

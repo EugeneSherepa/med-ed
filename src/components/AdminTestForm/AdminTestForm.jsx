@@ -12,7 +12,6 @@ export const AdminTestForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(isEditing);
 
-  // 🚀 New state for controlling the custom popup
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
     title: "",
@@ -53,7 +52,6 @@ export const AdminTestForm = () => {
           });
         } catch (error) {
           console.error("Failed to fetch test", error);
-          // 🚀 Error Popup
           setModalConfig({
             isOpen: true,
             title: "Помилка завантаження",
@@ -104,7 +102,6 @@ export const AdminTestForm = () => {
       if (isEditing) {
         await api.patch(`/tests/${testId}`, payload);
         
-        // 🚀 Success Popup for Editing
         setModalConfig({
           isOpen: true,
           title: "Успішно оновлено!",
@@ -117,7 +114,6 @@ export const AdminTestForm = () => {
       } else {
         const res = await api.post("/tests", payload);
         
-        // 🚀 Success Popup for Creating
         setModalConfig({
           isOpen: true,
           title: "Тест успішно створено!",
@@ -131,7 +127,6 @@ export const AdminTestForm = () => {
     } catch (error) {
       console.error("Error saving test:", error);
       
-      // 🚀 Error Popup for Saving
       setModalConfig({
         isOpen: true,
         title: "Помилка збереження",
@@ -255,14 +250,15 @@ export const AdminTestForm = () => {
       </form>
 
       {/* 🚀 Render the custom modal logic */}
-      <ConfirmModal 
+      <ConfirmModal
         isOpen={modalConfig.isOpen}
         title={modalConfig.title}
         subtitle={modalConfig.subtitle}
         confirmText={modalConfig.confirmText}
         cancelText={modalConfig.cancelText}
+        showIcon={modalConfig.showIcon ?? true}
         onConfirm={modalConfig.onConfirm}
-        onCancel={modalConfig.cancelText ? closeModal : undefined} // Only allow cancel if cancelText exists
+        onCancel={modalConfig.cancelText ? closeModal : undefined}
       />
     </div>
   );

@@ -27,7 +27,13 @@
 
     &-form {
       &-photo {
+        display: flex;
+        justify-content: space-between;
         margin-bottom: 32px;
+
+        & .button-pink {
+          height: fit-content;
+        }
 
         & img {
           cursor: pointer;

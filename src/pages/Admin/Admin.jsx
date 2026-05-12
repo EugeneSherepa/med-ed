@@ -5,7 +5,7 @@ export const Admin = ({ currentUser }) => {
   return (
     <div className="admin-layout">
       <aside className="admin-sidebar">
-        <h2>Admin Panel</h2>
+        <h2>Med Ed Admin</h2>
         <nav>
           {/* 🚀 Add the Dashboard link here */}
           <NavLink to="/admin" end>📊 Дашборд</NavLink>

@@ -19,6 +19,94 @@
   }
 }
 
+.reports-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.reports-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-family: $font-fixel;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover { background: #f9fafb; }
+
+  &.active {
+    background: #111827;
+    border-color: #111827;
+    color: #fff;
+
+    .reports-tab-count { background: rgba(255,255,255,0.2); color: #fff; }
+  }
+}
+
+.reports-tab-count {
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #f3f4f6;
+  color: #6b7280;
+
+  &.open     { background: #fee2e2; color: #b91c1c; }
+  &.resolved { background: #d1fae5; color: #047857; }
+  &.rejected { background: #f3f4f6; color: #6b7280; }
+  &.all      { background: #eff6ff; color: #1d4ed8; }
+}
+
+.report-question-preview {
+  font-size: 13px;
+  color: #374151;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: #eff6ff;
+  border-radius: 8px;
+
+  .context-label { font-weight: 600; }
+
+  .report-question-text {
+    color: #1e40af;
+    font-style: italic;
+  }
+}
+
+.report-card.rejected {
+  border-left-color: #9ca3af;
+  opacity: 0.75;
+}
+
+.status-badge.rejected {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.btn-reject {
+  background: transparent;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: $font-fixel;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover { background: #fee2e2; }
+}
+
 .reports-list {
   display: flex;
   flex-direction: column;

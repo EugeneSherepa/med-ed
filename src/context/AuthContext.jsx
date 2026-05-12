@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        // 🚀 FIX 1: Look for 'accessToken' instead of 'token'
         const token = localStorage.getItem('accessToken'); 
         
         if (!token) {
@@ -21,7 +20,6 @@ export const AuthProvider = ({ children }) => {
         const res = await api.get('/auth/me');
         setCurrentUser(res.data);
       } catch (err) {
-        // 🚀 FIX 2: Clear 'accessToken' on error
         localStorage.removeItem('accessToken'); 
       } finally {
         setIsLoading(false); 

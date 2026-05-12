@@ -32,6 +32,7 @@ export const TestPage = () => {
   const [answers, setAnswers] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [resultsData, setResultsData] = useState(null);
 
   const timeSpentRef = useRef(0);
 
@@ -151,32 +152,43 @@ export const TestPage = () => {
     } catch (error) {
       console.error("Autosave failed:", error);
     }
+
+    if (test && Object.keys(newAnswers).length === test.questions.length) {
+      setTimeout(() => doSubmit(newAnswers), 800);
+    }
   };
 
-  // 🚀 Logic for finalizing the test (with modal)
-  const openSubmitModal = () => {
-    setModalConfig({
-      isOpen: true,
-      title: "Завершити тест?",
-      subtitle: "Ви більше не зможете змінити свої відповіді.",
-      confirmText: "Завершити",
-      cancelText: "Скасувати",
-      onConfirm: handleSubmitTest,
-    });
-  };
-
-  const handleSubmitTest = async () => {
+  const doSubmit = async (answersToSubmit) => {
     if (!attemptId || isCompleted) return;
     closeModal();
     setIsSubmitting(true);
     try {
       const formattedAnswers = {};
-      for (const [qId, oId] of Object.entries(answers)) {
+      for (const [qId, oId] of Object.entries(answersToSubmit)) {
         formattedAnswers[parseInt(qId)] = parseInt(oId);
       }
-      await api.post(`/attempts/${attemptId}/complete`, {
+      const res = await api.post(`/attempts/${attemptId}/complete`, {
         answers: formattedAnswers,
         timeSpentSeconds: timeSpentRef.current,
+      });
+
+      const totalCount = test.questions.length;
+      const correctCount = Object.entries(formattedAnswers).reduce(
+        (count, [qId, oId]) => {
+          const question = test.questions.find((q) => q.id === parseInt(qId));
+          const option = question?.options.find((o) => o.id === oId);
+          return count + (option?.isCorrect ? 1 : 0);
+        },
+        0,
+      );
+
+      setResultsData({
+        totalCount,
+        answeredCount: Object.keys(formattedAnswers).length,
+        correctCount,
+        scorePercent:
+          res.data?.scorePercentage ??
+          Math.round((correctCount / totalCount) * 100),
       });
       setAttemptStatus("COMPLETED");
     } catch (error) {
@@ -186,7 +198,19 @@ export const TestPage = () => {
     }
   };
 
-  // 🚀 Logic for restarting the test (with modal)
+  const openSubmitModal = () => {
+    setModalConfig({
+      isOpen: true,
+      title: "Завершити тест?",
+      subtitle: "Ви більше не зможете змінити свої відповіді.",
+      confirmText: "Завершити",
+      cancelText: "Скасувати",
+      onConfirm: () => doSubmit(answers),
+    });
+  };
+
+  const handleSubmitTest = () => doSubmit(answers);
+
   const openRestartModal = () => {
     setModalConfig({
       isOpen: true,
@@ -215,7 +239,6 @@ export const TestPage = () => {
     }
   };
 
-  // 🚀 Logic for exiting an active test
   const handleBackClick = () => {
     if (isCompleted || Object.keys(answers).length === 0) {
       navigate(backUrl);
@@ -527,11 +550,12 @@ export const TestPage = () => {
 
                 <button
                   className={`test-footer-nav-next ${hasAnsweredCurrent || isCompleted ? "answered" : ""}`}
+                  disabled={currentQuestionIndex === test.questions.length - 1 && isCompleted}
                   onClick={() => {
                     if (currentQuestionIndex < test.questions.length - 1) {
                       setCurrentQuestionIndex((prev) => prev + 1);
                     } else if (!isCompleted) {
-                      openSubmitModal(); // 🚀 Use modal for completion
+                      openSubmitModal();
                     }
                   }}
                 >
@@ -541,7 +565,7 @@ export const TestPage = () => {
                     : hasAnsweredCurrent || isCompleted
                       ? "Наступне"
                       : "Пропустити"}
-                  {hasAnsweredCurrent || isCompleted ? (
+                  {(hasAnsweredCurrent || isCompleted) && !(currentQuestionIndex === test.questions.length - 1 && isCompleted) ? (
                     <img src={iconCaretButtonWhite} />
                   ) : (
                     <img src={iconCaretButton} />
@@ -599,16 +623,55 @@ export const TestPage = () => {
         </div>
       </div>
 
-      {/* 🚀 Render the custom modal for confirmation actions */}
       <ConfirmModal
         isOpen={modalConfig.isOpen}
         title={modalConfig.title}
         subtitle={modalConfig.subtitle}
         confirmText={modalConfig.confirmText}
         cancelText={modalConfig.cancelText}
+        showIcon={modalConfig.showIcon ?? true}
         onConfirm={modalConfig.onConfirm}
         onCancel={closeModal}
       />
+
+      {resultsData && (
+        <div className="test-results-overlay">
+          <div className="test-results-modal">
+            <h2 className="test-results-modal-title">Тест завершено!</h2>
+            <p className="test-results-modal-subtitle">
+              Ось ваші результати
+            </p>
+
+            <div className="test-results-modal-stats">
+              <div className="test-results-modal-stat">
+                <span className="test-results-modal-stat-value">
+                  {resultsData.answeredCount}/{resultsData.totalCount}
+                </span>
+                <span className="test-results-modal-stat-label">Відповідей</span>
+              </div>
+              <div className="test-results-modal-stat">
+                <span className="test-results-modal-stat-value correct">
+                  {resultsData.correctCount}/{resultsData.totalCount}
+                </span>
+                <span className="test-results-modal-stat-label">Правильно</span>
+              </div>
+              <div className={`test-results-modal-stat score ${resultsData.scorePercent >= 70 ? "passing" : "failing"}`}>
+                <span className="test-results-modal-stat-value">
+                  {resultsData.scorePercent}%
+                </span>
+                <span className="test-results-modal-stat-label">Результат</span>
+              </div>
+            </div>
+
+            <button
+              className="button-pink-small test-results-modal-btn"
+              onClick={() => setResultsData(null)}
+            >
+              Переглянути відповіді
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

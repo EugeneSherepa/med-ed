@@ -47,6 +47,7 @@ export const BookletsPage = () => {
       subtitle,
       confirmText: "Окей",
       cancelText: "",
+      showIcon: false,
       onConfirm: closeModal,
     });
   };
@@ -140,7 +141,6 @@ export const BookletsPage = () => {
 
       const matchesSearch = title.includes(searchQuery.toLowerCase());
 
-      // 2. Dropdown Checks
       const matchesExam = filterExam ? test.examType === filterExam : true;
       const matchesCategory = filterCategory
         ? test.category === filterCategory
@@ -150,7 +150,6 @@ export const BookletsPage = () => {
         : true;
       const matchesType = filterType ? test.language === filterType : true;
 
-      // 3. Status Check
       let matchesStatus = true;
       if (filterStatus === "COMPLETED") matchesStatus = status === "COMPLETED";
       if (filterStatus === "IN_PROGRESS")
@@ -195,6 +194,7 @@ export const BookletsPage = () => {
         subtitle={modalConfig.subtitle}
         confirmText={modalConfig.confirmText}
         cancelText={modalConfig.cancelText}
+        showIcon={modalConfig.showIcon ?? true}
         onConfirm={modalConfig.onConfirm}
         onCancel={closeModal}
       />
@@ -317,7 +317,7 @@ export const BookletsPage = () => {
         ) : filteredTests.length === 0 ? (
           <div className="booklets-empty">
             🔍 На жаль, у цьому розділі поки що немає буклетів.
-            <br /> Ми Активно працюємо над їхнім додаванням — заходьте трохи
+            <br /> Ми активно працюємо над їхнім додаванням — заходьте трохи
             згодом!
           </div>
         ) : (
@@ -328,19 +328,16 @@ export const BookletsPage = () => {
               const isCompleted = attempt?.status === "COMPLETED";
               const isInProgress = attempt?.status === "IN_PROGRESS";
 
-              // 🛠️ Check both the JSON and the column for the answered count
               const answered = attempt?.answers
                 ? Object.keys(attempt.answers).length
                 : attempt?.questionsAnswered || 0;
 
-              // 🛠️ Check multiple places for the total count
               const totalQuestions =
                 test._count?.questions || test.questions?.length || 0;
 
               const score = attempt?.scorePercentage || 0;
               const time = formatTime(attempt?.timeSpentSeconds || 0);
 
-              // 🎨 Correctly determine the status class
               let statusClass = "not-started";
               let buttonText = "Почати спробу";
 

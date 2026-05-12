@@ -38,7 +38,6 @@
   height: calc(100vh - 150px); // Full height layout
 }
 
-// 📑 SIDEBAR
 .admin-qm-sidebar {
   width: 350px;
   background: $white;
@@ -122,7 +121,6 @@
   }
 }
 
-// 📝 MAIN FORM
 .admin-qm-main {
   flex: 1;
   background: $white;
@@ -180,7 +178,6 @@
     }
   }
 
-  // ... keep your existing scss ...
 
   .options-container {
     background-color: #f9fafb;
@@ -225,7 +222,6 @@
         flex: 1;
       }
 
-      // 🗑️ Delete Option Button
       .remove-option-btn {
         background: #fee2e2;
         color: #ef4444;
@@ -247,7 +243,6 @@
       }
     }
 
-    // ➕ Add Option Button
     .add-option-btn {
       width: 100%;
       padding: 12px;
@@ -273,4 +268,118 @@
     align-self: flex-start;
     padding: 12px 24px;
   }
+}
+
+.btn-import-toggle {
+  padding: 10px 16px;
+  border: 1px dashed #d1d5db;
+  border-radius: 10px;
+  background: #f9fafb;
+  font-family: $font-fixel;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+
+  &:hover { background: #f3f4f6; border-color: #9ca3af; }
+
+  &.full-width { width: 100%; }
+}
+
+.import-panel {
+  h3 {
+    font-family: $font-fixel;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 8px 0;
+  }
+}
+
+.import-hint {
+  font-family: $font-fixel;
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 12px;
+  line-height: 1.5;
+
+  code {
+    background: #f3f4f6;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #1d4ed8;
+  }
+}
+
+.import-example {
+  margin-bottom: 14px;
+
+  summary {
+    font-family: $font-fixel;
+    font-size: 13px;
+    color: #374151;
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 8px;
+  }
+
+  pre {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #1f2937;
+    overflow-x: auto;
+    margin: 0;
+  }
+}
+
+.import-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #1f2937;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+
+  &:focus { border-color: #60a5fa; }
+}
+
+.import-error {
+  color: #ef4444;
+  font-family: $font-fixel;
+  font-size: 13px;
+  margin: 8px 0 0 0;
+}
+
+.import-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.btn-cancel-import {
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-family: $font-fixel;
+  font-size: 14px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover { background: #f3f4f6; }
 }
