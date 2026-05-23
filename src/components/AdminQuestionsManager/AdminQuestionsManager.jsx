@@ -1,8 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { api } from "../../api";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import "./AdminQuestionsManager.scss";
+
+const TYPE_LABELS = { BOOKLET: "Буклети", BASE: "Бази", AMPS: "АМПС" };
+const EXAM_LABELS = { KROK_1: "Крок-1", KROK_2: "Крок-2", KROK_3: "Крок-3" };
+
+const getTestTitle = (t) => {
+  if (t.type === "BASE") return t.title;
+  if (t.type === "AMPS") {
+    let s = `${t.year} АМПС`;
+    if (t.language) s += ` (${t.language === "en" ? "Eng" : "Укр"})`;
+    return s;
+  }
+  let s = `${t.year}`;
+  if (t.day) s += ` день ${t.day}`;
+  if (t.language) s += ` (${t.language === "en" ? "Eng" : "Укр"})`;
+  if (t.variant) s += ` варіант ${t.variant}`;
+  return s;
+};
 
 export const AdminQuestionsManager = () => {
   const { testId } = useParams();
@@ -36,7 +53,60 @@ export const AdminQuestionsManager = () => {
   const [isImporting, setIsImporting] = useState(false);
   const [importError, setImportError] = useState("");
 
+  const [copyTarget, setCopyTarget] = useState(null);
+  const [copyTests, setCopyTests] = useState([]);
+  const [copyTestsLoading, setCopyTestsLoading] = useState(false);
+  const [testSearch, setTestSearch] = useState("");
+  const [copyingTo, setCopyingTo] = useState(null);
+  const [copyResult, setCopyResult] = useState("");
+
   const letters = ["А", "Б", "В", "Г", "Д", "Е", "Є", "Ж", "З", "И"];
+
+  const openCopyModal = async (e, q) => {
+    e.stopPropagation();
+    setCopyTarget(q);
+    setCopyResult("");
+    setTestSearch("");
+    setCopyTestsLoading(true);
+    try {
+      const res = await api.get("/tests");
+      setCopyTests(res.data?.data ?? res.data ?? []);
+    } catch {
+      setCopyTests([]);
+    } finally {
+      setCopyTestsLoading(false);
+    }
+  };
+
+  const handleCopyToTest = async (test) => {
+    setCopyingTo(test.id);
+    try {
+      await api.post(`/admin/questions/${copyTarget.id}/copy-to-test/${test.id}`);
+      setCopyResult(`✓ Скопійовано до «${getTestTitle(test)}»`);
+    } catch {
+      setCopyResult("Помилка копіювання.");
+    } finally {
+      setCopyingTo(null);
+    }
+  };
+
+  const filteredCopyTests = useMemo(() => {
+    if (!testSearch.trim()) return copyTests;
+    const q = testSearch.toLowerCase();
+    return copyTests.filter((t) =>
+      getTestTitle(t).toLowerCase().includes(q) ||
+      (EXAM_LABELS[t.examType] ?? t.examType).toLowerCase().includes(q)
+    );
+  }, [copyTests, testSearch]);
+
+  const copyTestsByType = useMemo(() => {
+    const groups = {};
+    for (const t of filteredCopyTests) {
+      if (!groups[t.type]) groups[t.type] = [];
+      groups[t.type].push(t);
+    }
+    return groups;
+  }, [filteredCopyTests]);
 
   const fetchQuestions = async () => {
     setIsLoading(true);
@@ -235,6 +305,56 @@ export const AdminQuestionsManager = () => {
         onConfirm={modalConfig.onConfirm}
         onCancel={closeModal}
       />
+
+      {copyTarget && (
+        <div className="gq-copy-overlay" onClick={() => setCopyTarget(null)}>
+          <div className="gq-copy-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="gq-copy-modal__header">
+              <h3>Копіювати питання до тесту</h3>
+              <button onClick={() => setCopyTarget(null)}>✕</button>
+            </div>
+            <p className="gq-copy-modal__question">
+              «{copyTarget.text.length > 80 ? copyTarget.text.slice(0, 80) + "…" : copyTarget.text}»
+            </p>
+            <input
+              className="gq-copy-modal__search"
+              type="text"
+              placeholder="Пошук тесту..."
+              value={testSearch}
+              onChange={(e) => setTestSearch(e.target.value)}
+              autoFocus
+            />
+            {copyResult && <p className="gq-copy-modal__result">{copyResult}</p>}
+            {copyTestsLoading ? (
+              <p className="gq-copy-modal__loading">Завантаження тестів...</p>
+            ) : (
+              <div className="gq-copy-modal__list">
+                {Object.entries(copyTestsByType).map(([type, items]) => (
+                  <div key={type}>
+                    <div className="gq-copy-modal__group-label">
+                      {TYPE_LABELS[type] ?? type} ({EXAM_LABELS[items[0]?.examType] ?? items[0]?.examType})
+                    </div>
+                    {items.map((t) => (
+                      <button
+                        key={t.id}
+                        className="gq-copy-modal__test-item"
+                        onClick={() => handleCopyToTest(t)}
+                        disabled={copyingTo === t.id}
+                      >
+                        {copyingTo === t.id ? "Копіюю..." : getTestTitle(t)}
+                      </button>
+                    ))}
+                  </div>
+                ))}
+                {Object.keys(copyTestsByType).length === 0 && (
+                  <p className="gq-copy-modal__loading">Тести не знайдено.</p>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="admin-qm-header">
         <button onClick={() => navigate("/admin/tests")} className="back-btn">
           ← Назад до тестів
@@ -272,6 +392,16 @@ export const AdminQuestionsManager = () => {
               >
                 <div className="item-number">{idx + 1}</div>
                 <div className="item-text">{q.text}</div>
+                {q.globalQuestionId && (
+                  <span className="item-global-badge" title="Глобальне питання">🌐</span>
+                )}
+                <button
+                  className="gq-copy-btn"
+                  title="Дублювати до іншого тесту"
+                  onClick={(e) => openCopyModal(e, q)}
+                >
+                  ⎘
+                </button>
                 <button
                   className="item-delete"
                   onClick={(e) => handleDeleteClick(e, q.id)}
@@ -331,11 +461,16 @@ export const AdminQuestionsManager = () => {
             </div>
           )}
 
-          {!importMode && <h3>
-            {activeQuestionId
-              ? `Редагування питання #${questions.findIndex((q) => q.id === activeQuestionId) + 1}`
-              : "Створення нового питання"}
-          </h3>}
+          {!importMode && (
+            <h3>
+              {activeQuestionId
+                ? `Редагування питання #${questions.findIndex((q) => q.id === activeQuestionId) + 1}`
+                : "Створення нового питання"}
+              {activeQuestionId && questions.find((q) => q.id === activeQuestionId)?.globalQuestionId && (
+                <span className="item-global-notice" title="Це питання синхронізується з глобальним пулом"> 🌐 Глобальне</span>
+              )}
+            </h3>
+          )}
 
           {!importMode && <form onSubmit={handleSubmit} className="admin-qm-form">
             <div className="form-group full-width">

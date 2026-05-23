@@ -1,0 +1,9 @@
+@use "../../styles/variables" as *;
+
+// .gq-copy-btn, .gq-copy-overlay, .gq-copy-modal are defined in AdminQuestionsManager.scss
+
+.gq-header-hint {
+  font-family: $font-fixel;
+  font-size: 14px;
+  color: #6b7280;
+}

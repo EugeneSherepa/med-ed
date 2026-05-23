@@ -12,6 +12,7 @@ import iconCaretButton from "../../assets/icon-caret-button.svg";
 import iconCaretButtonWhite from "../../assets/icon-caret-button-white.svg";
 import iconBookmark from "../../assets/bookmark.svg";
 import iconBookmarkFilled from "../../assets/bookmark-filled.svg";
+import iconFolder from "../../assets/folder.svg";
 import iconLabs from "../../assets/icon-labs.svg";
 import iconClose from "../../assets/icon-close-second.svg";
 import iconCorrect from "../../assets/icon-correct.svg";
@@ -19,6 +20,9 @@ import iconIncorrect from "../../assets/icon-incorrect.svg";
 import { TestTimer } from "../TestTimer/TestTimer";
 import { ReportModal } from "../ReportModal/ReportModal";
 import { LabModalComponent } from "../LabModalComponent/LabModalComponent";
+import { FolderPickerPopover } from "../FolderPickerPopover/FolderPickerPopover";
+import { NotePopover } from "../NotePopover/NotePopover";
+import iconDoc from "../../assets/icon-doc.svg";
 
 export const TestPage = () => {
   const { testId } = useParams();
@@ -37,6 +41,9 @@ export const TestPage = () => {
   const timeSpentRef = useRef(0);
 
   const [savedQuestionIds, setSavedQuestionIds] = useState(new Set());
+  const [noteQuestionIds, setNoteQuestionIds] = useState(new Set());
+  const [showFolderPicker, setShowFolderPicker] = useState(false);
+  const [showNotePicker, setShowNotePicker] = useState(false);
   const [showLabsModal, setShowLabsModal] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [swiperInstance, setSwiperInstance] = useState(null);
@@ -114,11 +121,18 @@ export const TestPage = () => {
     if (swiperInstance && swiperInstance.slideTo) {
       swiperInstance.slideTo(currentQuestionIndex);
     }
+    setShowFolderPicker(false);
+    setShowNotePicker(false);
   }, [currentQuestionIndex, swiperInstance]);
 
   useEffect(() => {
-    api.get("/saved-questions/ids")
+    api
+      .get("/saved-questions/ids")
       .then((res) => setSavedQuestionIds(new Set(res.data)))
+      .catch(() => {});
+    api
+      .get("/notes")
+      .then((res) => setNoteQuestionIds(new Set(res.data.map((n) => n.questionId))))
       .catch(() => {});
   }, []);
 
@@ -249,7 +263,7 @@ export const TestPage = () => {
       isOpen: true,
       title: "Вийти з тесту?",
       subtitle:
-        "Прогрес буде збережено, але таймер продовжить відлік при поверненні.",
+        "Прогрес буде збережено, а таймер продовжить відлік при поверненні.",
       confirmText: "Вийти",
       cancelText: "Продовжити",
       onConfirm: () => navigate(backUrl),
@@ -276,7 +290,8 @@ export const TestPage = () => {
     if (test.type === "BASE") return test.title;
     if (test.type === "AMPS") {
       let title = `${test.year} АМПС`;
-      if (test.language) title += ` (${test.language === "en" ? "Eng" : "Укр"})`;
+      if (test.language)
+        title += ` (${test.language === "en" ? "Eng" : "Укр"})`;
       return title;
     }
     let title = `${test.year}`;
@@ -324,10 +339,7 @@ export const TestPage = () => {
       <div className="test-page-wrapper">
         <header className="test-header">
           <div className="test-header-left">
-            <button
-              className="test-header-back"
-              onClick={handleBackClick} // 🚀 Safety check modal
-            >
+            <button className="test-header-back" onClick={handleBackClick}>
               <img src={iconCaretDropdown} alt="Back" />
             </button>
             <h2 className="test-header-title">{getTestTitle()}</h2>
@@ -421,11 +433,56 @@ export const TestPage = () => {
                     onClick={handleToggleSave}
                   >
                     <img
-                      src={savedQuestionIds.has(currentQuestion.id) ? iconBookmarkFilled : iconBookmark}
+                      src={
+                        savedQuestionIds.has(currentQuestion.id)
+                          ? iconBookmarkFilled
+                          : iconBookmark
+                      }
                       alt="Зберегти"
                     />
-                    {savedQuestionIds.has(currentQuestion.id) ? "Збережено" : "Зберегти"}
+                    {savedQuestionIds.has(currentQuestion.id)
+                      ? "Збережено"
+                      : "Зберегти"}
                   </button>
+
+                  <div style={{ position: "relative" }}>
+                    <button
+                      className="test-question-card-tools-btn"
+                      onClick={() => setShowFolderPicker((v) => !v)}
+                    >
+                      <img src={iconFolder} alt="Папка" />
+                      До папки
+                    </button>
+                    {showFolderPicker && (
+                      <FolderPickerPopover
+                        questionId={currentQuestion.id}
+                        onClose={() => setShowFolderPicker(false)}
+                      />
+                    )}
+                  </div>
+
+                  <div style={{ position: "relative" }}>
+                    <button
+                      className={`test-question-card-tools-btn${noteQuestionIds.has(currentQuestion.id) ? " saved" : ""}`}
+                      onClick={() => setShowNotePicker((v) => !v)}
+                    >
+                      <img src={iconDoc} alt="Нотатки" />
+                      Нотатки
+                    </button>
+                    {showNotePicker && (
+                      <NotePopover
+                        questionId={currentQuestion.id}
+                        onClose={() => setShowNotePicker(false)}
+                        onNoteChange={(qId, text) =>
+                          setNoteQuestionIds((prev) => {
+                            const next = new Set(prev);
+                            text ? next.add(qId) : next.delete(qId);
+                            return next;
+                          })
+                        }
+                      />
+                    )}
+                  </div>
 
                   {currentQuestion.labIndicators && (
                     <button
@@ -550,7 +607,10 @@ export const TestPage = () => {
 
                 <button
                   className={`test-footer-nav-next ${hasAnsweredCurrent || isCompleted ? "answered" : ""}`}
-                  disabled={currentQuestionIndex === test.questions.length - 1 && isCompleted}
+                  disabled={
+                    currentQuestionIndex === test.questions.length - 1 &&
+                    isCompleted
+                  }
                   onClick={() => {
                     if (currentQuestionIndex < test.questions.length - 1) {
                       setCurrentQuestionIndex((prev) => prev + 1);
@@ -565,7 +625,11 @@ export const TestPage = () => {
                     : hasAnsweredCurrent || isCompleted
                       ? "Наступне"
                       : "Пропустити"}
-                  {(hasAnsweredCurrent || isCompleted) && !(currentQuestionIndex === test.questions.length - 1 && isCompleted) ? (
+                  {(hasAnsweredCurrent || isCompleted) &&
+                  !(
+                    currentQuestionIndex === test.questions.length - 1 &&
+                    isCompleted
+                  ) ? (
                     <img src={iconCaretButtonWhite} />
                   ) : (
                     <img src={iconCaretButton} />
@@ -638,16 +702,16 @@ export const TestPage = () => {
         <div className="test-results-overlay">
           <div className="test-results-modal">
             <h2 className="test-results-modal-title">Тест завершено!</h2>
-            <p className="test-results-modal-subtitle">
-              Ось ваші результати
-            </p>
+            <p className="test-results-modal-subtitle">Ось ваші результати</p>
 
             <div className="test-results-modal-stats">
               <div className="test-results-modal-stat">
                 <span className="test-results-modal-stat-value">
                   {resultsData.answeredCount}/{resultsData.totalCount}
                 </span>
-                <span className="test-results-modal-stat-label">Відповідей</span>
+                <span className="test-results-modal-stat-label">
+                  Відповідей
+                </span>
               </div>
               <div className="test-results-modal-stat">
                 <span className="test-results-modal-stat-value correct">
@@ -655,7 +719,9 @@ export const TestPage = () => {
                 </span>
                 <span className="test-results-modal-stat-label">Правильно</span>
               </div>
-              <div className={`test-results-modal-stat score ${resultsData.scorePercent >= 70 ? "passing" : "failing"}`}>
+              <div
+                className={`test-results-modal-stat score ${resultsData.scorePercent >= 70 ? "passing" : "failing"}`}
+              >
                 <span className="test-results-modal-stat-value">
                   {resultsData.scorePercent}%
                 </span>

@@ -1,0 +1,63 @@
+@use "../../styles/variables" as *;
+
+.folder-detail {
+  &__header {
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__back {
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    background: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Fixel", sans-serif, serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    color: #252c3f;
+    border: none;
+
+    & img {
+      transform: rotate(90deg);
+    }
+  }
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__icon {
+    font-size: 28px;
+  }
+
+  &__title {
+    font-family: $font-fixel;
+    font-weight: 600;
+    font-size: 24px;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  &__empty {
+    font-family: $font-fixel;
+    font-size: 16px;
+    color: #6b7280;
+    padding: 64px 0;
+    text-align: center;
+  }
+}
+
+.folder-quiz-source {
+  font-family: $font-fixel;
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 12px;
+}

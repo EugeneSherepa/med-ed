@@ -10,6 +10,7 @@ export const Admin = ({ currentUser }) => {
           {/* 🚀 Add the Dashboard link here */}
           <NavLink to="/admin" end>📊 Дашборд</NavLink>
           <NavLink to="/admin/tests">📚 Управління тестами</NavLink>
+          <NavLink to="/admin/global-questions">🌐 Глобальні питання</NavLink>
           <NavLink to="/admin/reports">🚩 Скарги на питання</NavLink>
 
           {currentUser?.role === "ADMIN" && (
