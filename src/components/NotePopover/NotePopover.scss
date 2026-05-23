@@ -1,0 +1,96 @@
+@use "../../styles/variables" as *;
+
+.note-popover-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+.note-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 101;
+  background: $white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 12px;
+  width: 280px;
+
+  &__title {
+    font-family: $font-fixel;
+    font-size: 13px;
+    font-weight: 600;
+    color: $primary-color;
+    margin-bottom: 8px;
+  }
+
+  &__loading {
+    font-family: $font-fixel;
+    font-size: 13px;
+    color: #6b7280;
+    padding: 8px 0;
+  }
+
+  &__textarea {
+    width: 100%;
+    min-height: 96px;
+    resize: vertical;
+    border: 1px solid #b1d4e0;
+    border-radius: 8px;
+    padding: 8px;
+    font-family: $font-fixel;
+    font-size: 13px;
+    color: $primary-color;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s;
+
+    &:focus {
+      border-color: #5597ad;
+    }
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    gap: 8px;
+  }
+
+  &__status {
+    font-family: $font-fixel;
+    font-size: 12px;
+    color: #16a34a;
+    min-height: 16px;
+  }
+
+  &__save {
+    background-color: $primary-color;
+    color: $white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-family: $font-fixel;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    flex-shrink: 0;
+
+    &:hover:not(:disabled) {
+      background-color: #1a2030;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+  }
+}

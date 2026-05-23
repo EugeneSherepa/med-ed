@@ -36,6 +36,7 @@ import { Amps } from "../pages/Amps/Amps";
 import { Saved } from "../pages/Saved/Saved";
 import { SavedDetail } from "../pages/Saved/SavedDetail";
 import { TestPage } from "../components/TestPage/TestPage";
+import { FolderDetail } from "../components/FolderDetail/FolderDetail";
 
 const Admin = lazy(() =>
   import("../pages/Admin/Admin").then((m) => ({ default: m.Admin })),
@@ -78,6 +79,11 @@ const AdminReportsList = lazy(() =>
 const AdminTestAnalytics = lazy(() =>
   import("../components/AdminTestAnalytics/AdminTestAnalytics").then((m) => ({
     default: m.AdminTestAnalytics,
+  })),
+);
+const AdminGlobalQuestions = lazy(() =>
+  import("../components/AdminGlobalQuestions/AdminGlobalQuestions").then((m) => ({
+    default: m.AdminGlobalQuestions,
   })),
 );
 
@@ -198,6 +204,14 @@ const AppRouter = () => {
           }
         />
         <Route
+          path="/saved/folder/:folderId"
+          element={
+            <ProtectedRoute>
+              <FolderDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/saved/:slug"
           element={
             <ProtectedRoute>
@@ -278,6 +292,14 @@ const AppRouter = () => {
             element={
               <Suspense fallback={<AdminLoader />}>
                 <AdminTestAnalytics />
+              </Suspense>
+            }
+          />
+          <Route
+            path="global-questions"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminGlobalQuestions />
               </Suspense>
             }
           />

@@ -26,6 +26,7 @@ export const BasesPage = () => {
   const [filterStatus, setFilterStatus] = useState("");
   const [filterType, setFilterType] = useState("");
 
+
   const navigate = useNavigate();
 
   const [modalConfig, setModalConfig] = useState({
