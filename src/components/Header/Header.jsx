@@ -198,19 +198,10 @@ export const Header = () => {
             </ul>
             <div className="header-wrapper-buttons">
               <div className="header-wrapper-buttons-wrapper">
-                {isAuthenticated ? (
+                {isAuthenticated && (
                   <Link to="/account" className="button-primary">
                     Акаунт
                   </Link>
-                ) : (
-                  <>
-                    <Link to="/login" className="button-secondary-thin">
-                      Увійти
-                    </Link>
-                    <Link to="/register" className="button-primary">
-                      Зареєструватись
-                    </Link>
-                  </>
                 )}
               </div>
               <button
@@ -326,19 +317,10 @@ export const Header = () => {
           )}
 
           <div className="mobile-menu-log">
-            {isAuthenticated ? (
+            {isAuthenticated && (
               <Link to="/account" className="button-primary">
                 Акаунт
               </Link>
-            ) : (
-              <>
-                <Link to="/login" className="button-secondary-thin">
-                  Увійти
-                </Link>
-                <Link to="/register" className="button-primary">
-                  Зареєструватись
-                </Link>
-              </>
             )}
           </div>
 
