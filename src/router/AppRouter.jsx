@@ -146,7 +146,7 @@ const AppRouter = () => {
           }
         />
 
-        {/* Protected student pages */}
+        {/* Protected student pages — TEMP: restricted to ADMIN/TEACHER only */}
         <Route
           path="/complete-profile"
           element={
@@ -158,73 +158,73 @@ const AppRouter = () => {
         <Route
           path="/account"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
               <Account />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/booklets"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
               <Booklets />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/test/:testId"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
               <TestPage />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/results/:testId"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
               <TestPage />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/bases"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
               <Bases />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/saved"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
               <Saved />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/saved/folder/:folderId"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
               <FolderDetail />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/saved/:slug"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
               <SavedDetail />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/amps"
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
               <Amps />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
 
