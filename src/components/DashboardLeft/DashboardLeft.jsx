@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import "./DashboardLeft.scss";
 import logo from "../../assets/logo.png";
 import main from "../../assets/main-dashboard.svg";
@@ -8,6 +9,7 @@ import folder from "../../assets/folder.svg";
 import bookmark from "../../assets/bookmark.svg";
 import accountWhite from "../../assets/account-white.svg";
 import account from "../../assets/account.svg";
+import adminIcon from "../../assets/icon-person.svg";
 import burger from "../../assets/burger.svg";
 import close from "../../assets/icon-close.svg";
 import searchIcon from "../../assets/icon-search.svg";
@@ -19,6 +21,8 @@ export const DashboardLeft = ({
   onSearchChange,
   searchPlaceholder = "Пошук...",
 }) => {
+  const { currentUser } = useAuth();
+  const isAdminOrTeacher = currentUser?.role === "ADMIN" || currentUser?.role === "TEACHER";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -189,6 +193,26 @@ export const DashboardLeft = ({
               Збережені
             </Link>
           </li>
+
+          {isAdminOrTeacher && (
+            <li className="left-panel-links-link">
+              <Link
+                to="/admin"
+                className={
+                  currentLink === "/admin"
+                    ? "left-panel-links-link-current"
+                    : ""
+                }
+              >
+                <img
+                  src={adminIcon}
+                  className="left-panel-links-link-image"
+                  alt="Admin"
+                />
+                Адмін панель
+              </Link>
+            </li>
+          )}
 
           <li className="left-panel-links-link">
             <Link
