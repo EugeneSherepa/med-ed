@@ -103,6 +103,7 @@ export const AdminTestForm = () => {
         await api.patch(`/tests/${testId}`, payload);
         
         setModalConfig({
+          showIcon: false,
           isOpen: true,
           title: "Успішно оновлено!",
           subtitle: "Зміни в налаштуваннях тесту збережені.",

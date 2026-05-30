@@ -332,7 +332,7 @@ export const AdminDashboard = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-muted">Новых реєстрацій цього тижня немає</p>
+              <p className="text-muted">Нових реєстрацій цього тижня немає</p>
             )}
           </div>
 
