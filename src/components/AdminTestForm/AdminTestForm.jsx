@@ -116,6 +116,7 @@ export const AdminTestForm = () => {
         const res = await api.post("/tests", payload);
         
         setModalConfig({
+          showIcon: false,
           isOpen: true,
           title: "Тест успішно створено!",
           subtitle: "Бажаєте перейти до додавання питань для цього тесту?",
