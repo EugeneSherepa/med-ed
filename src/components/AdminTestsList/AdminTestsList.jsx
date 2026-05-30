@@ -295,12 +295,12 @@ export const AdminTestsList = () => {
                   >
                     {duplicatingId === test.id ? "…" : "⧉ Дублювати"}
                   </button>
-                  <button
+                  {/* <button
                     className="action-btn export"
                     onClick={() => handleExportResults(test)}
                   >
                     ↓ CSV
-                  </button>
+                  </button> */}
                   <button
                     className="action-btn delete"
                     onClick={() => handleDelete(test.id)}
