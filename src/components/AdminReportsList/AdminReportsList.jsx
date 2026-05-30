@@ -168,7 +168,9 @@ export const AdminReportsList = () => {
                     <button
                       className="btn-outline btn-edit-question"
                       onClick={() =>
-                        navigate(`/admin/tests/${report.test.id}/questions`)
+                        navigate(
+                          `/admin/tests/${report.test.id}/questions${report.question?.id ? `?questionId=${report.question.id}` : ""}`
+                        )
                       }
                     >
                       ✎ Редагувати питання

@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect, useMemo, useRef } from "react";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { api } from "../../api";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import "./AdminQuestionsManager.scss";
@@ -24,6 +24,9 @@ const getTestTitle = (t) => {
 export const AdminQuestionsManager = () => {
   const { testId } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const preselectedQuestionId = searchParams.get("questionId");
+  const didPreselect = useRef(false);
 
   const [testInfo, setTestInfo] = useState({
     title: "Завантаження...",
@@ -128,6 +131,23 @@ export const AdminQuestionsManager = () => {
   useEffect(() => {
     fetchQuestions();
   }, [testId]);
+
+  useEffect(() => {
+    if (!preselectedQuestionId || isLoading || questions.length === 0 || didPreselect.current) return;
+    const q = questions.find((q) => q.id === parseInt(preselectedQuestionId));
+    if (!q) return;
+    didPreselect.current = true;
+    setActiveQuestionId(q.id);
+    setFormData({
+      text: q.text,
+      explanation: q.explanation || "",
+      labIndicators: q.labIndicators || "",
+      options: q.options?.length ? q.options : emptyForm.options,
+    });
+    setTimeout(() => {
+      document.getElementById(`question-item-${q.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
+  }, [questions, isLoading, preselectedQuestionId]);
 
   const handleOptionTextChange = (index, value) => {
     const newOptions = [...formData.options];
@@ -387,6 +407,7 @@ export const AdminQuestionsManager = () => {
             {questions.map((q, idx) => (
               <div
                 key={q.id}
+                id={`question-item-${q.id}`}
                 className={`admin-qm-list-item ${activeQuestionId === q.id ? "active" : ""}`}
                 onClick={() => handleEditClick(q)}
               >
