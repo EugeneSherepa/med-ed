@@ -152,13 +152,13 @@ export const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="stat-card">
+        {/* <div className="stat-card">
           <div className="stat-icon yellow">🏆</div>
           <div className="stat-info">
             <span className="stat-label">Прохідний бал (≥70%)</span>
             <span className="stat-value">{stats.passRate}%</span>
           </div>
-        </div>
+        </div> */}
 
         <div className="stat-card">
           <div className="stat-icon orange">📊</div>

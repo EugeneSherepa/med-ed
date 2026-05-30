@@ -93,10 +93,10 @@ export const AdminTestAnalytics = () => {
           <span className="ta-kpi-label">Не склали</span>
           <span className="ta-kpi-value">{data.failCount}</span>
         </div>
-        <div className="ta-kpi">
+        {/* <div className="ta-kpi">
           <span className="ta-kpi-label">Прохідний бал</span>
           <span className="ta-kpi-value">{data.passRate}%</span>
-        </div>
+        </div> */}
         <div className="ta-kpi">
           <span className="ta-kpi-label">Середній бал</span>
           <span className="ta-kpi-value">{data.avgScore}%</span>
