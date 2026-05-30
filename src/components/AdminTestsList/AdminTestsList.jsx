@@ -272,16 +272,16 @@ export const AdminTestsList = () => {
                 <td>{test._count?.questions || test.questions?.length || 0}</td>
                 <td className="admin-table-actions">
                   <button
-                    className="action-btn edit"
-                    onClick={() => navigate(`/admin/tests/${test.id}/edit`)}
-                  >
-                    ✎ Редагувати
-                  </button>
-                  <button
                     className="action-btn questions"
                     onClick={() => navigate(`/admin/tests/${test.id}/questions`)}
                   >
                     ☰ Питання
+                  </button>
+                  <button
+                    className="action-btn edit"
+                    onClick={() => navigate(`/admin/tests/${test.id}/edit`)}
+                  >
+                    ✎ Редагувати
                   </button>
                   <button
                     className="action-btn analytics"
