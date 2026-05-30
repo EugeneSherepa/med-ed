@@ -252,6 +252,7 @@ export const AdminDashboard = () => {
         {/* Live Feed */}
         <div className="admin-dashboard-section live-feed">
           <h3>Остання активність</h3>
+          <div className="admin-table-scroll">
           <table className="admin-table">
             <thead>
               <tr>
@@ -303,6 +304,7 @@ export const AdminDashboard = () => {
               )}
             </tbody>
           </table>
+          </div>
         </div>
 
         {/* Right sidebar */}
@@ -356,6 +358,7 @@ export const AdminDashboard = () => {
       {stats.topTests?.length > 0 && (
         <div className="admin-dashboard-section dash-section-mt">
           <h3>Топ тестів за кількістю спроб</h3>
+          <div className="admin-table-scroll">
           <table className="admin-table">
             <thead>
               <tr>
@@ -392,6 +395,7 @@ export const AdminDashboard = () => {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>

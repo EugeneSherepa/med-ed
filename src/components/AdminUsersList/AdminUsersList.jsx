@@ -185,6 +185,7 @@ export const AdminUsersList = () => {
         </button>
       </div>
 
+      <div className="admin-table-scroll">
       <table className="admin-table">
         <thead>
           <tr>
@@ -236,6 +237,7 @@ export const AdminUsersList = () => {
           )}
         </tbody>
       </table>
+      </div>
 
       <ConfirmModal
         isOpen={modalConfig.isOpen}

@@ -127,6 +127,7 @@ export const AdminUserDetail = () => {
         {user.testAttempts.length === 0 ? (
           <p className="ud-empty">Немає спроб</p>
         ) : (
+          <div className="admin-table-scroll">
           <table className="admin-table">
             <thead>
               <tr>
@@ -182,6 +183,7 @@ export const AdminUserDetail = () => {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>

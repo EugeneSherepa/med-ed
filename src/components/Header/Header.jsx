@@ -317,10 +317,12 @@ export const Header = () => {
           )}
 
           <div className="mobile-menu-log">
-            {isAuthenticated && (
+            {isAuthenticated ? (
               <Link to="/account" className="button-primary">
                 Акаунт
               </Link>
+            ) : (
+              <a href="https://t.me/its_meded?text=Привіт,%20хочу%20записатись%20на%20навчання%20до%20вас!" class="button-primary">Почати навчання</a>
             )}
           </div>
 
