@@ -6,6 +6,8 @@
 
 .test-analytics-header {
   display: flex;
+  flex-direction: column;
+  width: 100%;
   align-items: flex-start;
   gap: 16px;
   margin-bottom: 28px;
@@ -29,6 +31,7 @@
 }
 
 .ta-title-block {
+  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;

@@ -66,9 +66,9 @@ export const AdminTestAnalytics = () => {
           </h2>
           <span className="ta-subtitle">{data.test.examType} · {data.test.questionsCount} питань</span>
         </div>
-        <button className="btn-export-ta" onClick={handleExport}>
+        {/* <button className="btn-export-ta" onClick={handleExport}>
           ↓ Експорт CSV
-        </button>
+        </button> */}
       </div>
 
       {/* KPI Cards */}
