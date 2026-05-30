@@ -194,6 +194,24 @@ export const DashboardLeft = ({
             </Link>
           </li>
 
+          <li className="left-panel-links-link">
+            <Link
+              to="/account"
+              className={
+                currentLink === "/account"
+                  ? "left-panel-links-link-current"
+                  : ""
+              }
+            >
+              <img
+                src={account}
+                className="left-panel-links-link-image"
+                alt="Account"
+              />
+              Профіль
+            </Link>
+          </li>
+
           {isAdminOrTeacher && (
             <li className="left-panel-links-link">
               <Link
@@ -213,24 +231,6 @@ export const DashboardLeft = ({
               </Link>
             </li>
           )}
-
-          <li className="left-panel-links-link">
-            <Link
-              to="/account"
-              className={
-                currentLink === "/account"
-                  ? "left-panel-links-link-current"
-                  : ""
-              }
-            >
-              <img
-                src={account}
-                className="left-panel-links-link-image"
-                alt="Account"
-              />
-              Профіль
-            </Link>
-          </li>
         </ul>
 
         <div className="left-panel-support">

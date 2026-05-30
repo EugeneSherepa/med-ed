@@ -20,6 +20,11 @@
   height: 100vh;
   overflow-y: auto;
 
+  & a {
+    text-decoration: none;
+    color: $primary-color;
+  }
+
   h2 {
     font-family: $font-fixel;
     font-size: 20px;
@@ -66,6 +71,74 @@
 .admin-content {
   flex: 1;
   min-width: 0;
+}
+
+// Shared admin utility classes — must live here (always loaded) not in lazy-loaded child components
+.admin-loading,
+.admin-error {
+  padding: 32px;
+  font-family: $font-fixel;
+  color: #6b7280;
+}
+
+.text-muted { color: #6b7280; }
+.text-sm { font-size: 13px; }
+.text-truncate {
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-table {
+  width: 100%;
+  background: $white;
+  border-radius: 16px;
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+
+  thead {
+    background-color: #f3f4f6;
+
+    th {
+      padding: 16px 24px;
+      text-align: left;
+      font-family: $font-fixel;
+      font-weight: 600;
+      font-size: 14px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #e5e7eb;
+      white-space: nowrap;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background 0.15s ease;
+
+      &:hover { background-color: #f9fafb; }
+      &:last-child td { border-bottom: none; }
+    }
+
+    td {
+      padding: 14px 24px;
+      font-family: $font-fixel;
+      font-size: 14px;
+      color: #374151;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: middle;
+    }
+  }
+
+  @media screen and (max-width: 1280px) {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
 
 @media screen and (max-width: 768px) {
