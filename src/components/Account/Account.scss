@@ -1,0 +1,168 @@
+@use "../../styles/variables" as *;
+
+.account {
+  min-height: 100vh;
+  display: flex;
+  background-color: $white;
+
+  &-wrapper {
+    padding: 40px 56px;
+    width: 100%;
+    border-radius: 24px;
+    background-color: #b1d4e03d;
+
+    &-outer {
+      width: 100%;
+      padding: 60px 72px;
+      overflow-y: auto;
+    }
+
+    &-title {
+      margin-bottom: 24px;
+      font-family: $font-fixel;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 22px;
+    }
+
+    &-form {
+      &-photo {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 32px;
+
+        & .button-pink {
+          height: fit-content;
+        }
+
+        & img {
+          cursor: pointer;
+          width: 112px;
+          height: 112px;
+          object-fit: cover;
+          border-radius: 50%;
+          border: none;
+          padding: 4px;
+          background:
+            radial-gradient(
+              73.92% 251.95% at 26.91% 46.73%,
+              #f7b4d1 0%,
+              #e3cee1 23.19%,
+              #dbd0f7 44.5%,
+              #b1d4e0 97%
+            ),
+            linear-gradient(
+              180deg,
+              rgba(255, 154, 66, 0) 0%,
+              rgba(177, 212, 224, 0.2) 55.02%,
+              rgba(255, 154, 66, 0.2) 100%
+            );
+        }
+
+        &-button {
+          cursor: pointer;
+          padding-top: 8px;
+          font-family: $font-fixel;
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 16px;
+          background-color: transparent;
+          color: #85878d;
+          border: 0;
+        }
+      }
+
+      &-title {
+        margin-bottom: 32px;
+        font-family: $font-fixel;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 22px;
+      }
+
+      &-field {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+
+        & .auth-form-wrapper-field {
+          margin-bottom: 32px;
+          width: 50%;
+        }
+      }
+    }
+  }
+}
+
+.logout-wrapper {
+  margin-top: 24px;
+  padding: 24px;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 990px) {
+  .logout-wrapper {
+    padding: 0;
+    margin-top: 24px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    justify-content: flex-start;
+  }
+
+  .account {
+    margin-top: 80px;
+
+    &-wrapper {
+      padding: 24px;
+      padding-bottom: 0.1px;
+      width: 100%;
+      border-radius: 24px;
+      background-color: #b1d4e03d;
+
+      &-outer {
+        width: 100%;
+        padding: 24px;
+        overflow-y: auto;
+      }
+
+      &-title {
+        font-family: $font-fixel;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 22px;
+        text-align: center;
+      }
+
+      &-form {
+        &-photo {
+          text-align: center;
+          margin-bottom: 24px;
+
+          & img {
+            width: 102px;
+            height: 102px;
+          }
+        }
+
+        &-title {
+          margin-bottom: 24px;
+        }
+
+        &-field {
+          flex-direction: column;
+          gap: 0;
+
+          & .auth-form-wrapper-field {
+            width: 100%;
+
+            &:not(:nth-child(2n)) {
+              margin-bottom: 24px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

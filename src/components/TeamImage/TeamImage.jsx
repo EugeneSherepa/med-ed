@@ -32,7 +32,7 @@ export const TeamImage = () => {
             </div>
           </div>
           <div className="team-image-right">
-            <img src={tramImage} alt="Our team" />
+            <img src={tramImage} alt="Our team" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import './HomeTextImage.scss';
 import photo from '../../assets/home-new-hero.webp';
 import bubble from '../../assets/home-image-text-bubble.svg';
+import { Link } from 'react-router-dom';
 
 export const HomeTextImage = () => {
   return (
@@ -8,7 +9,7 @@ export const HomeTextImage = () => {
       <div className="page-width">
         <div className="home-it">
           <div className="page-width">
-            <img src={photo} alt="Our team photo" />
+            <img src={photo} alt="Our team photo" loading="lazy" decoding="async" />
             <h2 className="home-it-title">IT’s Med Ed</h2>
           </div>
           <div className="home-it-text">
@@ -26,9 +27,9 @@ export const HomeTextImage = () => {
               складання КРОК.
             </div>
             <div className="home-it-text-button">
-              <a href="/about-us" className="button-secondary">
+              <Link to="/about-us" className="button-secondary">
                 Про нас
-              </a>
+              </Link>
             </div>
           </div>
         </div>

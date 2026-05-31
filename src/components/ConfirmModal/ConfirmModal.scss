@@ -1,0 +1,94 @@
+@use "../../styles/variables" as *;
+
+.confirm-modal {
+  &-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(43, 45, 50, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(2px);
+  }
+
+  &-content {
+    backdrop-filter: blur(2px);
+    box-shadow: 0px 4px 10px 0px #0000000f;
+    background-color: rgba(236, 246, 249, 1);
+    border-radius: 36px;
+    padding: 32px;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: scaleUp 0.2s ease-out;
+    text-align: center;
+  }
+
+  &-icon {
+    margin-bottom: 16px;
+  }
+
+  &-title {
+    margin-bottom: 4px;
+    font-family: $font-fixel;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 32px;
+  }
+
+  &-subtitle {
+    margin-bottom: 16px;
+    font-family: $font-fixel;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 32px;
+  }
+
+  &-actions {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+    justify-content: center;
+
+    button {
+      cursor: pointer;
+      min-width: 110px;
+      padding: 10px 16px;
+      font-family: $font-fixel;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 100%;
+      border-radius: 12px;
+    }
+  }
+
+  &-cancel {
+    background-color: transparent;
+    border: 1px solid #B1D4E0;
+    color: #252C3F;
+  }
+
+  &-confirm {
+    background-color: #F7B4D1;
+    border: none;
+    color: $white;
+    font-weight: 600;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

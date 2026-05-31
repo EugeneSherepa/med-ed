@@ -77,7 +77,7 @@ const ReviewCard = ({ review }) => {
 
   return (
     <div className="reviews-slider-wrapper-review-wrapper">
-      {review.image && <img src={review.image} alt="" />}
+      {review.image && <img src={review.image} alt="" loading="lazy" decoding="async" />}
       <h4 className="reviews-slider-wrapper-review-wrapper-title">
         {review.title}
       </h4>

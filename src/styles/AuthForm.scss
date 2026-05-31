@@ -1,0 +1,256 @@
+@use "./variables" as *;
+
+.auth-form {
+  padding-top: 32px;
+  max-width: 480px;
+  margin: 0 auto;
+
+  &-logo {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    text-decoration: none;
+
+    & img {
+      width: 68px;
+      height: 80px;
+      object-fit: contain;
+    }
+
+    &-text {
+      font-family: $font-artegra;
+      font-size: 24px;
+      line-height: 100%;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: $primary-color;
+      font-weight: 800;
+    }
+  }
+
+  &-wrapper {
+    padding: 32px 24px;
+    width: 100%;
+    border-radius: 20px;
+    background-color: $white;
+    box-shadow:
+      0px 4px 6px -2px #10182808,
+      0px 12px 16px -4px #10182814;
+    backdrop-filter: blur(4px);
+
+    &-title {
+      margin-bottom: 8px;
+      font-family: $font-fixel;
+      font-size: 24px;
+      line-height: 100%;
+      font-weight: 600;
+      color: $primary-color;
+    }
+
+    &-text {
+      margin-bottom: 24px;
+      font-family: $font-fixel;
+      font-size: 16px;
+      line-height: 100%;
+      font-weight: 600;
+      color: $gray;
+    }
+
+    &-field {
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      & label {
+        font-family: $font-fixel;
+        font-size: 14px;
+        line-height: 16px;
+        font-weight: 600;
+        color: $gray;
+      }
+
+      & input {
+        width: 100%;
+        padding: 12px 16px;
+        font-family: $font-fixel;
+        font-size: 16px;
+        line-height: 100%;
+        font-weight: 400;
+        color: $primary-color;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        background-image:
+          linear-gradient(#fff, #fff),
+          radial-gradient(
+            73.92% 251.95% at 26.91% 46.73%,
+            #f7b4d1 0%,
+            #e3cee1 23.19%,
+            #dbd0f7 44.5%,
+            #b1d4e0 97%
+          );
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+
+        &::placeholder {
+          color: $gray;
+        }
+      }
+
+      & select {
+        position: relative;
+        width: 100%;
+        padding: 12px 16px;
+        min-height: 46px;
+        padding-right: 42px !important;
+        font-family: $font-fixel;
+        font-size: 16px;
+        line-height: 100%;
+        font-weight: 400;
+        color: $primary-color;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        background-image:
+          linear-gradient(#fff, #fff),
+          radial-gradient(
+            73.92% 251.95% at 26.91% 46.73%,
+            #f7b4d1 0%,
+            #e3cee1 23.19%,
+            #dbd0f7 44.5%,
+            #b1d4e0 97%
+          );
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        &::placeholder {
+          color: $gray;
+        }
+      }
+
+      &-password {
+        &-input {
+          position: relative;
+        }
+
+        &-toggle {
+          cursor: pointer;
+          width: 21px;
+          height: 21px;
+          position: absolute;
+          top: 12.5px;
+          right: 18px;
+          display: flex;
+          background-color: transparent;
+          border: none;
+        }
+      }
+    }
+
+    &-navigation {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    &-policy {
+      margin-top: 24px;
+      font-family: $font-eastman;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 125%;
+      text-align: center;
+      color: #3333339e;
+
+      & a {
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        color: #3333339e;
+      }
+    }
+
+    &-alt {
+      margin-top: 24px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 46px;
+      font-family: $font-fixel;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 100%;
+      color: #85878d;
+
+      &-line {
+        height: 1px;
+        width: 100%;
+        background-color: #85878d33;
+      }
+
+      &-button {
+        cursor: pointer;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background-color: transparent;
+        border: 1px solid #252c3f;
+        border-radius: 12px;
+        font-family: $font-fixel;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 120%;
+        color: #333333;
+      }
+    }
+  }
+
+  &-bottom {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-family: $font-fixel;
+    font-size: 16px;
+    line-height: 100%;
+    font-weight: 400;
+    color: $primary-color;
+
+    & a {
+      font-weight: 600;
+      color: $primary-color;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  }
+}
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select-caret {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 990px) {
+  .auth-form {
+    padding-left: 16px;
+    padding: 16px;
+  }
+}

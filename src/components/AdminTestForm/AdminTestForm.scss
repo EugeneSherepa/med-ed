@@ -1,0 +1,204 @@
+@use "../../styles/variables" as *;
+
+.admin-form-container {
+  padding: 40px;
+  background-color: #f9fafb;
+  min-height: 100vh;
+
+  .back-btn {
+    padding: 8px 16px;
+    margin-bottom: 24px;
+    background: transparent;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: $font-fixel;
+    color: #4b5563;
+    transition: 0.2s ease;
+    
+    &:hover { 
+      background: #f3f4f6; 
+      color: #111827;
+    }
+  }
+
+  h2 {
+    font-family: $font-fixel;
+    color: #252c3f;
+    margin-top: 0;
+    margin-bottom: 32px;
+    font-size: 28px;
+    font-weight: 600;
+  }
+}
+
+.admin-form {
+  background: $white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  .type-toggle {
+    display: inline-flex;
+    background-color: #f3f4f6;
+    padding: 6px;
+    border-radius: 12px;
+    width: fit-content;
+
+    label {
+      position: relative;
+      cursor: pointer;
+      padding: 10px 32px;
+      font-size: 15px;
+      font-family: $font-fixel;
+      font-weight: 600;
+      color: #6b7280;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      &:has(input[type="radio"]:checked) {
+        background-color: $white;
+        color: #252c3f;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      &:has(input[type="radio"]:disabled) {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .form-row {
+    display: flex;
+    gap: 24px;
+
+    .form-group {
+      flex: 1;
+    }
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+      font-family: $font-fixel;
+      font-weight: 500;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    input[type="text"], 
+    input[type="number"], 
+    select {
+      padding: 14px 16px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-family: $font-fixel;
+      font-size: 15px;
+      color: #111827;
+      background-color: $white;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        outline: none;
+        border-color: #b1d4e0;
+        box-shadow: 0 0 0 3px rgba(177, 212, 224, 0.2);
+      }
+
+      &:disabled {
+        background-color: #f3f4f6;
+        color: #9ca3af;
+        cursor: not-allowed;
+      }
+
+      &::placeholder {
+        color: #9ca3af;
+      }
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%239CA3AF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+      background-repeat: no-repeat;
+      background-position: right 16px top 50%;
+      background-size: 10px auto;
+      padding-right: 40px;
+    }
+  }
+
+  button[type="submit"] {
+    margin-top: 16px;
+    align-self: flex-start;
+    padding: 14px 32px;
+    font-size: 16px;
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+
+  .dynamic-fields {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .admin-form-container {
+    padding: 24px;
+    
+    h2 {
+      font-size: 24px;
+    }
+  }
+
+  .admin-form {
+    padding: 24px;
+    
+    .form-row {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      align-self: stretch;
+    }
+    
+    .type-toggle {
+      width: 100%;
+      
+      label {
+        flex: 1; // Makes Booklet/Base tabs equal width on mobile
+      }
+    }
+  }
+}

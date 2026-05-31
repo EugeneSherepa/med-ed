@@ -71,7 +71,7 @@ export const MaterialsGrid = () => {
           {cards.map((card, index) => (
             <SwiperSlide key={index}>
               <a href={card.url} className="materialsgrid-wrapper-item" target='_blank'>
-                <img src={card.src} alt={card.alt} />
+                <img src={card.src} alt={card.alt} loading="lazy" decoding="async" />
                 <div className="materialsgrid-wrapper-item-overlay">
                   переглянути
                 </div>

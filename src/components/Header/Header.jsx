@@ -1,15 +1,16 @@
-import './Header.scss';
-import '../Footer/Footer.scss';
-import logo from '../../assets/logo.png';
-import caret from '../../assets/icon-caret.svg';
-import burger from '../../assets/burger.svg';
-import close from '../../assets/icon-close.svg';
-import iconFacebook from '../../assets/telegram.svg';
-import iconInstagram from '../../assets/instagram.svg';
-import iconLinkedin from '../../assets/tiktok.svg';
-import iconYoutube from '../../assets/youtube.svg';
-import logoFooter from '../../assets/logo.png';
-import { useState, useEffect } from 'react';
+import "./Header.scss";
+import "../Footer/Footer.scss";
+import logo from "../../assets/logo.png";
+import caret from "../../assets/icon-caret.svg";
+import burger from "../../assets/burger.svg";
+import close from "../../assets/icon-close.svg";
+import iconFacebook from "../../assets/telegram.svg";
+import iconInstagram from "../../assets/instagram.svg";
+import iconLinkedin from "../../assets/tiktok.svg";
+import iconYoutube from "../../assets/youtube.svg";
+import logoFooter from "../../assets/logo.png";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const [prepareOpened, setPrepareOpened] = useState(false);
@@ -18,6 +19,8 @@ export const Header = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [menuOpened, setMenuOpened] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
+
+  const isAuthenticated = Boolean(localStorage.getItem("accessToken"));
 
   const PrepareToggle = () => {
     setPrepareOpened((prev) => !prev);
@@ -34,9 +37,9 @@ export const Header = () => {
       const newState = !prev;
 
       if (newState) {
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
       } else {
-        document.body.style.overflow = '';
+        document.body.style.overflow = "";
       }
 
       return newState;
@@ -58,20 +61,25 @@ export const Header = () => {
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
   return (
     <>
-      <header className={`header ${showHeader ? 'visible' : 'hidden'}`}>
+      <header className={`header ${showHeader ? "visible" : "hidden"}`}>
         <div className="header-wrapper">
-          <a href="/" className="header-wrapper-logo">
+          <Link
+            to="/"
+            className={`header-wrapper-logo ${isAuthenticated ? "auth-layout" : ""}`}
+          >
             <img src={logo} alt="Med ed logo" />
             <div className="header-wrapper-logo-text">IT’s Med Ed</div>
-          </a>
-          <nav className="header-wrapper-navigation">
+          </Link>
+          <nav
+            className={`header-wrapper-navigation ${isAuthenticated ? "auth-layout" : ""}`}
+          >
             <ul className="header-wrapper-navigation-items">
               <li className="header-wrapper-navigation-items-item">
                 <a
@@ -90,12 +98,12 @@ export const Header = () => {
                   <img
                     src={caret}
                     alt="caret icon"
-                    className={`${prepareOpened ? 'open' : ''}`}
+                    className={`${prepareOpened ? "open" : ""}`}
                   />
                 </a>
                 <div
                   className={`header-wrapper-navigation-items-item-link-dropdown ${
-                    prepareOpened ? 'open' : ''
+                    prepareOpened ? "open" : ""
                   }`}
                 >
                   <ul className="header-wrapper-navigation-items-item-link-dropdown-list">
@@ -151,12 +159,12 @@ export const Header = () => {
                   <img
                     src={caret}
                     alt="caret icon"
-                    className={`${stepsOpened ? 'open' : ''}`}
+                    className={`${stepsOpened ? "open" : ""}`}
                   />
                 </a>
                 <div
                   className={`header-wrapper-navigation-items-item-link-dropdown ${
-                    stepsOpened ? 'open' : ''
+                    stepsOpened ? "open" : ""
                   }`}
                 >
                   <ul className="header-wrapper-navigation-items-item-link-dropdown-list">
@@ -188,31 +196,32 @@ export const Header = () => {
                 </a>
               </li>
             </ul>
+            <div className="header-wrapper-buttons">
+              <div className="header-wrapper-buttons-wrapper">
+                {isAuthenticated && (
+                  <Link to="/account" className="button-primary">
+                    Акаунт
+                  </Link>
+                )}
+              </div>
+              <button
+                className="header-wrapper-buttons-burger"
+                onClick={menuToggle}
+              >
+                <img src={burger} alt="Burger Menu" />
+              </button>
+            </div>
           </nav>
-          <div className="header-wrapper-buttons">
-            <a
-              href="https://t.me/its_meded?text=Привіт,%20хочу%20записатись%20на%20навчання%20до%20вас!"
-              className="button-primary"
-            >
-              Почати навчання
-            </a>
-            <button
-              className="header-wrapper-buttons-burger"
-              onClick={menuToggle}
-            >
-              <img src={burger} alt="Burger Menu" />
-            </button>
-          </div>
         </div>
       </header>
-      <div className={`mobile-menu ${menuOpened ? 'open' : ''}`}>
+      <div className={`mobile-menu ${menuOpened ? "open" : ""}`}>
         <div>
           <div className={`header header-mobile visible`}>
             <div className="header-wrapper">
-              <a href="/" className="header-wrapper-logo">
+              <Link to="/" className="header-wrapper-logo">
                 <img src={logo} alt="Med ed logo" />
                 <div className="header-wrapper-logo-text">IT’s Med Ed</div>
-              </a>
+              </Link>
               <div className="header-wrapper-buttons">
                 <button
                   className="header-wrapper-buttons-burger"
@@ -228,14 +237,14 @@ export const Header = () => {
               <div className="mobile-submenu-button">Меню</div>
               <li
                 className="mobile-menu-main-item"
-                onClick={() => setActiveSubmenu('prepare')}
+                onClick={() => setActiveSubmenu("prepare")}
               >
                 Підготовка до пар
                 <img src={caret} />
               </li>
               <li
                 className="mobile-menu-main-item"
-                onClick={() => setActiveSubmenu('steps')}
+                onClick={() => setActiveSubmenu("steps")}
               >
                 Іспити
                 <img src={caret} />
@@ -253,7 +262,7 @@ export const Header = () => {
             </ul>
           )}
 
-          {activeSubmenu === 'prepare' && (
+          {activeSubmenu === "prepare" && (
             <div className="mobile-submenu">
               <button
                 className="mobile-submenu-button"
@@ -307,7 +316,17 @@ export const Header = () => {
             </div>
           )}
 
-          {activeSubmenu === 'steps' && (
+          <div className="mobile-menu-log">
+            {isAuthenticated ? (
+              <Link to="/account" className="button-primary">
+                Акаунт
+              </Link>
+            ) : (
+              <a href="https://t.me/its_meded?text=Привіт,%20хочу%20записатись%20на%20навчання%20до%20вас!" class="button-primary">Почати навчання</a>
+            )}
+          </div>
+
+          {activeSubmenu === "steps" && (
             <div className="mobile-submenu">
               <button
                 className="mobile-submenu-button"
@@ -332,43 +351,6 @@ export const Header = () => {
           )}
         </div>
         <div className="mobile-menu-footer">
-          <div className="mobile-menu-links">
-            Слідкуйте за нами в соцмережах
-            <ul className="mobile-menu-links-list">
-              <li className="mobile-menu-links-list-item">
-                <a
-                  href="https://t.me/itsmeded"
-                  className="mobile-menu-links-list-item-link"
-                >
-                  <img src={iconFacebook} alt="Telegram" />
-                </a>
-              </li>
-              <li className="mobile-menu-links-list-item">
-                <a
-                  href="https://www.instagram.com/its_med_ed?igsh=OTR3a3BlOTY2eGg3"
-                  className="mobile-menu-links-list-item-link"
-                >
-                  <img src={iconInstagram} alt="Instagram" />
-                </a>
-              </li>
-              <li className="mobile-menu-links-list-item">
-                <a
-                  href="https://www.tiktok.com/@its_med_ed?_t=ZM-8z6y5n1KeSE&_r=1"
-                  className="mobile-menu-links-list-item-link"
-                >
-                  <img src={iconLinkedin} alt="TikTok" />
-                </a>
-              </li>
-              <li className="mobile-menu-links-list-item">
-                <a
-                  href="https://youtube.com/@its_med_ed?si=S_t0-hzMraIEttwR"
-                  className="mobile-menu-links-list-item-link"
-                >
-                  <img src={iconYoutube} alt="Youtube" />
-                </a>
-              </li>
-            </ul>
-          </div>
           <div className="page-width">
             <div className="footer-top">
               <div className="footer-top-left">
@@ -381,6 +363,43 @@ export const Header = () => {
                     alt="Med Ed"
                     className="footer-top-left-heading-mobile"
                   />
+                </div>
+                <div className="mobile-menu-links">
+                  Слідкуйте за нами в соцмережах
+                  <ul className="mobile-menu-links-list">
+                    <li className="mobile-menu-links-list-item">
+                      <a
+                        href="https://t.me/itsmeded"
+                        className="mobile-menu-links-list-item-link"
+                      >
+                        <img src={iconFacebook} alt="Telegram" />
+                      </a>
+                    </li>
+                    <li className="mobile-menu-links-list-item">
+                      <a
+                        href="https://www.instagram.com/its_med_ed?igsh=OTR3a3BlOTY2eGg3"
+                        className="mobile-menu-links-list-item-link"
+                      >
+                        <img src={iconInstagram} alt="Instagram" />
+                      </a>
+                    </li>
+                    <li className="mobile-menu-links-list-item">
+                      <a
+                        href="https://www.tiktok.com/@its_med_ed?_t=ZM-8z6y5n1KeSE&_r=1"
+                        className="mobile-menu-links-list-item-link"
+                      >
+                        <img src={iconLinkedin} alt="TikTok" />
+                      </a>
+                    </li>
+                    <li className="mobile-menu-links-list-item">
+                      <a
+                        href="https://youtube.com/@its_med_ed?si=S_t0-hzMraIEttwR"
+                        className="mobile-menu-links-list-item-link"
+                      >
+                        <img src={iconYoutube} alt="Youtube" />
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
               <img src={logoFooter} alt="Med Ed" />

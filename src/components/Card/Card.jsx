@@ -1,6 +1,7 @@
 import './Card.scss';
 import arrow from '../../assets/icon-arrow-link.svg';
 import cardDot from '../../assets/card-dot.svg';
+import { Link } from 'react-router-dom';
 
 export const Card = ({ card }) => {
   const { url, image, tag, caption, title, text, start, price } = card;
@@ -55,7 +56,7 @@ export const Card = ({ card }) => {
           <div className="card-bottom-price">{price}</div>
         </div>
       </div>
-      <a href={url} className="card-link"></a>
+      <Link to={url || "/"} className="card-link"></Link>
     </div>
   );
 };
