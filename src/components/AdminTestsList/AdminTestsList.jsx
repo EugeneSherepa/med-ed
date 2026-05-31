@@ -10,6 +10,8 @@ export const AdminTestsList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: "id", direction: "descending" });
   const [duplicatingId, setDuplicatingId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const PAGE_SIZE = 25;
 
   const navigate = useNavigate();
 
@@ -26,7 +28,7 @@ export const AdminTestsList = () => {
 
   const fetchTests = async () => {
     try {
-      const res = await api.get("/tests");
+      const res = await api.get("/tests", { params: { limit: 1000 } });
       setTests(res.data.data || res.data);
     } catch (error) {
       console.error("Failed to load tests", error);
@@ -120,6 +122,7 @@ export const AdminTestsList = () => {
       direction = "descending";
     }
     setSortConfig({ key, direction });
+    setCurrentPage(1);
   };
 
   const processedTests = useMemo(() => {
@@ -169,6 +172,9 @@ export const AdminTestsList = () => {
     return filtered;
   }, [tests, searchQuery, sortConfig]);
 
+  const totalPages = Math.ceil(processedTests.length / PAGE_SIZE);
+  const pagedTests = processedTests.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
   const getSortIcon = (key) => {
     if (sortConfig.key !== key) return " ↕";
     return sortConfig.direction === "ascending" ? " ▲" : " ▼";
@@ -193,7 +199,7 @@ export const AdminTestsList = () => {
           type="text"
           placeholder="🔍 Пошук за назвою, роком, категорією або типом..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
           style={{
             width: "100%",
             padding: "10px 15px",
@@ -233,14 +239,14 @@ export const AdminTestsList = () => {
           </tr>
         </thead>
         <tbody>
-          {processedTests.length === 0 ? (
+          {pagedTests.length === 0 ? (
             <tr>
               <td colSpan="8" style={{ textAlign: "center", padding: "30px" }}>
                 Тестів не знайдено
               </td>
             </tr>
           ) : (
-            processedTests.map((test) => (
+            pagedTests.map((test) => (
               <tr key={test.id}>
                 <td>{test.id}</td>
                 <td>
@@ -315,6 +321,28 @@ export const AdminTestsList = () => {
         </tbody>
       </table>
       </div>
+
+      {totalPages > 1 && (
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", justifyContent: "center", marginTop: "16px" }}>
+          <button
+            className="button-pink-small"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((p) => p - 1)}
+          >
+            ← Назад
+          </button>
+          <span style={{ fontSize: "14px" }}>
+            Сторінка {currentPage} з {totalPages} ({processedTests.length} тестів)
+          </span>
+          <button
+            className="button-pink-small"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((p) => p + 1)}
+          >
+            Далі →
+          </button>
+        </div>
+      )}
 
       <ConfirmModal
         isOpen={modalConfig.isOpen}
