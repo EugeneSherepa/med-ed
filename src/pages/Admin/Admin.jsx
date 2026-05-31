@@ -13,6 +13,7 @@ export const Admin = ({ currentUser }) => {
         <nav>
           <NavLink to="/admin" end>📊 Дашборд</NavLink>
           <NavLink to="/admin/tests">📚 Управління тестами</NavLink>
+          <NavLink to="/admin/bases-reorder">↕ Порядок тестів</NavLink>
           <NavLink to="/admin/global-questions">🌐 Глобальні питання</NavLink>
           <NavLink to="/admin/reports">🚩 Скарги на питання</NavLink>
           <NavLink to="/account">👤 Профіль</NavLink>

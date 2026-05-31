@@ -58,7 +58,9 @@ export const FolderDetail = () => {
       .finally(() => setIsLoading(false));
     api
       .get("/notes")
-      .then((res) => setNoteQuestionIds(new Set(res.data.map((n) => n.questionId))))
+      .then((res) =>
+        setNoteQuestionIds(new Set(res.data.map((n) => n.questionId))),
+      )
       .catch(() => {});
   }, [folderId]);
 
@@ -101,7 +103,10 @@ export const FolderDetail = () => {
 
       <div className="test-page-wrapper">
         <div className="folder-detail__header">
-          <button className="folder-detail__back" onClick={() => navigate("/saved")}>
+          <button
+            className="folder-detail__back"
+            onClick={() => navigate("/saved")}
+          >
             <img src={iconCaretDropdown} alt="Back" />
             Назад
           </button>
@@ -228,7 +233,16 @@ export const FolderDetail = () => {
                         )}
                       </div>
 
-                      <p className="test-question-card-text">{q.text}</p>
+                      <p className="test-question-card-text">
+                        {q.text}
+                        {q.image && (
+                          <img
+                            src={q.image}
+                            alt="question illustration"
+                            className="test-question-image"
+                          />
+                        )}
+                      </p>
 
                       <div className="test-question-card-options">
                         {q.options.map((option, idx) => {
@@ -269,16 +283,38 @@ export const FolderDetail = () => {
                                   </div>
                                 )}
                               </div>
-                              {isCorrect && hasAnswered && q.explanation && (
+                              {option.image && (
+                                <img
+                                  src={option.image}
+                                  alt={`option ${idx}`}
+                                  className="test-option-image"
+                                />
+                              )}
+
+                              {hasAnswered && option.explanation && (
                                 <div className="test-question-explanation">
                                   <div
                                     className="test-question-explanation-text"
                                     dangerouslySetInnerHTML={{
-                                      __html: q.explanation,
+                                      __html: option.explanation,
                                     }}
                                   />
                                 </div>
                               )}
+
+                              {isCorrect &&
+                                hasAnswered &&
+                                q.explanation &&
+                                !q.options?.some((o) => o.explanation) && (
+                                  <div className="test-question-explanation">
+                                    <div
+                                      className="test-question-explanation-text"
+                                      dangerouslySetInnerHTML={{
+                                        __html: q.explanation,
+                                      }}
+                                    />
+                                  </div>
+                                )}
                             </label>
                           );
                         })}

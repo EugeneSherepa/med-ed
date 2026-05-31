@@ -5,6 +5,7 @@ import { getTestIdFromSlug } from "../../utils/savedSlug";
 import { DashboardLeft } from "../DashboardLeft/DashboardLeft";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Mousewheel } from "swiper/modules";
+import "../TestPage/TestPage.scss";
 import "./SavedQuestionViewer.scss";
 import iconCaretDropdown from "../../assets/icon-caret-dropdown.svg";
 import iconCaret from "../../assets/icon-caret-swiper-disabled.svg";
@@ -178,18 +179,35 @@ export const SavedQuestionViewer = () => {
                   <button
                     className={`test-question-card-tools-btn ${unsavedIds.has(currentQuestion.id) ? "" : "saved"}`}
                     onClick={handleToggleSave}
-                    title={unsavedIds.has(currentQuestion.id) ? "Зберегти" : "Видалити зі збережених"}
+                    title={
+                      unsavedIds.has(currentQuestion.id)
+                        ? "Зберегти"
+                        : "Видалити зі збережених"
+                    }
                   >
                     <img
-                      src={unsavedIds.has(currentQuestion.id) ? iconBookmark : iconBookmarkFilled}
+                      src={
+                        unsavedIds.has(currentQuestion.id)
+                          ? iconBookmark
+                          : iconBookmarkFilled
+                      }
                       alt="Зберегти"
                     />
-                    {unsavedIds.has(currentQuestion.id) ? "Зберегти" : "Збережено"}
+                    {unsavedIds.has(currentQuestion.id)
+                      ? "Зберегти"
+                      : "Збережено"}
                   </button>
                 </div>
 
                 <p className="test-question-card-text">
                   {currentQuestion.text}
+                  {currentQuestion.image && (
+                    <img
+                      src={currentQuestion.image}
+                      alt="question illustration"
+                      className="test-question-image"
+                    />
+                  )}
                 </p>
 
                 <div className="test-question-card-options">
@@ -245,9 +263,31 @@ export const SavedQuestionViewer = () => {
                           )}
                         </div>
 
+                        {option.image && (
+                          <img
+                            src={option.image}
+                            alt={`option ${idx}`}
+                            className="test-option-image"
+                          />
+                        )}
+
+                        {hasAnsweredCurrent && option.explanation && (
+                          <div className="test-question-explanation">
+                            <div
+                              className="test-question-explanation-text"
+                              dangerouslySetInnerHTML={{
+                                __html: option.explanation,
+                              }}
+                            />
+                          </div>
+                        )}
+
                         {isCorrect &&
                           hasAnsweredCurrent &&
-                          currentQuestion.explanation && (
+                          currentQuestion.explanation &&
+                          !currentQuestion.options?.some(
+                            (o) => o.explanation,
+                          ) && (
                             <div className="test-question-explanation">
                               <div
                                 className="test-question-explanation-text"
@@ -267,9 +307,7 @@ export const SavedQuestionViewer = () => {
                 <button
                   className="test-footer-nav-prev"
                   disabled={currentQuestionIndex === 0}
-                  onClick={() =>
-                    setCurrentQuestionIndex((prev) => prev - 1)
-                  }
+                  onClick={() => setCurrentQuestionIndex((prev) => prev - 1)}
                 >
                   <img src={iconCaretButton} alt="Попереднє" /> Попереднє
                 </button>
@@ -286,7 +324,9 @@ export const SavedQuestionViewer = () => {
                   {hasAnsweredCurrent ? "Наступне" : "Пропустити"}
                   <img
                     src={
-                      hasAnsweredCurrent ? iconCaretButtonWhite : iconCaretButton
+                      hasAnsweredCurrent
+                        ? iconCaretButtonWhite
+                        : iconCaretButton
                     }
                     alt=""
                   />

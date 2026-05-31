@@ -222,7 +222,7 @@ export const AmpsPage = () => {
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
               >
-                <option value="">Факультет</option>
+                <option value="">Спеціальність</option>
                 {availableCategories.map((cat) => (
                   <option key={cat} value={cat}>
                     {cat}
@@ -346,7 +346,7 @@ export const AmpsPage = () => {
                   </div>
 
                   <div className="booklets-booklet-header">
-                    <h3 className="booklets-booklet__title">
+                    <h3 className="booklets-booklet__title" title={generateTitle(test)}>
                       {generateTitle(test)}
                     </h3>
                     <button

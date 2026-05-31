@@ -86,6 +86,11 @@ const AdminGlobalQuestions = lazy(() =>
     default: m.AdminGlobalQuestions,
   })),
 );
+const AdminBasesReorder = lazy(() =>
+  import("../components/AdminBasesReorder/AdminBasesReorder").then((m) => ({
+    default: m.AdminBasesReorder,
+  })),
+);
 
 const AdminLoader = () => (
   <div
@@ -316,6 +321,14 @@ const AppRouter = () => {
             element={
               <Suspense fallback={<AdminLoader />}>
                 <AdminUserDetail />
+              </Suspense>
+            }
+          />
+          <Route
+            path="bases-reorder"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminBasesReorder />
               </Suspense>
             }
           />

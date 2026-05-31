@@ -1,10 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
 import { api } from "../../api";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
+import { AdminImagePicker } from "../AdminImagePicker/AdminImagePicker";
+import { RichTextarea } from "../RichTextarea/RichTextarea";
 import "../AdminQuestionsManager/AdminQuestionsManager.scss";
 import "./AdminGlobalQuestions.scss";
-import iconClose from '../../assets/icon-close.svg'
-import iconConnect from '../../assets/icon-search.svg'
+import iconClose from "../../assets/icon-close.svg";
+import iconConnect from "../../assets/icon-search.svg";
 
 const LETTERS = ["А", "Б", "В", "Г", "Д", "Е", "Є", "Ж", "З", "И"];
 const TYPE_LABELS = { BOOKLET: "Буклети", BASE: "Бази", AMPS: "АМПС" };
@@ -26,13 +28,14 @@ const getTestTitle = (t) => {
 
 const emptyForm = {
   text: "",
+  image: "",
   explanation: "",
   labIndicators: "",
   options: [
-    { text: "", isCorrect: true },
-    { text: "", isCorrect: false },
-    { text: "", isCorrect: false },
-    { text: "", isCorrect: false },
+    { text: "", isCorrect: true, explanation: "", image: "" },
+    { text: "", isCorrect: false, explanation: "", image: "" },
+    { text: "", isCorrect: false, explanation: "", image: "" },
+    { text: "", isCorrect: false, explanation: "", image: "" },
   ],
 };
 
@@ -42,6 +45,7 @@ export const AdminGlobalQuestions = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [activeId, setActiveId] = useState(null);
   const [formData, setFormData] = useState(emptyForm);
+  const [pickerTarget, setPickerTarget] = useState(null);
 
   const [copyTarget, setCopyTarget] = useState(null);
   const [tests, setTests] = useState([]);
@@ -51,13 +55,26 @@ export const AdminGlobalQuestions = () => {
   const [copyResult, setCopyResult] = useState("");
 
   const [modalConfig, setModalConfig] = useState({
-    isOpen: false, title: "", subtitle: "", confirmText: "", cancelText: "", onConfirm: null,
+    isOpen: false,
+    title: "",
+    subtitle: "",
+    confirmText: "",
+    cancelText: "",
+    onConfirm: null,
   });
 
   const closeModal = () => setModalConfig((p) => ({ ...p, isOpen: false }));
 
   const notify = (title, subtitle) =>
-    setModalConfig({ isOpen: true, title, subtitle, confirmText: "Окей", cancelText: "", showIcon: false, onConfirm: closeModal });
+    setModalConfig({
+      isOpen: true,
+      title,
+      subtitle,
+      confirmText: "Окей",
+      cancelText: "",
+      showIcon: false,
+      onConfirm: closeModal,
+    });
 
   const fetchQuestions = async () => {
     setIsLoading(true);
@@ -71,19 +88,57 @@ export const AdminGlobalQuestions = () => {
     }
   };
 
-  useEffect(() => { fetchQuestions(); }, []);
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
 
   const handleEditClick = (q) => {
     setActiveId(q.id);
     setFormData({
       text: q.text,
+      image: q.image || "",
       explanation: q.explanation || "",
       labIndicators: q.labIndicators || "",
-      options: q.options?.length ? q.options : emptyForm.options,
+      options: q.options?.length
+        ? q.options.map((o) => ({
+            ...o,
+            explanation: o.explanation || "",
+            image: o.image || "",
+          }))
+        : emptyForm.options,
     });
   };
 
-  const handleNewClick = () => { setActiveId(null); setFormData(emptyForm); };
+  const handleImageSelect = (url) => {
+    if (!pickerTarget) return;
+    if (pickerTarget === "question") {
+      setFormData((p) => ({ ...p, image: url }));
+    } else if (pickerTarget.startsWith("option-explanation-")) {
+      const idx = parseInt(pickerTarget.split("-").pop());
+      const opts = [...formData.options];
+      opts[idx].explanation =
+        (opts[idx].explanation || "") +
+        `<img src="${url}" style="max-width:100%">`;
+      setFormData((p) => ({ ...p, options: opts }));
+    } else if (pickerTarget.startsWith("option-")) {
+      const idx = parseInt(pickerTarget.split("-").pop());
+      const opts = [...formData.options];
+      opts[idx].image = url;
+      setFormData((p) => ({ ...p, options: opts }));
+    } else if (pickerTarget === "explanation") {
+      setFormData((p) => ({
+        ...p,
+        explanation:
+          (p.explanation || "") + `<img src="${url}" style="max-width:100%">`,
+      }));
+    }
+    setPickerTarget(null);
+  };
+
+  const handleNewClick = () => {
+    setActiveId(null);
+    setFormData(emptyForm);
+  };
 
   const handleOptionTextChange = (i, val) => {
     const opts = [...formData.options];
@@ -92,18 +147,37 @@ export const AdminGlobalQuestions = () => {
   };
 
   const handleCorrectChange = (i) => {
-    setFormData({ ...formData, options: formData.options.map((o, idx) => ({ ...o, isCorrect: idx === i })) });
+    setFormData({
+      ...formData,
+      options: formData.options.map((o, idx) => ({
+        ...o,
+        isCorrect: idx === i,
+      })),
+    });
+  };
+
+  const handleOptionExplanationChange = (i, val) => {
+    const opts = [...formData.options];
+    opts[i] = { ...opts[i], explanation: val };
+    setFormData({ ...formData, options: opts });
   };
 
   const handleAddOption = () => {
     if (formData.options.length >= LETTERS.length) return;
-    setFormData({ ...formData, options: [...formData.options, { text: "", isCorrect: false }] });
+    setFormData({
+      ...formData,
+      options: [
+        ...formData.options,
+        { text: "", isCorrect: false, explanation: "" },
+      ],
+    });
   };
 
   const handleRemoveOption = (i) => {
     setFormData((prev) => {
       const opts = prev.options.filter((_, idx) => idx !== i);
-      if (prev.options[i].isCorrect && opts.length > 0) opts[0].isCorrect = true;
+      if (prev.options[i].isCorrect && opts.length > 0)
+        opts[0].isCorrect = true;
       return { ...prev, options: opts };
     });
   };
@@ -171,7 +245,9 @@ export const AdminGlobalQuestions = () => {
   const handleCopyToTest = async (test) => {
     setCopyingTo(test.id);
     try {
-      await api.post(`/admin/global-questions/${copyTarget.id}/copy-to-test/${test.id}`);
+      await api.post(
+        `/admin/global-questions/${copyTarget.id}/copy-to-test/${test.id}`,
+      );
       setCopyResult(`✓ Скопійовано до «${getTestTitle(test)}»`);
     } catch {
       setCopyResult("Помилка копіювання.");
@@ -183,9 +259,10 @@ export const AdminGlobalQuestions = () => {
   const filteredTests = useMemo(() => {
     if (!testSearch.trim()) return tests;
     const q = testSearch.toLowerCase();
-    return tests.filter((t) =>
-      getTestTitle(t).toLowerCase().includes(q) ||
-      (EXAM_LABELS[t.examType] ?? t.examType).toLowerCase().includes(q)
+    return tests.filter(
+      (t) =>
+        getTestTitle(t).toLowerCase().includes(q) ||
+        (EXAM_LABELS[t.examType] ?? t.examType).toLowerCase().includes(q),
     );
   }, [tests, testSearch]);
 
@@ -198,10 +275,17 @@ export const AdminGlobalQuestions = () => {
     return groups;
   }, [filteredTests]);
 
-  if (isLoading) return <div className="admin-qm-container">Завантаження...</div>;
+  if (isLoading)
+    return <div className="admin-qm-container">Завантаження...</div>;
 
   return (
     <div className="admin-qm-container">
+      <AdminImagePicker
+        isOpen={!!pickerTarget}
+        onClose={() => setPickerTarget(null)}
+        onSelect={handleImageSelect}
+      />
+
       <ConfirmModal
         isOpen={modalConfig.isOpen}
         title={modalConfig.title}
@@ -221,7 +305,11 @@ export const AdminGlobalQuestions = () => {
               <button onClick={() => setCopyTarget(null)}>✕</button>
             </div>
             <p className="gq-copy-modal__question">
-              «{copyTarget.text.length > 80 ? copyTarget.text.slice(0, 80) + "…" : copyTarget.text}»
+              «
+              {copyTarget.text.length > 80
+                ? copyTarget.text.slice(0, 80) + "…"
+                : copyTarget.text}
+              »
             </p>
             <input
               className="gq-copy-modal__search"
@@ -231,7 +319,9 @@ export const AdminGlobalQuestions = () => {
               onChange={(e) => setTestSearch(e.target.value)}
               autoFocus
             />
-            {copyResult && <p className="gq-copy-modal__result">{copyResult}</p>}
+            {copyResult && (
+              <p className="gq-copy-modal__result">{copyResult}</p>
+            )}
             {testsLoading ? (
               <p className="gq-copy-modal__loading">Завантаження тестів...</p>
             ) : (
@@ -239,7 +329,8 @@ export const AdminGlobalQuestions = () => {
                 {Object.entries(testsByType).map(([type, items]) => (
                   <div key={type}>
                     <div className="gq-copy-modal__group-label">
-                      {TYPE_LABELS[type] ?? type} ({EXAM_LABELS[items[0]?.examType] ?? items[0]?.examType})
+                      {TYPE_LABELS[type] ?? type} (
+                      {EXAM_LABELS[items[0]?.examType] ?? items[0]?.examType})
                     </div>
                     {items.map((t) => (
                       <button
@@ -271,12 +362,17 @@ export const AdminGlobalQuestions = () => {
 
       <div className="admin-qm-layout">
         <aside className="admin-qm-sidebar">
-          <button className="button-pink-small full-width" onClick={handleNewClick}>
+          <button
+            className="button-pink-small full-width"
+            onClick={handleNewClick}
+          >
             + Нове питання
           </button>
 
           <div className="admin-qm-list">
-            <div className="admin-qm-list-count">Всього: {questions.length}</div>
+            <div className="admin-qm-list-count">
+              Всього: {questions.length}
+            </div>
             {questions.map((q, idx) => (
               <div
                 key={q.id}
@@ -292,7 +388,10 @@ export const AdminGlobalQuestions = () => {
                 >
                   <img src={iconConnect} alt="" />
                 </button>
-                <button className="item-delete" onClick={(e) => handleDeleteClick(e, q.id)}>
+                <button
+                  className="item-delete"
+                  onClick={(e) => handleDeleteClick(e, q.id)}
+                >
                   <img src={iconClose} alt="" />
                 </button>
               </div>
@@ -301,14 +400,52 @@ export const AdminGlobalQuestions = () => {
         </aside>
 
         <main className="admin-qm-main">
-          <h3>{activeId ? `Редагування питання #${questions.findIndex((q) => q.id === activeId) + 1}` : "Нове глобальне питання"}</h3>
+          <h3>
+            {activeId
+              ? `Редагування питання #${questions.findIndex((q) => q.id === activeId) + 1}`
+              : "Нове глобальне питання"}
+          </h3>
 
           <form onSubmit={handleSubmit} className="admin-qm-form">
             <div className="form-group full-width">
-              <label>Текст питання *</label>
+              <div className="form-group-top">
+                <label>Текст питання *</label>
+                <div className="form-group-top-image">
+                  <button
+                    type="button"
+                    className="img-pick-btn"
+                    onClick={() => setPickerTarget("question")}
+                  >
+                    📷{" "}
+                    {formData.image
+                      ? "Змінити зображення"
+                      : "Додати зображення"}
+                  </button>
+                  {formData.image && (
+                    <>
+                      <img
+                        src={formData.image}
+                        alt="question"
+                        className="field-image-preview"
+                      />
+                      <button
+                        type="button"
+                        className="img-remove-btn"
+                        onClick={() =>
+                          setFormData((p) => ({ ...p, image: "" }))
+                        }
+                      >
+                        ✕
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
               <textarea
                 value={formData.text}
-                onChange={(e) => setFormData({ ...formData, text: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, text: e.target.value })
+                }
                 rows={4}
                 required
                 placeholder="Введіть текст питання..."
@@ -319,50 +456,126 @@ export const AdminGlobalQuestions = () => {
               <label>Варіанти відповідей (Позначте правильну)</label>
               <div className="options-list">
                 {formData.options.map((opt, i) => (
-                  <div key={i} className={`option-row ${opt.isCorrect ? "is-correct-row" : ""}`}>
-                    <input type="radio" name="correct" checked={opt.isCorrect} onChange={() => handleCorrectChange(i)} />
-                    <span className="option-letter">{LETTERS[i] || "?"}</span>
-                    <input
-                      type="text"
-                      value={opt.text}
-                      onChange={(e) => handleOptionTextChange(i, e.target.value)}
-                      placeholder={`Варіант ${LETTERS[i] || ""}`}
-                      required
-                    />
-                    {formData.options.length > 2 && (
-                      <button type="button" className="remove-option-btn" onClick={() => handleRemoveOption(i)}>✕</button>
-                    )}
-                  </div>
+                  <>
+                    <div key={i} className="option-row-wrapper">
+                      <div
+                        className={`option-row ${opt.isCorrect ? "is-correct-row" : ""}`}
+                      >
+                        <div className="option-row-option">
+                          <input
+                            type="radio"
+                            name="correct"
+                            checked={opt.isCorrect}
+                            onChange={() => handleCorrectChange(i)}
+                          />
+                          <span className="option-letter">
+                            {LETTERS[i] || "?"}
+                          </span>
+                          <button
+                            type="button"
+                            className="img-pick-btn small"
+                            onClick={() => setPickerTarget(`option-${i}`)}
+                          >
+                            📷{" "}
+                            {opt.image ? "Змінити" : "Зображення до варіанту"}
+                          </button>
+                          {opt.image && (
+                            <>
+                              <img
+                                src={opt.image}
+                                alt={`option-${i}`}
+                                className="field-image-preview"
+                              />
+                              <button
+                                type="button"
+                                className="img-remove-btn"
+                                onClick={() => {
+                                  const opts = [...formData.options];
+                                  opts[i].image = "";
+                                  setFormData((p) => ({ ...p, options: opts }));
+                                }}
+                              >
+                                ✕
+                              </button>
+                            </>
+                          )}
+                        </div>
+                        {formData.options.length > 2 && (
+                          <button
+                            type="button"
+                            className="remove-option-btn"
+                            onClick={() => handleRemoveOption(i)}
+                          >
+                            ✕
+                          </button>
+                        )}
+                      </div>
+                      <input
+                        type="text"
+                        value={opt.text}
+                        onChange={(e) =>
+                          handleOptionTextChange(i, e.target.value)
+                        }
+                        placeholder={`Варіант ${LETTERS[i] || ""}`}
+                        required
+                      />
+                      <RichTextarea
+                        value={opt.explanation || ""}
+                        onChange={(e) => handleOptionExplanationChange(i, e.target.value)}
+                        placeholder={`Пояснення до варіанту ${LETTERS[i] || ""} (необов'язково)`}
+                        rows={2}
+                      />
+                      <div className="field-image-row">
+                        <button
+                          type="button"
+                          className="img-pick-btn small"
+                          onClick={() =>
+                            setPickerTarget(`option-explanation-${i}`)
+                          }
+                        >
+                          📷 Вставити в пояснення
+                        </button>
+                      </div>
+                    </div>
+                    <div className="option-divider"></div>
+                  </>
                 ))}
               </div>
               {formData.options.length < LETTERS.length && (
-                <button type="button" className="add-option-btn" onClick={handleAddOption}>+ Додати ще один варіант</button>
+                <button
+                  type="button"
+                  className="add-option-btn"
+                  onClick={handleAddOption}
+                >
+                  + Додати ще один варіант
+                </button>
               )}
             </div>
 
             <div className="form-row">
               <div className="form-group half-width">
-                <label>Пояснення (можна HTML)</label>
-                <textarea
-                  value={formData.explanation}
-                  onChange={(e) => setFormData({ ...formData, explanation: e.target.value })}
-                  rows={4}
-                  placeholder="<p>Пояснення...</p>"
-                />
-              </div>
-              <div className="form-group half-width">
-                <label>Лабораторні показники (можна HTML)</label>
+                <label>Лабораторні показники (HTML)</label>
                 <textarea
                   value={formData.labIndicators}
-                  onChange={(e) => setFormData({ ...formData, labIndicators: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, labIndicators: e.target.value })
+                  }
                   rows={4}
                   placeholder="<table>...</table>"
                 />
               </div>
             </div>
 
-            <button type="submit" className="button-pink-small submit-btn" disabled={isSaving}>
-              {isSaving ? "Збереження..." : activeId ? "Оновити питання" : "Створити питання"}
+            <button
+              type="submit"
+              className="button-pink-small submit-btn"
+              disabled={isSaving}
+            >
+              {isSaving
+                ? "Збереження..."
+                : activeId
+                  ? "Оновити питання"
+                  : "Створити питання"}
             </button>
           </form>
         </main>

@@ -240,7 +240,7 @@ export const BookletsPage = () => {
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
               >
-                <option value="">Факультет</option>
+                <option value="">Спеціальність</option>
 
                 {availableCategories.map((cat) => (
                   <option key={cat} value={cat}>
@@ -365,16 +365,25 @@ export const BookletsPage = () => {
                   </div>
 
                   <div className="booklets-booklet-header">
-                    <h3 className="booklets-booklet__title">
+                    <h3
+                      className="booklets-booklet__title"
+                      title={generateTitle(test)}
+                    >
                       {generateTitle(test)}
                     </h3>
                     <button
                       className="booklets-booklet-save"
                       onClick={(e) => handleToggleSave(e, test.id)}
-                      title={savedTestIds.has(test.id) ? "Видалити зі збережених" : "Зберегти буклет"}
+                      title={
+                        savedTestIds.has(test.id)
+                          ? "Видалити зі збережених"
+                          : "Зберегти буклет"
+                      }
                     >
                       <img
-                        src={savedTestIds.has(test.id) ? saveIconFilled : saveIcon}
+                        src={
+                          savedTestIds.has(test.id) ? saveIconFilled : saveIcon
+                        }
                         alt="save"
                       />
                     </button>

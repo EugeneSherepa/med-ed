@@ -74,6 +74,111 @@
 }
 
 // Shared admin utility classes — must live here (always loaded) not in lazy-loaded child components
+.admin-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+
+  h2 {
+    font-family: $font-fixel;
+    color: #252c3f;
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+  }
+
+  .admin-search-bar {
+    position: relative;
+    width: 300px;
+
+    input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-family: $font-fixel;
+      font-size: 14px;
+      outline: none;
+      transition: 0.2s ease;
+
+      &:focus {
+        border-color: #b1d4e0;
+        box-shadow: 0 0 0 3px rgba(177, 212, 224, 0.2);
+      }
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      opacity: 0.5;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+
+    button { width: 100%; }
+  }
+}
+
+.admin-list-container {
+  padding: 40px;
+  background-color: #f9fafb;
+  min-height: 100vh;
+
+  @media screen and (max-width: 768px) {
+    padding: 24px;
+  }
+}
+
+.status-dropdown-wrapper {
+  position: relative;
+  width: fit-content;
+
+  &::after {
+    content: "▼";
+    font-size: 10px;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+}
+
+.status-select {
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: $font-fixel;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 6px 32px 6px 12px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: 0.2s ease;
+
+  &.draft {
+    background-color: #f3f4f6;
+    color: #6b7280;
+    &:hover { background-color: #e5e7eb; }
+  }
+
+  &.published {
+    background-color: #ecfdf5;
+    color: #059669;
+    &:hover { background-color: #d1fae5; }
+  }
+}
+
 .admin-loading,
 .admin-error {
   padding: 32px;

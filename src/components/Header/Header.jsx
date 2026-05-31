@@ -72,14 +72,12 @@ export const Header = () => {
         <div className="header-wrapper">
           <Link
             to="/"
-            className={`header-wrapper-logo ${isAuthenticated ? "auth-layout" : ""}`}
+            className={`header-wrapper-logo auth-layout`}
           >
             <img src={logo} alt="Med ed logo" />
             <div className="header-wrapper-logo-text">IT’s Med Ed</div>
           </Link>
-          <nav
-            className={`header-wrapper-navigation ${isAuthenticated ? "auth-layout" : ""}`}
-          >
+          <nav className={`header-wrapper-navigation auth-layout`}>
             <ul className="header-wrapper-navigation-items">
               <li className="header-wrapper-navigation-items-item">
                 <a
@@ -198,10 +196,17 @@ export const Header = () => {
             </ul>
             <div className="header-wrapper-buttons">
               <div className="header-wrapper-buttons-wrapper">
-                {isAuthenticated && (
+                {isAuthenticated ? (
                   <Link to="/account" className="button-primary">
                     Акаунт
                   </Link>
+                ) : (
+                  <a
+                    href="https://t.me/its_meded?text=Привіт,%20хочу%20записатись%20на%20навчання%20до%20вас!"
+                    class="button-primary"
+                  >
+                    Почати навчання
+                  </a>
                 )}
               </div>
               <button
@@ -322,7 +327,12 @@ export const Header = () => {
                 Акаунт
               </Link>
             ) : (
-              <a href="https://t.me/its_meded?text=Привіт,%20хочу%20записатись%20на%20навчання%20до%20вас!" class="button-primary">Почати навчання</a>
+              <a
+                href="https://t.me/its_meded?text=Привіт,%20хочу%20записатись%20на%20навчання%20до%20вас!"
+                class="button-primary"
+              >
+                Почати навчання
+              </a>
             )}
           </div>
 
