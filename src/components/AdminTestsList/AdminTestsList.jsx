@@ -224,7 +224,7 @@ export const AdminTestsList = () => {
               Назва / Рік{getSortIcon("title")}
             </th>
             <th onClick={() => handleSort("category")} style={{ cursor: "pointer" }}>
-              Факультет{getSortIcon("category")}
+              Спеціальність{getSortIcon("category")}
             </th>
             <th onClick={() => handleSort("examType")} style={{ cursor: "pointer" }}>
               Іспит{getSortIcon("examType")}
