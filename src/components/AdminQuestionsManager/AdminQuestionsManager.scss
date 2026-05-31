@@ -161,6 +161,19 @@
     flex-direction: column;
     gap: 8px;
 
+    &-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+
+      &-image {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+
     label {
       font-family: $font-fixel;
       font-weight: 500;
@@ -205,10 +218,59 @@
       margin-bottom: 16px;
     }
 
+    .option-row-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .option-divider {
+      border-top: 1px solid #e5e7eb;
+      margin-top: 8px;
+      margin-bottom: 8px;
+      margin-right: -24px;
+      margin-left: -24px;
+
+      &:last-of-type {
+        display: none;
+      }
+    }
+
+    .option-explanation-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-family: $font-fixel;
+      font-size: 13px;
+      color: #374151;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+      background: white;
+      min-height: 70px;
+
+      &:focus {
+        border-color: #b1d4e0;
+        background: #fff;
+      }
+
+      &::placeholder {
+        color: #9ca3af;
+      }
+    }
+
     .option-row {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
+
+      &-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
 
       &.is-correct-row input[type="text"] {
         background-color: #f0fdf4;
@@ -492,7 +554,9 @@
       line-height: 1;
       padding: 4px;
 
-      &:hover { color: #252c3f; }
+      &:hover {
+        color: #252c3f;
+      }
     }
   }
 
@@ -518,7 +582,9 @@
     outline: none;
     box-sizing: border-box;
 
-    &:focus { border-color: #b1d4e0; }
+    &:focus {
+      border-color: #b1d4e0;
+    }
   }
 
   &__result {
@@ -581,4 +647,79 @@
       cursor: default;
     }
   }
+}
+
+// ─── Image picker UI ─────────────────────────────────────────────────────────
+
+.label-with-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+
+  label {
+    margin-bottom: 0;
+  }
+}
+
+.field-image-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.img-pick-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  font-family: $font-fixel;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.15s;
+
+  &:hover {
+    background: #f3f4f6;
+    border-color: #b1d4e0;
+  }
+
+  &.small {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+.img-remove-btn {
+  background: #fef2f2;
+  color: #dc2626;
+  border: none;
+  border-radius: 6px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  flex-shrink: 0;
+  &:hover {
+    background: #fee2e2;
+  }
+}
+
+.field-image-preview {
+  height: 52px;
+  max-width: 120px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
 }

@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { api } from "../../api";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
+import { AdminImagePicker } from "../AdminImagePicker/AdminImagePicker";
+import { RichTextarea } from "../RichTextarea/RichTextarea";
 import "./AdminQuestionsManager.scss";
 
 const TYPE_LABELS = { BOOKLET: "Буклети", BASE: "Бази", AMPS: "АМПС" };
@@ -40,15 +42,20 @@ export const AdminQuestionsManager = () => {
 
   const emptyForm = {
     text: "",
+    image: "",
     explanation: "",
     labIndicators: "",
     options: [
-      { text: "", isCorrect: true },
-      { text: "", isCorrect: false },
-      { text: "", isCorrect: false },
-      { text: "", isCorrect: false },
+      { text: "", isCorrect: true, explanation: "", image: "" },
+      { text: "", isCorrect: false, explanation: "", image: "" },
+      { text: "", isCorrect: false, explanation: "", image: "" },
+      { text: "", isCorrect: false, explanation: "", image: "" },
     ],
   };
+
+  // image picker state: { target: "question" | "option-N" | "explanation" | "option-explanation-N", ref: textareaRef }
+  const [pickerTarget, setPickerTarget] = useState(null);
+  const explanationRef = useRef(null);
 
   const [formData, setFormData] = useState(emptyForm);
   const [importMode, setImportMode] = useState(false);
@@ -140,9 +147,12 @@ export const AdminQuestionsManager = () => {
     setActiveQuestionId(q.id);
     setFormData({
       text: q.text,
+      image: q.image || "",
       explanation: q.explanation || "",
       labIndicators: q.labIndicators || "",
-      options: q.options?.length ? q.options : emptyForm.options,
+      options: q.options?.length
+        ? q.options.map((o) => ({ ...o, explanation: o.explanation || "", image: o.image || "" }))
+        : emptyForm.options,
     });
     setTimeout(() => {
       document.getElementById(`question-item-${q.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -153,6 +163,34 @@ export const AdminQuestionsManager = () => {
     const newOptions = [...formData.options];
     newOptions[index].text = value;
     setFormData({ ...formData, options: newOptions });
+  };
+
+  const handleOptionExplanationChange = (index, value) => {
+    const newOptions = [...formData.options];
+    newOptions[index].explanation = value;
+    setFormData({ ...formData, options: newOptions });
+  };
+
+  const handleImageSelect = (url) => {
+    if (!pickerTarget) return;
+    if (pickerTarget === "question") {
+      setFormData((prev) => ({ ...prev, image: url }));
+    } else if (pickerTarget.startsWith("option-explanation-")) {
+      const idx = parseInt(pickerTarget.split("-").pop());
+      const newOptions = [...formData.options];
+      const tag = `<img src="${url}" style="max-width:100%">`;
+      newOptions[idx].explanation = (newOptions[idx].explanation || "") + tag;
+      setFormData((prev) => ({ ...prev, options: newOptions }));
+    } else if (pickerTarget.startsWith("option-")) {
+      const idx = parseInt(pickerTarget.split("-").pop());
+      const newOptions = [...formData.options];
+      newOptions[idx].image = url;
+      setFormData((prev) => ({ ...prev, options: newOptions }));
+    } else if (pickerTarget === "explanation") {
+      const tag = `<img src="${url}" style="max-width:100%">`;
+      setFormData((prev) => ({ ...prev, explanation: (prev.explanation || "") + tag }));
+    }
+    setPickerTarget(null);
   };
 
   const handleCorrectChange = (index) => {
@@ -230,10 +268,12 @@ export const AdminQuestionsManager = () => {
     setActiveQuestionId(q.id);
     setFormData({
       text: q.text,
+      image: q.image || "",
       explanation: q.explanation || "",
       labIndicators: q.labIndicators || "",
-      options:
-        q.options && q.options.length > 0 ? q.options : emptyForm.options,
+      options: q.options?.length > 0
+        ? q.options.map((o) => ({ ...o, explanation: o.explanation || "", image: o.image || "" }))
+        : emptyForm.options,
     });
   };
 
@@ -315,6 +355,12 @@ export const AdminQuestionsManager = () => {
 
   return (
     <div className="admin-qm-container">
+      <AdminImagePicker
+        isOpen={!!pickerTarget}
+        onClose={() => setPickerTarget(null)}
+        onSelect={handleImageSelect}
+      />
+
       <ConfirmModal
         isOpen={modalConfig.isOpen}
         title={modalConfig.title}
@@ -334,7 +380,11 @@ export const AdminQuestionsManager = () => {
               <button onClick={() => setCopyTarget(null)}>✕</button>
             </div>
             <p className="gq-copy-modal__question">
-              «{copyTarget.text.length > 80 ? copyTarget.text.slice(0, 80) + "…" : copyTarget.text}»
+              «
+              {copyTarget.text.length > 80
+                ? copyTarget.text.slice(0, 80) + "…"
+                : copyTarget.text}
+              »
             </p>
             <input
               className="gq-copy-modal__search"
@@ -344,7 +394,9 @@ export const AdminQuestionsManager = () => {
               onChange={(e) => setTestSearch(e.target.value)}
               autoFocus
             />
-            {copyResult && <p className="gq-copy-modal__result">{copyResult}</p>}
+            {copyResult && (
+              <p className="gq-copy-modal__result">{copyResult}</p>
+            )}
             {copyTestsLoading ? (
               <p className="gq-copy-modal__loading">Завантаження тестів...</p>
             ) : (
@@ -352,7 +404,8 @@ export const AdminQuestionsManager = () => {
                 {Object.entries(copyTestsByType).map(([type, items]) => (
                   <div key={type}>
                     <div className="gq-copy-modal__group-label">
-                      {TYPE_LABELS[type] ?? type} ({EXAM_LABELS[items[0]?.examType] ?? items[0]?.examType})
+                      {TYPE_LABELS[type] ?? type} (
+                      {EXAM_LABELS[items[0]?.examType] ?? items[0]?.examType})
                     </div>
                     {items.map((t) => (
                       <button
@@ -380,7 +433,12 @@ export const AdminQuestionsManager = () => {
           ← Назад до тестів
         </button>
         <h2>
-          {testInfo.type === "BASE" ? "База:" : testInfo.type === "AMPS" ? "АМПС:" : "Буклет:"} {testInfo.title}
+          {testInfo.type === "BASE"
+            ? "База:"
+            : testInfo.type === "AMPS"
+              ? "АМПС:"
+              : "Буклет:"}{" "}
+          {testInfo.title}
         </h2>
       </div>
 
@@ -395,7 +453,11 @@ export const AdminQuestionsManager = () => {
           </button>
           <button
             className="btn-import-toggle full-width"
-            onClick={() => { setImportMode(true); setActiveQuestionId(null); setImportError(""); }}
+            onClick={() => {
+              setImportMode(true);
+              setActiveQuestionId(null);
+              setImportError("");
+            }}
           >
             ↑ Імпорт JSON
           </button>
@@ -414,7 +476,9 @@ export const AdminQuestionsManager = () => {
                 <div className="item-number">{idx + 1}</div>
                 <div className="item-text">{q.text}</div>
                 {q.globalQuestionId && (
-                  <span className="item-global-badge" title="Глобальне питання">🌐</span>
+                  <span className="item-global-badge" title="Глобальне питання">
+                    🌐
+                  </span>
                 )}
                 <button
                   className="gq-copy-btn"
@@ -442,17 +506,19 @@ export const AdminQuestionsManager = () => {
               <p className="import-hint">
                 Вставте масив питань у форматі JSON. Кожен елемент повинен мати{" "}
                 <code>text</code> та <code>options</code> (масив з{" "}
-                <code>text</code> і <code>isCorrect</code>).
+                <code>text</code> і <code>isCorrect</code>). Поля{" "}
+                <code>explanation</code> — необов'язкові як для питання, так і
+                для кожного варіанту.
               </p>
               <details className="import-example">
                 <summary>Приклад формату</summary>
                 <pre>{`[
   {
     "text": "Текст питання",
-    "explanation": "Пояснення (необов'язково)",
+    "explanation": "Загальне пояснення (необов'язково)",
     "options": [
-      { "text": "Варіант А", "isCorrect": true },
-      { "text": "Варіант Б", "isCorrect": false },
+      { "text": "Варіант А", "isCorrect": true, "explanation": "Пояснення до А (необов'язково)" },
+      { "text": "Варіант Б", "isCorrect": false, "explanation": "Пояснення до Б (необов'язково)" },
       { "text": "Варіант В", "isCorrect": false },
       { "text": "Варіант Г", "isCorrect": false }
     ]
@@ -464,7 +530,10 @@ export const AdminQuestionsManager = () => {
                 rows={16}
                 placeholder='[{ "text": "...", "options": [...] }]'
                 value={importText}
-                onChange={(e) => { setImportText(e.target.value); setImportError(""); }}
+                onChange={(e) => {
+                  setImportText(e.target.value);
+                  setImportError("");
+                }}
               />
               {importError && <p className="import-error">{importError}</p>}
               <div className="import-actions">
@@ -475,7 +544,10 @@ export const AdminQuestionsManager = () => {
                 >
                   {isImporting ? "Імпортую..." : "Імпортувати питання"}
                 </button>
-                <button className="btn-cancel-import" onClick={() => setImportMode(false)}>
+                <button
+                  className="btn-cancel-import"
+                  onClick={() => setImportMode(false)}
+                >
                   Скасувати
                 </button>
               </div>
@@ -487,119 +559,202 @@ export const AdminQuestionsManager = () => {
               {activeQuestionId
                 ? `Редагування питання #${questions.findIndex((q) => q.id === activeQuestionId) + 1}`
                 : "Створення нового питання"}
-              {activeQuestionId && questions.find((q) => q.id === activeQuestionId)?.globalQuestionId && (
-                <span className="item-global-notice" title="Це питання синхронізується з глобальним пулом"> 🌐 Глобальне</span>
-              )}
+              {activeQuestionId &&
+                questions.find((q) => q.id === activeQuestionId)
+                  ?.globalQuestionId && (
+                  <span
+                    className="item-global-notice"
+                    title="Це питання синхронізується з глобальним пулом"
+                  >
+                    {" "}
+                    🌐 Глобальне
+                  </span>
+                )}
             </h3>
           )}
 
-          {!importMode && <form onSubmit={handleSubmit} className="admin-qm-form">
-            <div className="form-group full-width">
-              <label>Текст питання *</label>
-              <textarea
-                value={formData.text}
-                onChange={(e) =>
-                  setFormData({ ...formData, text: e.target.value })
-                }
-                rows="4"
-                required
-                placeholder="Введіть текст питання сюди..."
-              />
-            </div>
-
-            {/* 🚀 DYNAMIC OPTIONS CONTAINER */}
-            <div className="form-group full-width options-container">
-              <label>Варіанти відповідей (Позначте правильну)</label>
-
-              <div className="options-list">
-                {formData.options.map((option, index) => (
-                  <div
-                    key={index}
-                    className={`option-row ${option.isCorrect ? "is-correct-row" : ""}`}
-                  >
-                    <input
-                      type="radio"
-                      name="correctOption"
-                      checked={option.isCorrect}
-                      onChange={() => handleCorrectChange(index)}
-                    />
-                    <span className="option-letter">
-                      {letters[index] || "?"}
-                    </span>
-                    <input
-                      type="text"
-                      value={option.text}
-                      onChange={(e) =>
-                        handleOptionTextChange(index, e.target.value)
-                      }
-                      placeholder={`Варіант ${letters[index] || ""}`}
-                      required
-                    />
-
-                    {/* Only allow deleting if there are more than 2 options */}
-                    {formData.options.length > 2 && (
-                      <button
-                        type="button"
-                        className="remove-option-btn"
-                        onClick={() => handleRemoveOption(index)}
-                        title="Видалити варіант"
-                      >
-                        ✕
-                      </button>
+          {!importMode && (
+            <form onSubmit={handleSubmit} className="admin-qm-form">
+              <div className="form-group full-width">
+                <div className="form-group-top">
+                  <label>Текст питання *</label>
+                  <div className="form-group-top-image">
+                    <button
+                      type="button"
+                      className="img-pick-btn"
+                      onClick={() => setPickerTarget("question")}
+                    >
+                      📷{" "}
+                      {formData.image
+                        ? "Змінити зображення"
+                        : "Додати зображення"}
+                    </button>
+                    {formData.image && (
+                      <>
+                        <img
+                          src={formData.image}
+                          alt="question"
+                          className="field-image-preview"
+                        />
+                        <button
+                          type="button"
+                          className="img-remove-btn"
+                          onClick={() =>
+                            setFormData((p) => ({ ...p, image: "" }))
+                          }
+                        >
+                          ✕
+                        </button>
+                      </>
                     )}
                   </div>
-                ))}
-              </div>
-
-              {/* Add New Option Button */}
-              {formData.options.length < letters.length && (
-                <button
-                  type="button"
-                  className="add-option-btn"
-                  onClick={handleAddOption}
-                >
-                  + Додати ще один варіант
-                </button>
-              )}
-            </div>
-
-            <div className="form-row">
-              <div className="form-group half-width">
-                <label>Пояснення (можна HTML)</label>
+                </div>
                 <textarea
-                  value={formData.explanation}
+                  value={formData.text}
                   onChange={(e) =>
-                    setFormData({ ...formData, explanation: e.target.value })
+                    setFormData({ ...formData, text: e.target.value })
                   }
                   rows="4"
-                  placeholder="<p>Пояснення...</p>"
+                  required
+                  placeholder="Введіть текст питання сюди..."
                 />
               </div>
-              <div className="form-group half-width">
-                <label>Лабораторні показники (можна HTML)</label>
-                <textarea
-                  value={formData.labIndicators}
-                  onChange={(e) =>
-                    setFormData({ ...formData, labIndicators: e.target.value })
-                  }
-                  rows="4"
-                  placeholder="<table>...</table>"
-                />
-              </div>
-            </div>
 
-            <button
-              type="submit"
-              className="button-pink-small submit-btn"
-              disabled={isSaving}
-            >
-              {isSaving
-                ? "Збереження..."
-                : activeQuestionId
-                  ? "Оновити питання"
-                  : "Створити та додати наступне"}
-            </button>
-          </form>}
+              {/* 🚀 DYNAMIC OPTIONS CONTAINER */}
+              <div className="form-group full-width options-container">
+                <label>Варіанти відповідей (Позначте правильну)</label>
+
+                <div className="options-list">
+                  {formData.options.map((option, index) => (
+                    <>
+                      <div key={index} className="option-row-wrapper">
+                        <div
+                          className={`option-row ${option.isCorrect ? "is-correct-row" : ""}`}
+                        >
+                          <div className="option-row-option">
+                            <input
+                              type="radio"
+                              name="correctOption"
+                              checked={option.isCorrect}
+                              onChange={() => handleCorrectChange(index)}
+                            />
+                            <span className="option-letter">
+                              {letters[index] || "?"}
+                            </span>
+                            <button
+                              type="button"
+                              className="img-pick-btn small"
+                              onClick={() => setPickerTarget(`option-${index}`)}
+                            >
+                              📷{" "}
+                              {option.image ? "Змінити" : "Зображення до варіанту"}
+                            </button>
+                            {option.image && (
+                              <>
+                                <img
+                                  src={option.image}
+                                  alt={`option-${index}`}
+                                  className="field-image-preview"
+                                />
+                                <button
+                                  type="button"
+                                  className="img-remove-btn"
+                                  onClick={() => {
+                                    const opts = [...formData.options];
+                                    opts[index].image = "";
+                                    setFormData((p) => ({ ...p, options: opts }));
+                                  }}
+                                >
+                                  ✕
+                                </button>
+                              </>
+                            )}
+                          </div>
+                          {formData.options.length > 2 && (
+                            <button
+                              type="button"
+                              className="remove-option-btn"
+                              onClick={() => handleRemoveOption(index)}
+                              title="Видалити варіант"
+                            >
+                              ✕
+                            </button>
+                          )}
+                        </div>
+                        <input
+                          type="text"
+                          value={option.text}
+                          onChange={(e) =>
+                            handleOptionTextChange(index, e.target.value)
+                          }
+                          placeholder={`Варіант ${letters[index] || ""}`}
+                          required
+                        />
+                        <RichTextarea
+                          value={option.explanation || ""}
+                          onChange={(e) => handleOptionExplanationChange(index, e.target.value)}
+                          placeholder={`Пояснення до варіанту ${letters[index] || ""} (необов'язково)`}
+                          rows={2}
+                        />
+                        <div className="field-image-row">
+                          <button
+                            type="button"
+                            className="img-pick-btn small"
+                            onClick={() =>
+                              setPickerTarget(`option-explanation-${index}`)
+                            }
+                          >
+                            📷 Вставити в пояснення
+                          </button>
+                        </div>
+                      </div>
+                      <div className="option-divider"></div>
+                    </>
+                  ))}
+                </div>
+
+                {/* Add New Option Button */}
+                {formData.options.length < letters.length && (
+                  <button
+                    type="button"
+                    className="add-option-btn"
+                    onClick={handleAddOption}
+                  >
+                    + Додати ще один варіант
+                  </button>
+                )}
+              </div>
+
+              <div className="form-row">
+                <div className="form-group half-width">
+                  <label>Лабораторні показники (HTML)</label>
+                  <textarea
+                    value={formData.labIndicators}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        labIndicators: e.target.value,
+                      })
+                    }
+                    rows="4"
+                    placeholder="<table>...</table>"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="button-pink-small submit-btn"
+                disabled={isSaving}
+              >
+                {isSaving
+                  ? "Збереження..."
+                  : activeQuestionId
+                    ? "Оновити питання"
+                    : "Створити та додати наступне"}
+              </button>
+            </form>
+          )}
         </main>
       </div>
     </div>

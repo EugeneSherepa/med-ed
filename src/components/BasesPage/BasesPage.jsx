@@ -222,7 +222,7 @@ export const BasesPage = () => {
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
               >
-                <option value="">Факультет</option>
+                <option value="">Спеціальність</option>
 
                 {availableCategories.map((cat) => (
                   <option key={cat} value={cat}>
@@ -343,16 +343,25 @@ export const BasesPage = () => {
 
                   {/* Card Content */}
                   <div className="bases-card-header">
-                    <h3 className="bases-card-title">
+                    <h3
+                      className="bases-card-title"
+                      title={base.title || "Без назви"}
+                    >
                       {base.title || "БЕЗ НАЗВИ"}
                     </h3>
                     <button
                       className="bases-card-save"
                       onClick={(e) => handleToggleSave(e, base.id)}
-                      title={savedTestIds.has(base.id) ? "Видалити зі збережених" : "Зберегти базу"}
+                      title={
+                        savedTestIds.has(base.id)
+                          ? "Видалити зі збережених"
+                          : "Зберегти базу"
+                      }
                     >
                       <img
-                        src={savedTestIds.has(base.id) ? saveIconFilled : saveIcon}
+                        src={
+                          savedTestIds.has(base.id) ? saveIconFilled : saveIcon
+                        }
                         alt="save"
                       />
                     </button>

@@ -511,6 +511,13 @@ export const TestPage = () => {
 
                 <p className="test-question-card-text">
                   {currentQuestion.text}
+                  {currentQuestion.image && (
+                    <img
+                      src={currentQuestion.image}
+                      alt="question illustration"
+                      className="test-question-image"
+                    />
+                  )}
                 </p>
 
                 <div className="test-question-card-options">
@@ -578,9 +585,32 @@ export const TestPage = () => {
                           )}
                         </div>
 
+                        {option.image && (
+                          <img
+                            src={option.image}
+                            alt={`option ${idx} illustration`}
+                            className="test-option-image"
+                          />
+                        )}
+
+                        {(hasAnsweredCurrent || isCompleted) &&
+                          option.explanation && (
+                            <div className="test-question-explanation">
+                              <div
+                                className="test-question-explanation-text"
+                                dangerouslySetInnerHTML={{
+                                  __html: option.explanation,
+                                }}
+                              />
+                            </div>
+                          )}
+
                         {isCorrect &&
                           (hasAnsweredCurrent || isCompleted) &&
-                          currentQuestion.explanation && (
+                          currentQuestion.explanation &&
+                          !currentQuestion.options?.some(
+                            (o) => o.explanation,
+                          ) && (
                             <div className="test-question-explanation">
                               <div
                                 className="test-question-explanation-text"

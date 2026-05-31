@@ -1,0 +1,144 @@
+@use "../../styles/variables" as *;
+
+.abr-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.abr-tab {
+  padding: 8px 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  background: #fff;
+  font-family: $font-fixel;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: 0.15s;
+
+  &:hover { border-color: #b1d4e0; color: #374151; }
+
+  &.active {
+    background: #fdf2f8;
+    border-color: #db2777;
+    color: #db2777;
+  }
+}
+
+.abr-hint {
+  font-family: $font-fixel;
+  font-size: 13px;
+  color: #6b7280;
+  margin: -16px 0 20px;
+}
+
+.abr-filter {
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-family: $font-fixel;
+  font-size: 13px;
+  color: #374151;
+  background: #fff;
+  cursor: pointer;
+  outline: none;
+  &:focus { border-color: #b1d4e0; }
+}
+
+.abr-saved {
+  font-family: $font-fixel;
+  font-size: 13px;
+  color: #059669;
+  font-weight: 500;
+}
+
+.abr-loading,
+.abr-empty {
+  font-family: $font-fixel;
+  font-size: 14px;
+  color: #9ca3af;
+  padding: 40px;
+  text-align: center;
+}
+
+.abr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.abr-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  cursor: grab;
+  transition: box-shadow 0.15s, border-color 0.15s, background 0.15s;
+  user-select: none;
+
+  &:active { cursor: grabbing; }
+
+  &:hover {
+    border-color: #b1d4e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  &[draggable="true"]:active {
+    background: #f0f9ff;
+  }
+}
+
+.abr-handle {
+  font-size: 18px;
+  color: #9ca3af;
+  cursor: grab;
+  flex-shrink: 0;
+  line-height: 1;
+  &:active { cursor: grabbing; }
+}
+
+.abr-index {
+  font-family: $font-fixel;
+  font-size: 13px;
+  font-weight: 600;
+  color: #9ca3af;
+  min-width: 28px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.abr-title {
+  font-family: $font-fixel;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.abr-meta {
+  font-family: $font-fixel;
+  font-size: 13px;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.abr-status {
+  font-family: $font-fixel;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  flex-shrink: 0;
+
+  &.published { background: #ecfdf5; color: #059669; }
+  &.draft     { background: #f3f4f6; color: #6b7280; }
+}

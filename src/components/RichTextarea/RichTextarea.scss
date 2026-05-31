@@ -1,0 +1,76 @@
+@use "../../styles/variables" as *;
+
+.rich-textarea {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+
+  &:focus-within {
+    border-color: #b1d4e0;
+  }
+
+  textarea {
+    border: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    resize: vertical;
+    padding: 12px;
+    font-family: $font-fixel;
+    font-size: 14px;
+    color: #374151;
+    background: #fff;
+    min-height: 80px;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+}
+
+.rich-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  flex-wrap: wrap;
+}
+
+.rich-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 28px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  font-family: $font-fixel;
+  font-size: 13px;
+  color: #374151;
+  transition: background 0.12s, border-color 0.12s;
+  user-select: none;
+
+  &:hover {
+    background: #e5e7eb;
+    border-color: #d1d5db;
+  }
+
+  &:active {
+    background: #d1d5db;
+  }
+
+  &--b   { font-weight: 700; }
+  &--i   { font-style: italic; }
+  &--u   { text-decoration: underline; }
+  &--s   { text-decoration: line-through; }
+  &--sup { font-size: 11px; align-items: flex-start; padding-top: 2px; }
+  &--sub { font-size: 11px; align-items: flex-end; padding-bottom: 2px; }
+}

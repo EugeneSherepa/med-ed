@@ -145,27 +145,32 @@ export const AdminTestForm = () => {
 
   return (
     <div className="admin-form-container">
-      <button onClick={() => navigate("/admin/tests")} className="back-btn">← До списку тестів</button>
-      
+      <button onClick={() => navigate("/admin/tests")} className="back-btn">
+        ← До списку тестів
+      </button>
+
       <h2>{isEditing ? "Редагувати тест" : "Створити новий тест"}</h2>
-      
+
       <form onSubmit={handleSubmit} className="admin-form">
-        
         <div className="form-group">
           <label>Тип тесту</label>
           <div className="type-toggle">
             <label>
-              <input 
-                type="radio" name="type" value="BOOKLET" 
-                checked={formData.type === "BOOKLET"} 
-                onChange={handleChange} 
-                disabled={isEditing} 
+              <input
+                type="radio"
+                name="type"
+                value="BOOKLET"
+                checked={formData.type === "BOOKLET"}
+                onChange={handleChange}
+                disabled={isEditing}
               />
               Буклет
             </label>
             <label>
               <input
-                type="radio" name="type" value="BASE"
+                type="radio"
+                name="type"
+                value="BASE"
                 checked={formData.type === "BASE"}
                 onChange={handleChange}
                 disabled={isEditing}
@@ -174,7 +179,9 @@ export const AdminTestForm = () => {
             </label>
             <label>
               <input
-                type="radio" name="type" value="AMPS"
+                type="radio"
+                name="type"
+                value="AMPS"
                 checked={formData.type === "AMPS"}
                 onChange={handleChange}
                 disabled={isEditing}
@@ -187,7 +194,11 @@ export const AdminTestForm = () => {
         <div className="form-row">
           <div className="form-group">
             <label>Іспит</label>
-            <select name="examType" value={formData.examType} onChange={handleChange}>
+            <select
+              name="examType"
+              value={formData.examType}
+              onChange={handleChange}
+            >
               <option value="KROK_1">Крок 1</option>
               <option value="KROK_2">Крок 2</option>
               <option value="KROK_3">Крок 3</option>
@@ -195,13 +206,25 @@ export const AdminTestForm = () => {
           </div>
 
           <div className="form-group">
-            <label>Факультет</label>
-            <input type="text" name="category" value={formData.category} onChange={handleChange} required />
+            <label>Cпеціальність</label>
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+            >
+              <option value="Медицина">Медицина</option>
+              <option value="Стоматологія">Стоматологія</option>
+            </select>
           </div>
 
           <div className="form-group">
             <label>Мова</label>
-            <select name="language" value={formData.language} onChange={handleChange}>
+            <select
+              name="language"
+              value={formData.language}
+              onChange={handleChange}
+            >
               <option value="uk">Українська</option>
               <option value="en">English</option>
             </select>
@@ -212,15 +235,31 @@ export const AdminTestForm = () => {
           <div className="form-row dynamic-fields">
             <div className="form-group">
               <label>Рік *</label>
-              <input type="number" name="year" value={formData.year} onChange={handleChange} required={!isEditing} />
+              <input
+                type="number"
+                name="year"
+                value={formData.year}
+                onChange={handleChange}
+                required={!isEditing}
+              />
             </div>
             <div className="form-group">
               <label>День (необов'язково)</label>
-              <input type="number" name="day" value={formData.day} onChange={handleChange} />
+              <input
+                type="number"
+                name="day"
+                value={formData.day}
+                onChange={handleChange}
+              />
             </div>
             <div className="form-group">
               <label>Варіант (необов'язково)</label>
-              <input type="number" name="variant" value={formData.variant} onChange={handleChange} />
+              <input
+                type="number"
+                name="variant"
+                value={formData.variant}
+                onChange={handleChange}
+              />
             </div>
           </div>
         )}
@@ -229,7 +268,13 @@ export const AdminTestForm = () => {
           <div className="form-row dynamic-fields">
             <div className="form-group">
               <label>Рік *</label>
-              <input type="number" name="year" value={formData.year} onChange={handleChange} required={!isEditing} />
+              <input
+                type="number"
+                name="year"
+                value={formData.year}
+                onChange={handleChange}
+                required={!isEditing}
+              />
             </div>
           </div>
         )}
@@ -237,17 +282,27 @@ export const AdminTestForm = () => {
         {formData.type === "BASE" && (
           <div className="form-group dynamic-fields">
             <label>Назва бази *</label>
-            <input 
-              type="text" name="title" 
-              placeholder="Напр. СИСТЕМА КРОВОТВОРЕННЯ" 
-              value={formData.title} onChange={handleChange} 
-              required={formData.type === "BASE"} 
+            <input
+              type="text"
+              name="title"
+              placeholder="Напр. СИСТЕМА КРОВОТВОРЕННЯ"
+              value={formData.title}
+              onChange={handleChange}
+              required={formData.type === "BASE"}
             />
           </div>
         )}
 
-        <button type="submit" className="button-pink-small" disabled={isLoading}>
-          {isLoading ? "Збереження..." : (isEditing ? "Оновити тест" : "Створити")}
+        <button
+          type="submit"
+          className="button-pink-small"
+          disabled={isLoading}
+        >
+          {isLoading
+            ? "Збереження..."
+            : isEditing
+              ? "Оновити тест"
+              : "Створити"}
         </button>
       </form>
 
