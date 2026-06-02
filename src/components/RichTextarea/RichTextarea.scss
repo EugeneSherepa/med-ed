@@ -25,7 +25,9 @@
     background: #fff;
     min-height: 80px;
 
-    &::placeholder { color: #9ca3af; }
+    &::placeholder {
+      color: #9ca3af;
+    }
   }
 }
 
@@ -48,16 +50,56 @@
   }
 
   // Rendered formatting
-  b, strong { font-weight: 700; }
-  i, em     { font-style: italic; }
-  u         { text-decoration: underline; }
-  s, strike { text-decoration: line-through; }
+  b,
+  strong {
+    font-weight: 700;
+  }
+  i,
+  em {
+    font-style: italic;
+  }
+  u {
+    text-decoration: underline;
+  }
+  s,
+  strike {
+    text-decoration: line-through;
+  }
 
-  ul, ol {
+  ul,
+  ol {
     padding-left: 20px;
     margin: 4px 0;
   }
-  li { margin-bottom: 2px; }
+  li {
+    margin-bottom: 2px;
+  }
+
+  h1 {
+    font-size: 1.6em;
+    font-weight: 700;
+    margin: 6px 0;
+  }
+  h2 {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 5px 0;
+  }
+  h3 {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 4px 0;
+  }
+  p {
+    font-family: $font-fixel;
+    font-size: 14px;
+    color: #374151;
+    background: #fff;
+    outline: none;
+    overflow-y: auto;
+    line-height: 1.6;
+    word-break: break-word;
+  }
 }
 
 .rich-toolbar {
@@ -84,7 +126,9 @@
   font-family: $font-fixel;
   font-size: 13px;
   color: #374151;
-  transition: background 0.12s, border-color 0.12s;
+  transition:
+    background 0.12s,
+    border-color 0.12s;
   user-select: none;
 
   &:hover {
@@ -96,17 +140,60 @@
     background: #d1d5db;
   }
 
-  &--b   { font-weight: 700; }
-  &--i   { font-style: italic; }
-  &--u   { text-decoration: underline; }
-  &--s   { text-decoration: line-through; }
-  &--sup { font-size: 11px; align-items: flex-start; padding-top: 2px; }
-  &--sub  { font-size: 11px; align-items: flex-end; padding-bottom: 2px; }
+  &--active {
+    background: #e0f0f6;
+    border-color: #b1d4e0;
+    color: #0e7490;
+  }
+
+  &--b {
+    font-weight: 700;
+  }
+  &--i {
+    font-style: italic;
+  }
+  &--u {
+    text-decoration: underline;
+  }
+  &--s {
+    text-decoration: line-through;
+  }
+  &--sup {
+    font-size: 11px;
+    align-items: flex-start;
+    padding-top: 2px;
+  }
+  &--sub {
+    font-size: 11px;
+    align-items: flex-end;
+    padding-bottom: 2px;
+  }
 
   &--list {
     font-size: 12px;
     padding: 0 8px;
     min-width: auto;
+  }
+}
+
+.rich-toolbar-select {
+  height: 28px;
+  padding: 0 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  background: #fff;
+  font-family: $font-fixel;
+  font-size: 12px;
+  color: #374151;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.12s;
+
+  &:hover {
+    border-color: #b1d4e0;
+  }
+  &:focus {
+    border-color: #b1d4e0;
   }
 }
 
