@@ -25,10 +25,39 @@
     background: #fff;
     min-height: 80px;
 
-    &::placeholder {
-      color: #9ca3af;
-    }
+    &::placeholder { color: #9ca3af; }
   }
+}
+
+.rich-editor {
+  padding: 12px;
+  font-family: $font-fixel;
+  font-size: 14px;
+  color: #374151;
+  background: #fff;
+  outline: none;
+  overflow-y: auto;
+  line-height: 1.6;
+  word-break: break-word;
+
+  // Placeholder via data attribute
+  &:empty::before {
+    content: attr(data-placeholder);
+    color: #9ca3af;
+    pointer-events: none;
+  }
+
+  // Rendered formatting
+  b, strong { font-weight: 700; }
+  i, em     { font-style: italic; }
+  u         { text-decoration: underline; }
+  s, strike { text-decoration: line-through; }
+
+  ul, ol {
+    padding-left: 20px;
+    margin: 4px 0;
+  }
+  li { margin-bottom: 2px; }
 }
 
 .rich-toolbar {
@@ -72,5 +101,19 @@
   &--u   { text-decoration: underline; }
   &--s   { text-decoration: line-through; }
   &--sup { font-size: 11px; align-items: flex-start; padding-top: 2px; }
-  &--sub { font-size: 11px; align-items: flex-end; padding-bottom: 2px; }
+  &--sub  { font-size: 11px; align-items: flex-end; padding-bottom: 2px; }
+
+  &--list {
+    font-size: 12px;
+    padding: 0 8px;
+    min-width: auto;
+  }
+}
+
+.rich-toolbar-divider {
+  width: 1px;
+  height: 18px;
+  background: #d1d5db;
+  margin: 0 4px;
+  flex-shrink: 0;
 }
