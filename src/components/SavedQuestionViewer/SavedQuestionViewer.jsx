@@ -199,8 +199,8 @@ export const SavedQuestionViewer = () => {
                   </button>
                 </div>
 
-                <p className="test-question-card-text">
-                  {currentQuestion.text}
+                <div className="test-question-card-text kw-revealed">
+                  <div dangerouslySetInnerHTML={{ __html: currentQuestion.text }} />
                   {currentQuestion.image && (
                     <img
                       src={currentQuestion.image}
@@ -208,7 +208,7 @@ export const SavedQuestionViewer = () => {
                       className="test-question-image"
                     />
                   )}
-                </p>
+                </div>
 
                 <div className="test-question-card-options">
                   {currentQuestion.options.map((option, idx) => {
