@@ -1,0 +1,176 @@
+@use "../../styles/variables" as *;
+
+.lcp-loading {
+  font-family: $font-fixel;
+  font-size: 14px;
+  color: #9ca3af;
+  padding: 60px;
+}
+
+.lcp-content {
+  flex: 1;
+  padding: 40px 56px;
+  min-width: 0;
+}
+
+.lcp-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  font-family: $font-fixel;
+  font-size: 13px;
+
+  a {
+    color: #6b7280;
+    text-decoration: none;
+    &:hover { color: #374151; }
+  }
+
+  span { color: #252c3f; font-weight: 500; }
+}
+
+.lcp-breadcrumb-caret {
+  width: 14px;
+  height: 14px;
+  opacity: 0.4;
+  transform: rotate(-90deg);
+}
+
+.lcp-header {
+  margin-bottom: 28px;
+}
+
+.lcp-title {
+  font-family: $font-fixel;
+  font-size: 28px;
+  font-weight: 700;
+  color: #252c3f;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+}
+
+.lcp-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lcp-progress-bar {
+  flex: 1;
+  max-width: 400px;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.lcp-progress-fill {
+  height: 100%;
+  background: #f7b4d1;
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+
+.lcp-count {
+  font-family: $font-fixel;
+  font-size: 14px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.lcp-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.lcp-filter-btn {
+  padding: 6px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  background: #fff;
+  font-family: $font-fixel;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover { border-color: #b1d4e0; color: #374151; }
+
+  &.active {
+    background: #252c3f;
+    border-color: #252c3f;
+    color: #fff;
+  }
+}
+
+.lcp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lcp-lecture-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  gap: 16px;
+
+  &:hover {
+    border-color: #b1d4e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.lcp-lecture-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.lcp-lecture-title {
+  font-family: $font-fixel;
+  font-size: 15px;
+  color: #252c3f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lcp-lecture-btn {
+  padding: 8px 20px;
+  background: #f7b4d1;
+  border: none;
+  border-radius: 20px;
+  font-family: $font-fixel;
+  font-size: 13px;
+  font-weight: 600;
+  color: #252c3f;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+  flex-shrink: 0;
+
+  &:hover { background: #f49cbd; }
+}
+
+.lcp-empty {
+  font-family: $font-fixel;
+  font-size: 14px;
+  color: #9ca3af;
+  padding: 40px;
+  text-align: center;
+}

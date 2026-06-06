@@ -42,7 +42,7 @@
   min-width: 280px;
   height: -webkit-fill-available;
   min-height: 100vh;
-  background-color: #B1D4E075;
+  background-color: #b1d4e075;
   display: flex;
   flex-direction: column;
   position: sticky;
@@ -102,7 +102,6 @@
         margin-top: 16px;
         margin-bottom: -16px;
       }
-
       &:not(:has(.left-panel-links-link-current)) {
         padding-left: 24px;
         padding-right: 24px;
@@ -140,6 +139,10 @@
 
       &:first-of-type {
         margin-top: 0;
+
+        &:has(.left-panel-links-link-current) {
+          margin-top: -16px;
+        }
       }
     }
   }

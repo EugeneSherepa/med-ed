@@ -236,7 +236,7 @@ export const AccountPage = () => {
                   <input
                     type="file"
                     ref={fileInputRef}
-                    onChange={handlePhotoChange}
+                    photoPreview={handlePhotoChange}
                     accept="image/png, image/jpeg, image/jpg, image/webp"
                     style={{ display: "none" }}
                   />
