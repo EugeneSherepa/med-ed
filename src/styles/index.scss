@@ -290,6 +290,10 @@ p {
   }
 }
 
+// Keyword highlighting — hidden until .kw-revealed is applied
+.kw { border-bottom: none; }
+.kw-revealed .kw { border-bottom: 2px solid #2563eb; }
+
 @media screen and (max-width: 990px) {
   .page-width {
     padding: 0 24px;

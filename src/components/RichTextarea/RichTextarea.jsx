@@ -37,7 +37,8 @@ const cleanNode = (node) => {
   [...node.childNodes].forEach(cleanNode);
 
   // Unwrap <span> and <font> — keep their children, remove the wrapper
-  if (node.tagName === "SPAN" || node.tagName === "FONT") {
+  // Preserve <span class="kw"> (keyword markers)
+  if (node.tagName === "FONT" || (node.tagName === "SPAN" && node.className !== "kw")) {
     const parent = node.parentNode;
     if (parent) {
       while (node.firstChild) parent.insertBefore(node.firstChild, node);
@@ -48,7 +49,7 @@ const cleanNode = (node) => {
 
 const KNOWN_BLOCKS = new Set(BLOCK_OPTIONS.map((o) => o.value));
 
-export const RichTextarea = ({ value, onChange, rows = 4, placeholder, className }) => {
+export const RichTextarea = ({ value, onChange, rows = 4, placeholder, className, showKeywordButton }) => {
   const ref = useRef(null);
   const [blockFormat, setBlockFormat] = useState("p");
   const [activeFormats, setActiveFormats] = useState({});
@@ -94,6 +95,23 @@ export const RichTextarea = ({ value, onChange, rows = 4, placeholder, className
     ref.current?.focus();
     document.execCommand("formatBlock", false, tag);
     setBlockFormat(tag);
+    emit();
+  };
+
+  const applyKeyword = () => {
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed || !selection.rangeCount) return;
+    const range = selection.getRangeAt(0);
+    const span = document.createElement("span");
+    span.className = "kw";
+    try {
+      range.surroundContents(span);
+    } catch {
+      const fragment = range.extractContents();
+      span.appendChild(fragment);
+      range.insertNode(span);
+    }
+    selection.removeAllRanges();
     emit();
   };
 
@@ -161,6 +179,20 @@ export const RichTextarea = ({ value, onChange, rows = 4, placeholder, className
             {label}
           </button>
         ))}
+
+        {showKeywordButton && (
+          <>
+            <span className="rich-toolbar-divider" />
+            <button
+              type="button"
+              className="rich-toolbar-btn rich-toolbar-btn--kw"
+              title="Ключове слово (підкреслюється після відповіді)"
+              onMouseDown={(e) => { e.preventDefault(); applyKeyword(); }}
+            >
+              КС
+            </button>
+          </>
+        )}
       </div>
 
       <div

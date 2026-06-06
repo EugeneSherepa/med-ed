@@ -441,14 +441,12 @@ export const AdminGlobalQuestions = () => {
                   )}
                 </div>
               </div>
-              <textarea
+              <RichTextarea
                 value={formData.text}
-                onChange={(e) =>
-                  setFormData({ ...formData, text: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, text: e.target.value })}
                 rows={4}
-                required
                 placeholder="Введіть текст питання..."
+                showKeywordButton
               />
             </div>
 

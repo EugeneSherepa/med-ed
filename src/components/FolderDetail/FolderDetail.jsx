@@ -233,8 +233,8 @@ export const FolderDetail = () => {
                         )}
                       </div>
 
-                      <p className="test-question-card-text">
-                        {q.text}
+                      <div className="test-question-card-text kw-revealed">
+                        <div dangerouslySetInnerHTML={{ __html: q.text }} />
                         {q.image && (
                           <img
                             src={q.image}
@@ -242,7 +242,7 @@ export const FolderDetail = () => {
                             className="test-question-image"
                           />
                         )}
-                      </p>
+                      </div>
 
                       <div className="test-question-card-options">
                         {q.options.map((option, idx) => {

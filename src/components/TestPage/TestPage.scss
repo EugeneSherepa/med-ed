@@ -256,7 +256,7 @@
     &-modal {
       min-width: 280px;
       width: 100%;
-      max-width: 500px;
+      max-width: 740px;
       padding: 24px 16px;
       background-color: #ecf6f9;
       border-radius: 16px;
@@ -348,8 +348,8 @@
       margin-bottom: 16px;
       padding: 8px;
       font-family: $font-fixel;
-      font-size: 18px;
-      line-height: 100%;
+      font-size: 20px;
+      line-height: 140%;
       border-radius: 8px;
       background-color: $white;
       color: #252c3f;
@@ -360,6 +360,7 @@
         height: 100%;
         object-fit: contain;
       }
+
     }
 
     &-options {
@@ -489,8 +490,8 @@
 
           &-text {
             font-family: $font-fixel;
-            font-size: 18px;
-            line-height: 100%;
+            font-size: 20px;
+            line-height: 140%;
             color: #252c3f;
 
             & img {
@@ -589,8 +590,10 @@
 }
 
 .test-labs-modal-content {
+  overflow-x: auto;
+
   table {
-    width: 100%;
+    min-width: 100%;
     border-collapse: separate;
     border-spacing: 0;
     border: 1px solid #85878d;

@@ -66,7 +66,14 @@ export const TestPage = () => {
     const loadTestAndAttempt = async () => {
       try {
         const testRes = await api.get(`/tests/${testId}`);
-        setTest(testRes.data);
+        const shuffled = {
+          ...testRes.data,
+          questions: testRes.data.questions.map((q) => ({
+            ...q,
+            options: [...q.options].sort(() => Math.random() - 0.5),
+          })),
+        };
+        setTest(shuffled);
 
         const attemptsRes = await api.get("/attempts/my-attempts");
 
@@ -509,8 +516,8 @@ export const TestPage = () => {
                   />
                 </div>
 
-                <p className="test-question-card-text">
-                  {currentQuestion.text}
+                <div className={`test-question-card-text${hasAnsweredCurrent || isCompleted ? " kw-revealed" : ""}`}>
+                  <div dangerouslySetInnerHTML={{ __html: currentQuestion.text }} />
                   {currentQuestion.image && (
                     <img
                       src={currentQuestion.image}
@@ -518,7 +525,7 @@ export const TestPage = () => {
                       className="test-question-image"
                     />
                   )}
-                </p>
+                </div>
 
                 <div className="test-question-card-options">
                   {currentQuestion.options.map((option, idx) => {

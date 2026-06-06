@@ -609,14 +609,12 @@ export const AdminQuestionsManager = () => {
                     )}
                   </div>
                 </div>
-                <textarea
+                <RichTextarea
                   value={formData.text}
-                  onChange={(e) =>
-                    setFormData({ ...formData, text: e.target.value })
-                  }
-                  rows="4"
-                  required
+                  onChange={(e) => setFormData({ ...formData, text: e.target.value })}
+                  rows={4}
                   placeholder="Введіть текст питання сюди..."
+                  showKeywordButton
                 />
               </div>
 
