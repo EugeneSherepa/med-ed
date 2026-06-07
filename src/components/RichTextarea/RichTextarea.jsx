@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AdminImagePicker } from "../AdminImagePicker/AdminImagePicker";
+import { resolveImageUrl, resolveHtml, normalizeHtml } from "../../utils/imageUrl";
 import "./RichTextarea.scss";
 
 const FORMATS = [
@@ -90,13 +91,14 @@ export const RichTextarea = ({
   }, []);
 
   useEffect(() => {
-    if (ref.current) ref.current.innerHTML = value || "";
+    if (ref.current) ref.current.innerHTML = resolveHtml(value || "");
   }, []);
 
   useEffect(() => {
     const el = ref.current;
     if (!el || document.activeElement === el) return;
-    if (el.innerHTML !== (value || "")) el.innerHTML = value || "";
+    const resolved = resolveHtml(value || "");
+    if (el.innerHTML !== resolved) el.innerHTML = resolved;
   }, [value]);
 
   // Keep the resize overlay in sync with the image position
@@ -120,7 +122,7 @@ export const RichTextarea = ({
   }, [selectedImg]);
 
   const emit = () => {
-    onChange({ target: { value: ref.current?.innerHTML ?? "" } });
+    onChange({ target: { value: normalizeHtml(ref.current?.innerHTML ?? "") } });
   };
 
   const applyCmd = (cmd) => {
@@ -168,10 +170,11 @@ export const RichTextarea = ({
 
   const insertImage = (url) => {
     ref.current?.focus();
+    // Insert with full URL so the editor can display it; emit() will normalize back to relative
     document.execCommand(
       "insertHTML",
       false,
-      `<img src="${url}" class="rt-img" style="width:300px">`
+      `<img src="${resolveImageUrl(url)}" class="rt-img" style="width:300px">`
     );
     setIsPickerOpen(false);
     emit();
@@ -229,20 +232,6 @@ export const RichTextarea = ({
   return (
     <div className="rich-textarea">
       <div className="rich-toolbar">
-        <select
-          className="rich-toolbar-select"
-          value={blockFormat}
-          onMouseDown={(e) => e.stopPropagation()}
-          onChange={(e) => { applyBlock(e.target.value); }}
-          title="Формат блоку"
-        >
-          {BLOCK_OPTIONS.map((o) => (
-            <option key={o.value} value={o.value}>{o.label}</option>
-          ))}
-        </select>
-
-        <span className="rich-toolbar-divider" />
-
         {FORMATS.map(({ cmd, label, title, cls }) => (
           <button
             key={cmd}

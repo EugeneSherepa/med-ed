@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DashboardLeft } from "../DashboardLeft/DashboardLeft";
 import { api } from "../../api";
+import { resolveImageUrl, resolveHtml } from "../../utils/imageUrl";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Mousewheel } from "swiper/modules";
 import "../TestPage/TestPage.scss";
@@ -234,10 +235,10 @@ export const FolderDetail = () => {
                       </div>
 
                       <div className="test-question-card-text kw-revealed">
-                        <div dangerouslySetInnerHTML={{ __html: q.text }} />
+                        <div dangerouslySetInnerHTML={{ __html: resolveHtml(q.text) }} />
                         {q.image && (
                           <img
-                            src={q.image}
+                            src={resolveImageUrl(q.image)}
                             alt="question illustration"
                             className="test-question-image"
                           />
@@ -267,7 +268,7 @@ export const FolderDetail = () => {
                                   <span className="test-question-card-options-item-letter">
                                     {LETTERS[idx] ?? "?"}
                                   </span>
-                                  <span dangerouslySetInnerHTML={{ __html: option.text }} />
+                                  <span dangerouslySetInnerHTML={{ __html: resolveHtml(option.text) }} />
                                 </div>
                                 {hasAnswered && (
                                   <div>
@@ -289,7 +290,7 @@ export const FolderDetail = () => {
                                   <div
                                     className="test-question-explanation-text"
                                     dangerouslySetInnerHTML={{
-                                      __html: option.explanation,
+                                      __html: resolveHtml(option.explanation),
                                     }}
                                   />
                                 </div>
@@ -303,7 +304,7 @@ export const FolderDetail = () => {
                                     <div
                                       className="test-question-explanation-text"
                                       dangerouslySetInnerHTML={{
-                                        __html: q.explanation,
+                                        __html: resolveHtml(q.explanation),
                                       }}
                                     />
                                   </div>

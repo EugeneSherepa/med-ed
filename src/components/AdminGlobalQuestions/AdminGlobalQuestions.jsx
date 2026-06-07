@@ -3,6 +3,7 @@ import { api } from "../../api";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import { AdminImagePicker } from "../AdminImagePicker/AdminImagePicker";
 import { RichTextarea } from "../RichTextarea/RichTextarea";
+import { resolveImageUrl, normalizeImageUrl, normalizeHtml } from "../../utils/imageUrl";
 import "../AdminQuestionsManager/AdminQuestionsManager.scss";
 import "./AdminGlobalQuestions.scss";
 import iconClose from "../../assets/icon-close.svg";
@@ -189,12 +190,23 @@ export const AdminGlobalQuestions = () => {
       return;
     }
     setIsSaving(true);
+    const payload = {
+      ...formData,
+      image: normalizeImageUrl(formData.image),
+      text: normalizeHtml(formData.text),
+      explanation: normalizeHtml(formData.explanation),
+      options: formData.options.map((o) => ({
+        ...o,
+        text: normalizeHtml(o.text),
+        explanation: normalizeHtml(o.explanation),
+      })),
+    };
     try {
       if (activeId) {
-        await api.patch(`/admin/global-questions/${activeId}`, formData);
+        await api.patch(`/admin/global-questions/${activeId}`, payload);
         notify("Збережено", "Питання оновлено!");
       } else {
-        await api.post("/admin/global-questions", formData);
+        await api.post("/admin/global-questions", payload);
         setFormData(emptyForm);
       }
       fetchQuestions();
@@ -424,7 +436,7 @@ export const AdminGlobalQuestions = () => {
                   {formData.image && (
                     <>
                       <img
-                        src={formData.image}
+                        src={resolveImageUrl(formData.image)}
                         alt="question"
                         className="field-image-preview"
                       />

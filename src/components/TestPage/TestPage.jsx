@@ -2,7 +2,8 @@ import { useState, useEffect, useMemo, useRef, memo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { api } from "../../api";
 import { DashboardLeft } from "../DashboardLeft/DashboardLeft";
-import { ConfirmModal } from "../ConfirmModal/ConfirmModal"; // 🚀 Import the custom modal
+import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
+import { resolveImageUrl, resolveHtml } from "../../utils/imageUrl";
 import "./TestPage.scss";
 import iconCaretDropdown from "../../assets/icon-caret-dropdown.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -517,10 +518,10 @@ export const TestPage = () => {
                 </div>
 
                 <div className={`test-question-card-text${hasAnsweredCurrent || isCompleted ? " kw-revealed" : ""}`}>
-                  <div dangerouslySetInnerHTML={{ __html: currentQuestion.text }} />
+                  <div dangerouslySetInnerHTML={{ __html: resolveHtml(currentQuestion.text) }} />
                   {currentQuestion.image && (
                     <img
-                      src={currentQuestion.image}
+                      src={resolveImageUrl(currentQuestion.image)}
                       alt="question illustration"
                       className="test-question-image"
                     />
@@ -577,7 +578,7 @@ export const TestPage = () => {
                             <span className="test-question-card-options-item-letter">
                               {letters[idx] || "?"}
                             </span>
-                            <span dangerouslySetInnerHTML={{ __html: option.text }} />
+                            <span dangerouslySetInnerHTML={{ __html: resolveHtml(option.text) }} />
                           </div>
 
                           {(hasAnsweredCurrent || isCompleted) && (
@@ -592,14 +593,13 @@ export const TestPage = () => {
                           )}
                         </div>
 
-
                         {(hasAnsweredCurrent || isCompleted) &&
                           option.explanation && (
                             <div className="test-question-explanation">
                               <div
                                 className="test-question-explanation-text"
                                 dangerouslySetInnerHTML={{
-                                  __html: option.explanation,
+                                  __html: resolveHtml(option.explanation),
                                 }}
                               />
                             </div>
@@ -615,7 +615,7 @@ export const TestPage = () => {
                               <div
                                 className="test-question-explanation-text"
                                 dangerouslySetInnerHTML={{
-                                  __html: currentQuestion.explanation,
+                                  __html: resolveHtml(currentQuestion.explanation),
                                 }}
                               />
                             </div>

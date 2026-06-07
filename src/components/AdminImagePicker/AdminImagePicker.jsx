@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { api } from "../../api";
+import { resolveImageUrl } from "../../utils/imageUrl";
 import "./AdminImagePicker.scss";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export const AdminImagePicker = ({ isOpen, onClose, onSelect }) => {
   const [images, setImages] = useState([]);
@@ -58,14 +57,14 @@ export const AdminImagePicker = ({ isOpen, onClose, onSelect }) => {
   };
 
   const handleCopy = (url) => {
-    const fullUrl = `${API_URL}${url}`;
-    navigator.clipboard.writeText(fullUrl);
+    navigator.clipboard.writeText(resolveImageUrl(url));
     setCopiedUrl(url);
     setTimeout(() => setCopiedUrl(null), 2000);
   };
 
+  // Pass the relative path — callers resolve it to a full URL via resolveImageUrl
   const handleSelect = (url) => {
-    if (onSelect) onSelect(`${API_URL}${url}`);
+    if (onSelect) onSelect(url);
     onClose();
   };
 
@@ -142,7 +141,7 @@ export const AdminImagePicker = ({ isOpen, onClose, onSelect }) => {
             {images.map((img) => (
               <div key={img.filename} className="img-picker-item">
                 <img
-                  src={`${API_URL}${img.url}`}
+                  src={resolveImageUrl(img.url)}
                   alt={img.filename}
                   className="img-picker-thumb"
                   onClick={() => handleSelect(img.url)}
