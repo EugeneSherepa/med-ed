@@ -447,6 +447,7 @@ export const AdminGlobalQuestions = () => {
                 rows={4}
                 placeholder="Введіть текст питання..."
                 showKeywordButton
+                showImageButton
               />
             </div>
 
@@ -469,34 +470,6 @@ export const AdminGlobalQuestions = () => {
                           <span className="option-letter">
                             {LETTERS[i] || "?"}
                           </span>
-                          <button
-                            type="button"
-                            className="img-pick-btn small"
-                            onClick={() => setPickerTarget(`option-${i}`)}
-                          >
-                            📷{" "}
-                            {opt.image ? "Змінити" : "Зображення до варіанту"}
-                          </button>
-                          {opt.image && (
-                            <>
-                              <img
-                                src={opt.image}
-                                alt={`option-${i}`}
-                                className="field-image-preview"
-                              />
-                              <button
-                                type="button"
-                                className="img-remove-btn"
-                                onClick={() => {
-                                  const opts = [...formData.options];
-                                  opts[i].image = "";
-                                  setFormData((p) => ({ ...p, options: opts }));
-                                }}
-                              >
-                                ✕
-                              </button>
-                            </>
-                          )}
                         </div>
                         {formData.options.length > 2 && (
                           <button
@@ -508,32 +481,20 @@ export const AdminGlobalQuestions = () => {
                           </button>
                         )}
                       </div>
-                      <input
-                        type="text"
+                      <RichTextarea
+                        showImageButton
                         value={opt.text}
-                        onChange={(e) =>
-                          handleOptionTextChange(i, e.target.value)
-                        }
+                        onChange={(e) => handleOptionTextChange(i, e.target.value)}
                         placeholder={`Варіант ${LETTERS[i] || ""}`}
-                        required
+                        rows={2}
                       />
                       <RichTextarea
+                        showImageButton
                         value={opt.explanation || ""}
                         onChange={(e) => handleOptionExplanationChange(i, e.target.value)}
                         placeholder={`Пояснення до варіанту ${LETTERS[i] || ""} (необов'язково)`}
                         rows={2}
                       />
-                      <div className="field-image-row">
-                        <button
-                          type="button"
-                          className="img-pick-btn small"
-                          onClick={() =>
-                            setPickerTarget(`option-explanation-${i}`)
-                          }
-                        >
-                          📷 Вставити в пояснення
-                        </button>
-                      </div>
                     </div>
                     <div className="option-divider"></div>
                   </>

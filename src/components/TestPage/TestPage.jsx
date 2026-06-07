@@ -577,7 +577,7 @@ export const TestPage = () => {
                             <span className="test-question-card-options-item-letter">
                               {letters[idx] || "?"}
                             </span>
-                            {option.text}
+                            <span dangerouslySetInnerHTML={{ __html: option.text }} />
                           </div>
 
                           {(hasAnsweredCurrent || isCompleted) && (
@@ -592,13 +592,6 @@ export const TestPage = () => {
                           )}
                         </div>
 
-                        {option.image && (
-                          <img
-                            src={option.image}
-                            alt={`option ${idx} illustration`}
-                            className="test-option-image"
-                          />
-                        )}
 
                         {(hasAnsweredCurrent || isCompleted) &&
                           option.explanation && (

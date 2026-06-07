@@ -291,8 +291,20 @@ p {
 }
 
 // Keyword highlighting — hidden until .kw-revealed is applied
-.kw { border-bottom: none; }
-.kw-revealed .kw { border-bottom: 2px solid #2563eb; }
+.kw {
+  border-bottom: none;
+}
+.kw-revealed .kw {
+  background-color: rgba($color: #FFFABC, $alpha: 0.5);
+}
+
+// Inline images inserted via RichTextarea toolbar
+.rt-img {
+  display: inline-block;
+  vertical-align: top;
+  max-width: 100%;
+  height: auto;
+}
 
 @media screen and (max-width: 990px) {
   .page-width {

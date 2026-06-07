@@ -456,11 +456,10 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            line-height: 125%;
             padding: 8px 0;
             font-family: $font-fixel;
-            font-size: 18px;
-            line-height: 125%;
+            font-size: 20px;
+            line-height: 150%;
           }
         }
 
@@ -490,7 +489,7 @@
 
           &-text {
             font-family: $font-fixel;
-            font-size: 20px;
+            font-size: 16px;
             line-height: 140%;
             color: #252c3f;
 
