@@ -50,6 +50,7 @@ export const FolderDetail = () => {
   const [showNotePicker, setShowNotePicker] = useState(false);
   const [noteQuestionIds, setNoteQuestionIds] = useState(new Set());
   const [swiperInstance, setSwiperInstance] = useState(null);
+  const [countInput, setCountInput] = useState("1");
 
   useEffect(() => {
     api
@@ -67,11 +68,24 @@ export const FolderDetail = () => {
 
   useEffect(() => {
     if (swiperInstance?.slideTo) {
-      swiperInstance.slideTo(currentIndex);
+      const total = questions.length;
+      const perView = window.innerWidth >= 990 ? 10 : 4;
+      const offset = Math.max(0, Math.min(currentIndex - Math.floor(perView / 2), total - perView));
+      swiperInstance.slideTo(offset);
     }
+    setCountInput(String(currentIndex + 1));
     setShowLabsModal(false);
     setShowNotePicker(false);
   }, [currentIndex, swiperInstance]);
+
+  const handleCountJump = () => {
+    const n = parseInt(countInput, 10);
+    if (!isNaN(n) && n >= 1 && n <= questions.length) {
+      setCurrentIndex(n - 1);
+    } else {
+      setCountInput(String(currentIndex + 1));
+    }
+  };
 
   const handleAnswer = (questionId, optionId) => {
     if (answers[questionId]) return;
@@ -128,7 +142,16 @@ export const FolderDetail = () => {
           <>
             <aside className="test-sidebar">
               <div className="test-sidebar-count">
-                {currentIndex + 1}/{questions.length}
+                <input
+                  type="text"
+                  className="test-sidebar-count-input"
+                  value={countInput}
+                  onChange={(e) => setCountInput(e.target.value)}
+                  onFocus={(e) => e.target.select()}
+                  onKeyDown={(e) => e.key === "Enter" && handleCountJump()}
+                  onBlur={handleCountJump}
+                />
+                <span>/{questions.length}</span>
               </div>
               <button className="test-sidebar-grid-button test-sidebar-grid-button-prev">
                 <img src={iconCaret} className="active" alt="Prev" />

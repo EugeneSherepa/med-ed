@@ -48,6 +48,7 @@ export const TestPage = () => {
   const [showLabsModal, setShowLabsModal] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [swiperInstance, setSwiperInstance] = useState(null);
+  const [countInput, setCountInput] = useState("1");
 
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
@@ -143,6 +144,26 @@ export const TestPage = () => {
       .then((res) => setNoteQuestionIds(new Set(res.data.map((n) => n.questionId))))
       .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    if (swiperInstance?.slideTo && test) {
+      const total = test.questions.length;
+      const perView = window.innerWidth >= 990 ? 10 : 4;
+      const offset = Math.max(0, Math.min(currentQuestionIndex - Math.floor(perView / 2), total - perView));
+      swiperInstance.slideTo(offset);
+    }
+    setCountInput(String(currentQuestionIndex + 1));
+  }, [currentQuestionIndex, swiperInstance, test]);
+
+  const handleCountJump = () => {
+    const total = test?.questions?.length ?? 0;
+    const n = parseInt(countInput, 10);
+    if (!isNaN(n) && n >= 1 && n <= total) {
+      setCurrentQuestionIndex(n - 1);
+    } else {
+      setCountInput(String(currentQuestionIndex + 1));
+    }
+  };
 
   const handleToggleSave = async () => {
     const qId = currentQuestion?.id;
@@ -379,7 +400,16 @@ export const TestPage = () => {
         <div className="test-main">
           <aside className="test-sidebar">
             <div className="test-sidebar-count">
-              {currentQuestionIndex + 1}/{test.questions.length}
+              <input
+                type="text"
+                className="test-sidebar-count-input"
+                value={countInput}
+                onChange={(e) => setCountInput(e.target.value)}
+                onFocus={(e) => e.target.select()}
+                onKeyDown={(e) => e.key === "Enter" && handleCountJump()}
+                onBlur={handleCountJump}
+              />
+              <span>/{test.questions.length}</span>
             </div>
             <button className="test-sidebar-grid-button test-sidebar-grid-button-prev">
               <img src={iconCaret} className="active" alt="Prev" />
@@ -393,7 +423,7 @@ export const TestPage = () => {
               watchOverflow={true}
               breakpoints={{
                 0: { slidesPerView: 4 },
-                990: { slidesPerView: 10 },
+                990: { slidesPerView: 11 },
               }}
               className="mySwiper test-sidebar-grid"
               navigation={{
