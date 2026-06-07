@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { api } from "../../api";
 import { getTestIdFromSlug } from "../../utils/savedSlug";
+import { resolveImageUrl, resolveHtml } from "../../utils/imageUrl";
 import { DashboardLeft } from "../DashboardLeft/DashboardLeft";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Mousewheel } from "swiper/modules";
@@ -200,10 +201,10 @@ export const SavedQuestionViewer = () => {
                 </div>
 
                 <div className="test-question-card-text kw-revealed">
-                  <div dangerouslySetInnerHTML={{ __html: currentQuestion.text }} />
+                  <div dangerouslySetInnerHTML={{ __html: resolveHtml(currentQuestion.text) }} />
                   {currentQuestion.image && (
                     <img
-                      src={currentQuestion.image}
+                      src={resolveImageUrl(currentQuestion.image)}
                       alt="question illustration"
                       className="test-question-image"
                     />
@@ -248,7 +249,7 @@ export const SavedQuestionViewer = () => {
                             <span className="test-question-card-options-item-letter">
                               {OPTION_LETTERS[idx] || "?"}
                             </span>
-                            <span dangerouslySetInnerHTML={{ __html: option.text }} />
+                            <span dangerouslySetInnerHTML={{ __html: resolveHtml(option.text) }} />
                           </div>
 
                           {hasAnsweredCurrent && (
@@ -263,13 +264,12 @@ export const SavedQuestionViewer = () => {
                           )}
                         </div>
 
-
                         {hasAnsweredCurrent && option.explanation && (
                           <div className="test-question-explanation">
                             <div
                               className="test-question-explanation-text"
                               dangerouslySetInnerHTML={{
-                                __html: option.explanation,
+                                __html: resolveHtml(option.explanation),
                               }}
                             />
                           </div>
@@ -285,7 +285,7 @@ export const SavedQuestionViewer = () => {
                               <div
                                 className="test-question-explanation-text"
                                 dangerouslySetInnerHTML={{
-                                  __html: currentQuestion.explanation,
+                                  __html: resolveHtml(currentQuestion.explanation),
                                 }}
                               />
                             </div>

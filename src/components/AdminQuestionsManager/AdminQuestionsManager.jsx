@@ -4,6 +4,7 @@ import { api } from "../../api";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import { AdminImagePicker } from "../AdminImagePicker/AdminImagePicker";
 import { RichTextarea } from "../RichTextarea/RichTextarea";
+import { resolveImageUrl, normalizeImageUrl, normalizeHtml } from "../../utils/imageUrl";
 import "./AdminQuestionsManager.scss";
 
 const TYPE_LABELS = { BOOKLET: "Буклети", BASE: "Бази", AMPS: "АМПС" };
@@ -334,12 +335,23 @@ export const AdminQuestionsManager = () => {
     }
 
     setIsSaving(true);
+    const payload = {
+      ...formData,
+      image: normalizeImageUrl(formData.image),
+      text: normalizeHtml(formData.text),
+      explanation: normalizeHtml(formData.explanation),
+      options: formData.options.map((o) => ({
+        ...o,
+        text: normalizeHtml(o.text),
+        explanation: normalizeHtml(o.explanation),
+      })),
+    };
     try {
       if (activeQuestionId) {
-        await api.patch(`/tests/questions/${activeQuestionId}`, formData);
+        await api.patch(`/tests/questions/${activeQuestionId}`, payload);
         showNotification("Збережено", "Питання успішно оновлено!");
       } else {
-        await api.post(`/tests/${testId}/questions`, formData);
+        await api.post(`/tests/${testId}/questions`, payload);
         setFormData(emptyForm);
       }
       fetchQuestions();
@@ -592,7 +604,7 @@ export const AdminQuestionsManager = () => {
                     {formData.image && (
                       <>
                         <img
-                          src={formData.image}
+                          src={resolveImageUrl(formData.image)}
                           alt="question"
                           className="field-image-preview"
                         />
