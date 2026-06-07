@@ -217,6 +217,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 2px;
       height: 44px;
       border-radius: 8px;
       padding: 8px 16px;
@@ -225,6 +226,26 @@
       font-weight: 500;
       font-size: 20px;
       line-height: 100%;
+
+      &-input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: transparent;
+        font-family: $font-fixel;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 100%;
+        color: #252c3f;
+        width: 42px;
+        text-align: center;
+        outline: none;
+        padding: 0;
+        cursor: text;
+        background: rgba(177, 212, 224, 0.35);
+        border-radius: 4px;
+      }
     }
   }
 
@@ -314,6 +335,7 @@
       margin-bottom: 16px;
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 16px;
 
       &-btn {
@@ -360,7 +382,6 @@
         height: 100%;
         object-fit: contain;
       }
-
     }
 
     &-options {
@@ -479,7 +500,7 @@
           height: fit-content;
           object-fit: contain;
           padding: 8px 0 4px;
-          margin:  0 auto;
+          margin: 0 auto;
         }
 
         & .test-question-explanation {
@@ -898,4 +919,10 @@
 
 .swiper-button-lock {
   display: none !important;
+}
+
+@media screen and (max-width: 990px) {
+  .test-question-card-tools-btn.report-trigger-btn {
+    margin-left: none !important;
+  }
 }
