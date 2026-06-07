@@ -248,7 +248,7 @@ export const SavedQuestionViewer = () => {
                             <span className="test-question-card-options-item-letter">
                               {OPTION_LETTERS[idx] || "?"}
                             </span>
-                            {option.text}
+                            <span dangerouslySetInnerHTML={{ __html: option.text }} />
                           </div>
 
                           {hasAnsweredCurrent && (
@@ -263,13 +263,6 @@ export const SavedQuestionViewer = () => {
                           )}
                         </div>
 
-                        {option.image && (
-                          <img
-                            src={option.image}
-                            alt={`option ${idx}`}
-                            className="test-option-image"
-                          />
-                        )}
 
                         {hasAnsweredCurrent && option.explanation && (
                           <div className="test-question-explanation">

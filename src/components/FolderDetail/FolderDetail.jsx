@@ -267,7 +267,7 @@ export const FolderDetail = () => {
                                   <span className="test-question-card-options-item-letter">
                                     {LETTERS[idx] ?? "?"}
                                   </span>
-                                  {option.text}
+                                  <span dangerouslySetInnerHTML={{ __html: option.text }} />
                                 </div>
                                 {hasAnswered && (
                                   <div>
@@ -283,13 +283,6 @@ export const FolderDetail = () => {
                                   </div>
                                 )}
                               </div>
-                              {option.image && (
-                                <img
-                                  src={option.image}
-                                  alt={`option ${idx}`}
-                                  className="test-option-image"
-                                />
-                              )}
 
                               {hasAnswered && option.explanation && (
                                 <div className="test-question-explanation">
