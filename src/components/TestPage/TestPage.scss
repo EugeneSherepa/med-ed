@@ -1,6 +1,19 @@
 @use "../../styles/variables" as *;
 
-.swiper-wrapper {
+.test-question-card-text p {
+  font-family: $font-fixel;
+  font-size: 20px;
+  line-height: 140%;
+  border-radius: 8px;
+  color: #252c3f;
+}
+
+.test-question-card-text div {
+  font-family: $font-fixel;
+  font-size: 20px;
+  line-height: 140%;
+  border-radius: 8px;
+  color: #252c3f;
 }
 
 .test {
