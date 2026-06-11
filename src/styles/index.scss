@@ -39,20 +39,20 @@ p {
   font-weight: 400;
 }
 
-.page-width {
+:where(.page-width) {
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
   padding: 0 64px;
 }
 
-.page-width-left {
-  margin-left: calc(50vw - 1440px / 2) !important;
-  padding: 0 64px !important;
-  padding-right: 0 !important;
+:where(.page-width-left) {
+  margin-left: calc(50vw - 1440px / 2);
+  padding: 0 64px;
+  padding-right: 0;
 }
 
-.w-100 {
+:where(.w-100) {
   width: 100%;
 }
 
@@ -307,7 +307,7 @@ p {
 }
 
 @media screen and (max-width: 990px) {
-  .page-width {
+  html .page-width {
     padding: 0 24px;
   }
 
