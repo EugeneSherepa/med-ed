@@ -376,6 +376,22 @@
       background-color: $white;
       color: #252c3f;
 
+      & div {
+        font-family: $font-fixel;
+        font-size: 20px;
+        line-height: 140%;
+        border-radius: 8px;
+        color: #252c3f;
+      }
+
+      & p {
+        font-family: $font-fixel;
+        font-size: 20px;
+        line-height: 140%;
+        border-radius: 8px;
+        color: #252c3f;
+      }
+
       & img {
         padding: 8px;
         width: 100%;
