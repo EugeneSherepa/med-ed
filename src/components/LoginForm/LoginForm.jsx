@@ -147,7 +147,7 @@ export const LoginForm = () => {
 
         <div style={{ marginTop: "24px", display: "flex", flexDirection: "column", gap: "12px" }}>
           <button type="button" onClick={handleGoogleLogin} className="auth-form-wrapper-alt-button">
-            Вхід через аккаунт
+            Вхід через акаунт
             <img src={google} alt="google" />
           </button>
         </div>
