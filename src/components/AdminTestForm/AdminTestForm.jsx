@@ -87,7 +87,7 @@ export const AdminTestForm = () => {
       if (formData.type === "BOOKLET") {
         if (formData.year) payload.year = parseInt(formData.year);
         if (formData.day) payload.day = parseInt(formData.day);
-        if (formData.variant) payload.variant = parseInt(formData.variant);
+        if (formData.variant) payload.variant = formData.variant;
         payload.title = null;
       } else if (formData.type === "AMPS") {
         if (formData.year) payload.year = parseInt(formData.year);
@@ -255,7 +255,7 @@ export const AdminTestForm = () => {
             <div className="form-group">
               <label>Варіант (необов'язково)</label>
               <input
-                type="number"
+                type="text"
                 name="variant"
                 value={formData.variant}
                 onChange={handleChange}
