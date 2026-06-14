@@ -1,4 +1,18 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { api } from "../../api";
 import "./AdminBasesReorder.scss";
 
@@ -24,6 +38,31 @@ const getTestTitle = (t) => {
   return s;
 };
 
+const SortableTestItem = ({ test, idx }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({ id: test.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} className="abr-item">
+      <span className="abr-handle" {...attributes} {...listeners}>⠿</span>
+      <span className="abr-index">{idx + 1}</span>
+      <span className="abr-title">{getTestTitle(test)}</span>
+      <span className="abr-meta">
+        {EXAM_LABELS[test.examType] ?? test.examType} · {test.category}
+      </span>
+      <span className={`abr-status ${test.status === "PUBLISHED" ? "published" : "draft"}`}>
+        {test.status === "PUBLISHED" ? "Активний" : "Чернетка"}
+      </span>
+    </div>
+  );
+};
+
 export const AdminBasesReorder = () => {
   const [testType, setTestType] = useState("BASE");
   const [tests, setTests] = useState([]);
@@ -33,8 +72,7 @@ export const AdminBasesReorder = () => {
   const [savedMsg, setSavedMsg] = useState(false);
   const [filterExam, setFilterExam] = useState("");
 
-  const dragIndex = useRef(null);
-  const dragOverIndex = useRef(null);
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   useEffect(() => {
     setIsLoading(true);
@@ -51,39 +89,29 @@ export const AdminBasesReorder = () => {
       .finally(() => setIsLoading(false));
   }, [testType]);
 
-  const visibleTests = filterExam
-    ? tests.filter((t) => t.examType === filterExam)
-    : tests;
-
+  const visibleTests = filterExam ? tests.filter((t) => t.examType === filterExam) : tests;
   const availableExams = [...new Set(tests.map((t) => t.examType))];
 
-  const handleDragStart = (index) => { dragIndex.current = index; };
-
-  const handleDragOver = (e, index) => {
-    e.preventDefault();
-    dragOverIndex.current = index;
-  };
-
-  const handleDrop = () => {
-    const from = dragIndex.current;
-    const to = dragOverIndex.current;
-    if (from === null || to === null || from === to) return;
-
+  const handleDragEnd = ({ active, over }) => {
+    if (!over || active.id === over.id) return;
     const visibleIds = visibleTests.map((t) => t.id);
-    const fromId = visibleIds[from];
-    const toId = visibleIds[to];
+    const oldIndex = visibleIds.indexOf(active.id);
+    const newIndex = visibleIds.indexOf(over.id);
+    const reorderedVisible = arrayMove(visibleTests, oldIndex, newIndex);
 
     setTests((prev) => {
       const copy = [...prev];
-      const fromPos = copy.findIndex((t) => t.id === fromId);
-      const toPos = copy.findIndex((t) => t.id === toId);
-      const [moved] = copy.splice(fromPos, 1);
-      copy.splice(toPos, 0, moved);
-      return copy;
+      reorderedVisible.forEach((t, i) => {
+        const pos = copy.findIndex((x) => x.id === t.id);
+        copy[pos] = { ...copy[pos], _tempOrder: i };
+      });
+      return copy.sort((a, b) => {
+        const aO = a._tempOrder ?? Infinity;
+        const bO = b._tempOrder ?? Infinity;
+        return aO - bO;
+      }).map(({ _tempOrder, ...t }) => t);
     });
 
-    dragIndex.current = null;
-    dragOverIndex.current = null;
     setIsDirty(true);
   };
 
@@ -148,31 +176,18 @@ export const AdminBasesReorder = () => {
       {isLoading ? (
         <div className="abr-loading">Завантаження...</div>
       ) : (
-        <div className="abr-list">
-          {visibleTests.map((test, idx) => (
-            <div
-              key={test.id}
-              className="abr-item"
-              draggable
-              onDragStart={() => handleDragStart(idx)}
-              onDragOver={(e) => handleDragOver(e, idx)}
-              onDrop={handleDrop}
-            >
-              <span className="abr-handle" title="Перетягнути">⠿</span>
-              <span className="abr-index">{idx + 1}</span>
-              <span className="abr-title">{getTestTitle(test)}</span>
-              <span className="abr-meta">
-                {EXAM_LABELS[test.examType] ?? test.examType} · {test.category}
-              </span>
-              <span className={`abr-status ${test.status === "PUBLISHED" ? "published" : "draft"}`}>
-                {test.status === "PUBLISHED" ? "Активний" : "Чернетка"}
-              </span>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={visibleTests.map((t) => t.id)} strategy={verticalListSortingStrategy}>
+            <div className="abr-list">
+              {visibleTests.map((test, idx) => (
+                <SortableTestItem key={test.id} test={test} idx={idx} />
+              ))}
+              {visibleTests.length === 0 && (
+                <div className="abr-empty">Тестів не знайдено</div>
+              )}
             </div>
-          ))}
-          {visibleTests.length === 0 && (
-            <div className="abr-empty">Тестів не знайдено</div>
-          )}
-        </div>
+          </SortableContext>
+        </DndContext>
       )}
     </div>
   );

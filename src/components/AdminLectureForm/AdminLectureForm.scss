@@ -55,6 +55,18 @@
   &:last-child { border-bottom: none; }
 }
 
+.alc-drag-handle {
+  color: #d1d5db;
+  cursor: grab;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 2px;
+  flex-shrink: 0;
+  user-select: none;
+
+  &:active { cursor: grabbing; }
+}
+
 .alc-list-num {
   font-family: $font-fixel;
   font-size: 12px;
@@ -111,6 +123,49 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+      font-family: $font-fixel;
+      font-weight: 500;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="url"] {
+      padding: 12px 16px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-family: $font-fixel;
+      font-size: 14px;
+      color: #111827;
+      background: #fff;
+      transition: border-color 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: #b1d4e0;
+        box-shadow: 0 0 0 3px rgba(177, 212, 224, 0.2);
+      }
+
+      &::placeholder { color: #9ca3af; }
+    }
+  }
+
+  .form-row {
+    display: flex;
+    gap: 16px;
+
+    .half-width { flex: 1; }
+  }
+
+  .full-width { width: 100%; }
 }
 
 .alc-form-title {
@@ -119,6 +174,29 @@
   font-weight: 600;
   color: #252c3f;
   margin: 0;
+}
+
+.alc-field-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.alc-pdf-link {
+  font-family: $font-fixel;
+  font-size: 13px;
+  color: #1d4ed8;
+  text-decoration: underline;
+
+  &:hover { color: #1e40af; }
+}
+
+.alc-form-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 8px;
 }
 
 .alc-upload-btn {

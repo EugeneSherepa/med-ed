@@ -1,55 +1,174 @@
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { api } from "../../api";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import "./AdminTestsList.scss";
 
+const EXAM_LABELS = { KROK_1: "Крок-1", KROK_2: "Крок-2", KROK_3: "Крок-3" };
+
+const TYPE_TABS = [
+  { value: "BASE",    label: "Бази" },
+  { value: "AMPS",    label: "АМПС" },
+  { value: "BOOKLET", label: "Буклети" },
+];
+
+const getTestTitle = (test) => {
+  if (test.type === "BASE") return test.title || "Без назви";
+  if (test.type === "AMPS") {
+    let s = `${test.year} АМПС`;
+    if (test.language) s += ` (${test.language === "en" ? "Eng" : "Укр"})`;
+    return s;
+  }
+  let s = `${test.year}`;
+  if (test.day) s += ` день ${test.day}`;
+  if (test.language) s += ` (${test.language === "en" ? "Eng" : "Укр"})`;
+  if (test.variant) s += ` варіант ${test.variant}`;
+  return s;
+};
+
+const SortableRow = ({ test, idx, duplicatingId, onEdit, onQuestions, onAnalytics, onDuplicate, onDelete, onStatusChange }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({ id: test.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
+  };
+
+  return (
+    <tr ref={setNodeRef} style={style}>
+      <td>
+        <span className="abr-handle" {...attributes} {...listeners}>⠿</span>
+      </td>
+      <td className="text-muted text-sm">{idx + 1}</td>
+      <td className="test-title">{getTestTitle(test)}</td>
+      <td>{test.category}</td>
+      <td>{EXAM_LABELS[test.examType] ?? test.examType}</td>
+      <td>
+        <div className="status-dropdown-wrapper">
+          <select
+            className={`status-select ${test.status === "PUBLISHED" ? "published" : "draft"}`}
+            value={test.status || "DRAFT"}
+            onChange={(e) => onStatusChange(test.id, e.target.value)}
+          >
+            <option value="DRAFT">Чернетка</option>
+            <option value="PUBLISHED">Активний</option>
+          </select>
+        </div>
+      </td>
+      <td>{test._count?.questions || test.questions?.length || 0}</td>
+      <td className="admin-table-actions">
+        <button className="action-btn questions" onClick={() => onQuestions(test.id)}>☰ Питання</button>
+        <button className="action-btn edit" onClick={() => onEdit(test.id)}>✎ Редагувати</button>
+        <button className="action-btn analytics" onClick={() => onAnalytics(test.id)}>📊 Аналітика</button>
+        <button className="action-btn duplicate" disabled={duplicatingId === test.id} onClick={() => onDuplicate(test.id)}>
+          {duplicatingId === test.id ? "…" : "⧉ Дублювати"}
+        </button>
+        <button className="action-btn delete" onClick={() => onDelete(test.id)}>✕</button>
+      </td>
+    </tr>
+  );
+};
+
 export const AdminTestsList = () => {
+  const [testType, setTestType] = useState("BASE");
   const [tests, setTests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortConfig, setSortConfig] = useState({ key: "id", direction: "descending" });
+  const [filterExam, setFilterExam] = useState("");
   const [duplicatingId, setDuplicatingId] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const PAGE_SIZE = 25;
+  const [isDirty, setIsDirty] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [savedMsg, setSavedMsg] = useState(false);
 
   const navigate = useNavigate();
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   const [modalConfig, setModalConfig] = useState({
-    isOpen: false,
-    title: "",
-    subtitle: "",
-    confirmText: "Підтвердити",
-    cancelText: "Скасувати",
-    onConfirm: () => {},
+    isOpen: false, title: "", subtitle: "",
+    confirmText: "Підтвердити", cancelText: "Скасувати", onConfirm: () => {},
   });
+  const closeModal = () => setModalConfig((p) => ({ ...p, isOpen: false }));
 
-  const closeModal = () => setModalConfig((prev) => ({ ...prev, isOpen: false }));
+  const showNotification = (title, subtitle) =>
+    setModalConfig({ isOpen: true, title, subtitle, confirmText: "Окей", cancelText: "", showIcon: false, onConfirm: closeModal });
 
-  const fetchTests = async () => {
-    try {
-      const res = await api.get("/tests", { params: { limit: 1000 } });
-      setTests(res.data.data || res.data);
-    } catch (error) {
-      console.error("Failed to load tests", error);
-      showNotification("Помилка", "Не вдалося завантажити список тестів.");
-    } finally {
-      setIsLoading(false);
-    }
+  const fetchTests = () => {
+    setIsLoading(true);
+    setIsDirty(false);
+    setFilterExam("");
+    setSearchQuery("");
+    api.get("/tests", { params: { type: testType, limit: 1000 } })
+      .then((res) => {
+        const all = (res.data.data || res.data).sort((a, b) => a.sortOrder - b.sortOrder || a.id - b.id);
+        setTests(all);
+      })
+      .catch(() => showNotification("Помилка", "Не вдалося завантажити список тестів."))
+      .finally(() => setIsLoading(false));
   };
 
-  useEffect(() => { fetchTests(); }, []);
+  useEffect(() => { fetchTests(); }, [testType]);
 
-  const showNotification = (title, subtitle) => {
-    setModalConfig({
-      isOpen: true,
-      title,
-      subtitle,
-      confirmText: "Окей",
-      cancelText: "",
-      showIcon: false,
-      onConfirm: closeModal,
+  const availableExams = useMemo(() => [...new Set(tests.map((t) => t.examType).filter(Boolean))], [tests]);
+
+  const visibleTests = useMemo(() => {
+    let list = tests;
+    if (filterExam) list = list.filter((t) => t.examType === filterExam);
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      list = list.filter((t) =>
+        `${t.title || ""} ${t.year || ""} ${t.category || ""} ${t.examType || ""}`.toLowerCase().includes(q)
+      );
+    }
+    return list;
+  }, [tests, filterExam, searchQuery]);
+
+  const handleDragEnd = ({ active, over }) => {
+    if (!over || active.id === over.id) return;
+    const visibleIds = visibleTests.map((t) => t.id);
+    const oldIndex = visibleIds.indexOf(active.id);
+    const newIndex = visibleIds.indexOf(over.id);
+    const reorderedVisible = arrayMove(visibleTests, oldIndex, newIndex);
+
+    setTests((prev) => {
+      const copy = [...prev];
+      reorderedVisible.forEach((t, i) => {
+        const pos = copy.findIndex((x) => x.id === t.id);
+        copy[pos] = { ...copy[pos], _tempOrder: i };
+      });
+      return copy
+        .sort((a, b) => (a._tempOrder ?? Infinity) - (b._tempOrder ?? Infinity))
+        .map(({ _tempOrder, ...t }) => t);
     });
+    setIsDirty(true);
+  };
+
+  const handleSaveOrder = async () => {
+    setIsSaving(true);
+    try {
+      await api.patch("/admin/tests/reorder", { items: tests.map((t, i) => ({ id: t.id, sortOrder: i })) });
+      setTests((prev) => prev.map((t, i) => ({ ...t, sortOrder: i })));
+      setIsDirty(false);
+      setSavedMsg(true);
+      setTimeout(() => setSavedMsg(false), 2500);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleDelete = (id) => {
@@ -57,15 +176,13 @@ export const AdminTestsList = () => {
       isOpen: true,
       title: "Видалити цей тест?",
       subtitle: "Це також видалить усі питання та спроби користувачів! Цю дію не можна скасувати.",
-      confirmText: "Видалити",
-      cancelText: "Скасувати",
+      confirmText: "Видалити", cancelText: "Скасувати",
       onConfirm: async () => {
         try {
           await api.delete(`/tests/${id}`);
           setTests((prev) => prev.filter((t) => t.id !== id));
           showNotification("Видалено", "Тест успішно видалено з бази даних.");
-        } catch (error) {
-          console.error("Error deleting test", error);
+        } catch {
           showNotification("Помилка", "Не вдалося видалити тест. Спробуйте пізніше.");
         }
       },
@@ -78,282 +195,117 @@ export const AdminTestsList = () => {
       const res = await api.post(`/admin/tests/${id}/duplicate`);
       setTests((prev) => [res.data, ...prev]);
       showNotification("Скопійовано", "Тест продубльовано як чернетку.");
-    } catch (error) {
-      console.error("Error duplicating test", error);
+    } catch {
       showNotification("Помилка", "Не вдалося продублювати тест.");
     } finally {
       setDuplicatingId(null);
     }
   };
 
-  const handleExportResults = (test) => {
-    const token = localStorage.getItem("accessToken");
-    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
-    const url = `${baseUrl}/admin/export/tests/${test.id}/results`;
-    fetch(url, { headers: { Authorization: `Bearer ${token}` } })
-      .then((res) => res.blob())
-      .then((blob) => {
-        const objectUrl = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = objectUrl;
-        a.download = `test-${test.id}-results.csv`;
-        a.click();
-        URL.revokeObjectURL(objectUrl);
-      })
-      .catch(() => showNotification("Помилка", "Не вдалося завантажити файл."));
-  };
-
   const handleStatusChange = async (id, newStatus) => {
+    setTests((prev) => prev.map((t) => (t.id === id ? { ...t, status: newStatus } : t)));
     try {
-      setTests((prevTests) =>
-        prevTests.map((t) => (t.id === id ? { ...t, status: newStatus } : t)),
-      );
       await api.patch(`/tests/${id}`, { status: newStatus });
-    } catch (error) {
-      console.error("Error updating status:", error);
+    } catch {
       showNotification("Помилка", "Не вдалося оновити статус.");
       fetchTests();
     }
   };
 
-  const handleSort = (key) => {
-    let direction = "ascending";
-    if (sortConfig.key === key && sortConfig.direction === "ascending") {
-      direction = "descending";
-    }
-    setSortConfig({ key, direction });
-    setCurrentPage(1);
-  };
-
-  const processedTests = useMemo(() => {
-    let filtered = tests;
-    if (searchQuery) {
-      const lowerQuery = searchQuery.toLowerCase();
-      filtered = tests.filter((test) => {
-        const searchString = `
-          ${test.title || ""}
-          ${test.year || ""}
-          ${test.category || ""}
-          ${test.examType || ""}
-          ${test.type === "BASE" ? "База base" : test.type === "AMPS" ? "АМПС amps" : "Буклет booklet"}
-        `.toLowerCase();
-        return searchString.includes(lowerQuery);
-      });
-    }
-
-    if (sortConfig.key) {
-      filtered.sort((a, b) => {
-        let aValue = a[sortConfig.key];
-        let bValue = b[sortConfig.key];
-
-        if (sortConfig.key === "title") {
-          aValue = a.type === "BASE" ? a.title : `${a.year}`;
-          bValue = b.type === "BASE" ? b.title : `${b.year}`;
-        } else if (sortConfig.key === "questionsCount") {
-          aValue = a._count?.questions || a.questions?.length || 0;
-          bValue = b._count?.questions || b.questions?.length || 0;
-        }
-
-        aValue = aValue ?? "";
-        bValue = bValue ?? "";
-
-        if (typeof aValue === "string" && typeof bValue === "string") {
-          return sortConfig.direction === "ascending"
-            ? aValue.localeCompare(bValue)
-            : bValue.localeCompare(aValue);
-        }
-
-        if (aValue < bValue) return sortConfig.direction === "ascending" ? -1 : 1;
-        if (aValue > bValue) return sortConfig.direction === "ascending" ? 1 : -1;
-        return 0;
-      });
-    }
-
-    return filtered;
-  }, [tests, searchQuery, sortConfig]);
-
-  const totalPages = Math.ceil(processedTests.length / PAGE_SIZE);
-  const pagedTests = processedTests.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
-
-  const getSortIcon = (key) => {
-    if (sortConfig.key !== key) return " ↕";
-    return sortConfig.direction === "ascending" ? " ▲" : " ▼";
-  };
-
-  if (isLoading) return <div className="test-loading">Завантаження...</div>;
-
   return (
     <div className="admin-list-container">
+      <ConfirmModal
+        isOpen={modalConfig.isOpen} title={modalConfig.title} subtitle={modalConfig.subtitle}
+        confirmText={modalConfig.confirmText} cancelText={modalConfig.cancelText}
+        showIcon={modalConfig.showIcon ?? true} onConfirm={modalConfig.onConfirm} onCancel={closeModal}
+      />
+
       <div className="admin-list-header">
         <h2>Управління тестами</h2>
-        <button
-          className="button-pink-small"
-          onClick={() => navigate("/admin/tests/new")}
-        >
-          + Створити тест
-        </button>
-      </div>
-
-      <div className="admin-search-bar" style={{ marginBottom: "20px" }}>
-        <input
-          type="text"
-          placeholder="🔍 Пошук за назвою, роком, категорією або типом..."
-          value={searchQuery}
-          onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-          style={{
-            width: "100%",
-            padding: "10px 15px",
-            borderRadius: "8px",
-            border: "1px solid #ddd",
-            fontSize: "14px",
-          }}
-        />
-      </div>
-
-      <div className="admin-table-scroll">
-      <table className="admin-table">
-        <thead>
-          <tr>
-            <th onClick={() => handleSort("id")} style={{ cursor: "pointer" }}>
-              ID{getSortIcon("id")}
-            </th>
-            <th onClick={() => handleSort("type")} style={{ cursor: "pointer" }}>
-              Тип{getSortIcon("type")}
-            </th>
-            <th onClick={() => handleSort("title")} style={{ cursor: "pointer" }}>
-              Назва / Рік{getSortIcon("title")}
-            </th>
-            <th onClick={() => handleSort("category")} style={{ cursor: "pointer" }}>
-              Спеціальність{getSortIcon("category")}
-            </th>
-            <th onClick={() => handleSort("examType")} style={{ cursor: "pointer" }}>
-              Іспит{getSortIcon("examType")}
-            </th>
-            <th onClick={() => handleSort("status")} style={{ cursor: "pointer" }}>
-              Статус{getSortIcon("status")}
-            </th>
-            <th onClick={() => handleSort("questionsCount")} style={{ cursor: "pointer" }}>
-              Питань{getSortIcon("questionsCount")}
-            </th>
-            <th>Дії</th>
-          </tr>
-        </thead>
-        <tbody>
-          {pagedTests.length === 0 ? (
-            <tr>
-              <td colSpan="8" style={{ textAlign: "center", padding: "30px" }}>
-                Тестів не знайдено
-              </td>
-            </tr>
-          ) : (
-            pagedTests.map((test) => (
-              <tr key={test.id}>
-                <td>{test.id}</td>
-                <td>
-                  <span
-                    className={`type-badge ${test.type === "BASE" ? "base" : test.type === "AMPS" ? "amps" : "booklet"}`}
-                  >
-                    {test.type === "BASE" ? "База" : test.type === "AMPS" ? "АМПС" : "Буклет"}
-                  </span>
-                </td>
-                <td className="test-title">
-                  {test.type === "BASE"
-                    ? test.title
-                    : `${test.year} ${test.day ? `(День ${test.day})` : ""}`}
-                </td>
-                <td>{test.category}</td>
-                <td>{test.examType}</td>
-                <td>
-                  <div className="status-dropdown-wrapper">
-                    <select
-                      className={`status-select ${test.status === "PUBLISHED" ? "published" : "draft"}`}
-                      value={test.status || "DRAFT"}
-                      onChange={(e) => handleStatusChange(test.id, e.target.value)}
-                    >
-                      <option value="DRAFT">Чернетка</option>
-                      <option value="PUBLISHED">Активний</option>
-                    </select>
-                  </div>
-                </td>
-                <td>{test._count?.questions || test.questions?.length || 0}</td>
-                <td className="admin-table-actions">
-                  <button
-                    className="action-btn questions"
-                    onClick={() => navigate(`/admin/tests/${test.id}/questions`)}
-                  >
-                    ☰ Питання
-                  </button>
-                  <button
-                    className="action-btn edit"
-                    onClick={() => navigate(`/admin/tests/${test.id}/edit`)}
-                  >
-                    ✎ Редагувати
-                  </button>
-                  <button
-                    className="action-btn analytics"
-                    onClick={() => navigate(`/admin/tests/${test.id}/analytics`)}
-                  >
-                    📊 Аналітика
-                  </button>
-                  <button
-                    className="action-btn duplicate"
-                    disabled={duplicatingId === test.id}
-                    onClick={() => handleDuplicate(test.id)}
-                  >
-                    {duplicatingId === test.id ? "…" : "⧉ Дублювати"}
-                  </button>
-                  {/* <button
-                    className="action-btn export"
-                    onClick={() => handleExportResults(test)}
-                  >
-                    ↓ CSV
-                  </button> */}
-                  <button
-                    className="action-btn delete"
-                    onClick={() => handleDelete(test.id)}
-                  >
-                    ✕
-                  </button>
-                </td>
-              </tr>
-            ))
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {savedMsg && <span className="abr-saved">✓ Збережено</span>}
+          {isDirty && (
+            <button className="btn-cancel" onClick={handleSaveOrder} disabled={isSaving}>
+              {isSaving ? "Збереження..." : "↕ Зберегти порядок"}
+            </button>
           )}
-        </tbody>
-      </table>
+          <button className="button-pink-small" onClick={() => navigate("/admin/tests/new")}>+ Створити тест</button>
+        </div>
       </div>
 
-      {totalPages > 1 && (
-        <div style={{ display: "flex", alignItems: "center", gap: "12px", justifyContent: "center", marginTop: "16px" }}>
+      <div className="abr-tabs">
+        {TYPE_TABS.map((tab) => (
           <button
-            className="button-pink-small"
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage((p) => p - 1)}
+            key={tab.value}
+            className={`abr-tab ${testType === tab.value ? "active" : ""}`}
+            onClick={() => setTestType(tab.value)}
           >
-            ← Назад
+            {tab.label}
           </button>
-          <span style={{ fontSize: "14px" }}>
-            Сторінка {currentPage} з {totalPages} ({processedTests.length} тестів)
-          </span>
-          <button
-            className="button-pink-small"
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((p) => p + 1)}
-          >
-            Далі →
-          </button>
+        ))}
+      </div>
+
+      <div className="atl-toolbar">
+        <div className="admin-search-bar" style={{ flex: 1 }}>
+          <input
+            type="text"
+            placeholder="🔍 Пошук за назвою, роком, категорією..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+        {availableExams.length > 1 && (
+          <select className="abr-filter" value={filterExam} onChange={(e) => setFilterExam(e.target.value)}>
+            <option value="">Всі іспити</option>
+            {availableExams.map((e) => <option key={e} value={e}>{EXAM_LABELS[e] ?? e}</option>)}
+          </select>
+        )}
+      </div>
+
+      {isLoading ? (
+        <div className="admin-loading">Завантаження...</div>
+      ) : (
+        <div className="admin-table-scroll">
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={visibleTests.map((t) => t.id)} strategy={verticalListSortingStrategy}>
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th style={{ width: 32 }}></th>
+                    <th style={{ width: 40 }}>#</th>
+                    <th>Назва / Рік</th>
+                    <th>Спеціальність</th>
+                    <th>Іспит</th>
+                    <th>Статус</th>
+                    <th>Питань</th>
+                    <th>Дії</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {visibleTests.length === 0 ? (
+                    <tr><td colSpan={8} style={{ textAlign: "center", padding: 32, color: "#9ca3af" }}>Тестів не знайдено</td></tr>
+                  ) : (
+                    visibleTests.map((test, idx) => (
+                      <SortableRow
+                        key={test.id}
+                        test={test}
+                        idx={idx}
+                        duplicatingId={duplicatingId}
+                        onEdit={(id) => navigate(`/admin/tests/${id}/edit`)}
+                        onQuestions={(id) => navigate(`/admin/tests/${id}/questions`)}
+                        onAnalytics={(id) => navigate(`/admin/tests/${id}/analytics`)}
+                        onDuplicate={handleDuplicate}
+                        onDelete={handleDelete}
+                        onStatusChange={handleStatusChange}
+                      />
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </SortableContext>
+          </DndContext>
         </div>
       )}
-
-      <ConfirmModal
-        isOpen={modalConfig.isOpen}
-        title={modalConfig.title}
-        subtitle={modalConfig.subtitle}
-        confirmText={modalConfig.confirmText}
-        cancelText={modalConfig.cancelText}
-        showIcon={modalConfig.showIcon ?? true}
-        onConfirm={modalConfig.onConfirm}
-        onCancel={closeModal}
-      />
     </div>
   );
 };

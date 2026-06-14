@@ -3,8 +3,10 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { DashboardLeft } from "../DashboardLeft/DashboardLeft";
 import { api } from "../../api";
 import "./LectureCoursePage.scss";
-import iconCaret from "../../assets/icon-caret-dropdown.svg";
+import iconCaret from "../../assets/icon-caret-dropdown-second.svg";
 import iconLock from "../../assets/icon-close-second.svg";
+import iconMain from "../../assets/main-dashboard.svg";
+import iconUnlocked from "../../assets/icon-unlocked.svg";
 
 const TYPE_LABELS = { PREPARATION: "Підготовка до пар", EXAM: "Іспити" };
 
@@ -25,10 +27,15 @@ export const LectureCoursePage = () => {
   }, [courseSlug]);
 
   const lectures = course?.lectures ?? [];
-  const semesters = [...new Set(lectures.map((l) => l.semester))].sort((a, b) => a - b);
+  const semesters = [...new Set(lectures.map((l) => l.semester))].sort(
+    (a, b) => a - b,
+  );
 
   const filtered = useMemo(
-    () => filterSemester ? lectures.filter((l) => l.semester === Number(filterSemester)) : lectures,
+    () =>
+      filterSemester
+        ? lectures.filter((l) => l.semester === Number(filterSemester))
+        : lectures,
     [lectures, filterSemester],
   );
 
@@ -43,7 +50,9 @@ export const LectureCoursePage = () => {
 
       <main className="lcp-content">
         <nav className="lcp-breadcrumb">
-          <Link to="/lectures">Головна</Link>
+          <Link to="/lectures">
+            <img src={iconMain} alt="" />
+          </Link>
           <img src={iconCaret} alt=">" className="lcp-breadcrumb-caret" />
           <Link to={`/lectures?type=${course.type}`}>{typeLabel}</Link>
           <img src={iconCaret} alt=">" className="lcp-breadcrumb-caret" />
@@ -61,21 +70,20 @@ export const LectureCoursePage = () => {
         </div>
 
         <div className="lcp-filters">
-          <button
-            className={`lcp-filter-btn ${!filterSemester ? "active" : ""}`}
-            onClick={() => setFilterSemester("")}
-          >
-            Всі
-          </button>
-          {semesters.map((sem) => (
-            <button
-              key={sem}
-              className={`lcp-filter-btn ${filterSemester === String(sem) ? "active" : ""}`}
-              onClick={() => setFilterSemester(String(sem))}
+          <div className="select-wrapper">
+            <select
+              value={filterSemester}
+              onChange={(e) => setFilterSemester(e.target.value)}
             >
-              {sem} семестр
-            </button>
-          ))}
+              <option value="">Всі семестри</option>
+              {semesters.map((sem) => (
+                <option key={sem} value={String(sem)}>
+                  {sem} семестр
+                </option>
+              ))}
+            </select>
+            <img src={iconCaret} alt="" className="select-caret" />
+          </div>
         </div>
 
         <div className="lcp-list">
@@ -86,6 +94,7 @@ export const LectureCoursePage = () => {
               onClick={() => navigate(`/lectures/${courseSlug}/${lecture.id}`)}
             >
               <div className="lcp-lecture-left">
+                <img src={iconUnlocked} alt="" />
                 <span className="lcp-lecture-title">{lecture.title}</span>
               </div>
               <button className="lcp-lecture-btn">Переглянути</button>

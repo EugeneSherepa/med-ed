@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { DashboardLeft } from "../DashboardLeft/DashboardLeft";
 import { Link } from "react-router-dom";
 import { api } from "../../api";
+import { useAuth } from "../../context/AuthContext";
+import { resolveImageUrl } from "../../utils/imageUrl";
 import "./LecturesOverview.scss";
 import searchIcon from "../../assets/icon-search.svg";
 import changeProfile from "../../assets/change-profile.svg";
@@ -15,6 +17,7 @@ const TYPE_TABS = [
 
 export const LecturesOverview = () => {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const activeTab = searchParams.get("type") || "PREPARATION";
 
@@ -140,12 +143,24 @@ export const LecturesOverview = () => {
             </Link>
           </div>
           <div className="lectures-content-right-profile">
-            <img src={searchIcon} alt="Profile Avatar" />
+            <img
+              src={
+                currentUser?.photo
+                  ? resolveImageUrl(currentUser.photo)
+                  : `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser?.name || "")}&background=random`
+              }
+              alt="Profile Avatar"
+            />
             <div className="lectures-content-right-profile-title">
-              Карпенко Софія
+              {currentUser?.name || ""}
             </div>
             <div className="lectures-content-right-profile-text">
-              Студентка 1 курсу НМУ
+              {[
+                currentUser?.course ? `Студент(ка) ${currentUser.course} курсу` : null,
+                currentUser?.institution
+                  ? currentUser.institution.split(" ").map((w) => w[0].toUpperCase()).join("")
+                  : null,
+              ].filter(Boolean).join(" ")}
             </div>
           </div>
           <div className="lectures-content-right-bottom">

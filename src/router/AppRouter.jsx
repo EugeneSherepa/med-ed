@@ -89,11 +89,6 @@ const AdminGlobalQuestions = lazy(() =>
     default: m.AdminGlobalQuestions,
   })),
 );
-const AdminBasesReorder = lazy(() =>
-  import("../components/AdminBasesReorder/AdminBasesReorder").then((m) => ({
-    default: m.AdminBasesReorder,
-  })),
-);
 const AdminCoursesList = lazy(() =>
   import("../components/AdminCoursesList/AdminCoursesList").then((m) => ({
     default: m.AdminCoursesList,
@@ -359,14 +354,6 @@ const AppRouter = () => {
             element={
               <Suspense fallback={<AdminLoader />}>
                 <AdminUserDetail />
-              </Suspense>
-            }
-          />
-          <Route
-            path="bases-reorder"
-            element={
-              <Suspense fallback={<AdminLoader />}>
-                <AdminBasesReorder />
               </Suspense>
             }
           />

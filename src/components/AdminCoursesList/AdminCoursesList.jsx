@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../api";
+import { resolveImageUrl } from "../../utils/imageUrl";
 import { AdminImagePicker } from "../AdminImagePicker/AdminImagePicker";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 
@@ -84,11 +85,10 @@ export const AdminCoursesList = () => {
       </div>
 
       {showForm && (
-        <form onSubmit={handleSubmit} style={{ background: "#f9fafb", padding: 24, borderRadius: 12, marginBottom: 24, display: "flex", flexDirection: "column", gap: 16 }}>
-          <h3 style={{ margin: 0, fontFamily: "var(--font-fixel, sans-serif)", fontSize: 16, color: "#252c3f" }}>
-            {editingId ? "Редагувати курс" : "Новий курс"}
-          </h3>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+        <form onSubmit={handleSubmit} className="admin-inline-form">
+          <h3>{editingId ? "Редагувати курс" : "Новий курс"}</h3>
+
+          <div className="form-grid">
             <div className="form-group">
               <label>Назва курсу *</label>
               <input type="text" value={formData.title} onChange={(e) => setFormData((p) => ({ ...p, title: e.target.value }))} required placeholder="АНАТОМІЯ" />
@@ -99,40 +99,44 @@ export const AdminCoursesList = () => {
             </div>
             <div className="form-group">
               <label>Тип</label>
-              <select value={formData.type} onChange={(e) => setFormData((p) => ({ ...p, type: e.target.value }))} style={{ padding: "10px 12px", border: "1px solid #d1d5db", borderRadius: 8, fontFamily: "inherit", fontSize: 14 }}>
+              <select value={formData.type} onChange={(e) => setFormData((p) => ({ ...p, type: e.target.value }))}>
                 {TYPE_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
             </div>
             <div className="form-group">
               <label>Колір картки</label>
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <input type="color" value={formData.color} onChange={(e) => setFormData((p) => ({ ...p, color: e.target.value }))} style={{ width: 48, height: 36, border: "1px solid #d1d5db", borderRadius: 6, cursor: "pointer", padding: 2 }} />
-                <span style={{ fontFamily: "inherit", fontSize: 13, color: "#6b7280" }}>{formData.color}</span>
+              <div className="color-row">
+                <input type="color" value={formData.color} onChange={(e) => setFormData((p) => ({ ...p, color: e.target.value }))} />
+                <span>{formData.color}</span>
               </div>
             </div>
           </div>
+
           <div className="form-group">
             <label>Іконка курсу</label>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div className="color-row">
               <button type="button" className="img-pick-btn" onClick={() => setPickerOpen(true)}>
                 📷 {formData.icon ? "Змінити іконку" : "Додати іконку"}
               </button>
               {formData.icon && (
                 <>
-                  <img src={formData.icon} alt="icon" style={{ width: 48, height: 48, objectFit: "contain", borderRadius: 8, border: "1px solid #e5e7eb" }} />
+                  <img src={resolveImageUrl(formData.icon)} alt="icon" style={{ width: 48, height: 48, objectFit: "contain", borderRadius: 8, border: "1px solid #e5e7eb" }} />
                   <button type="button" className="img-remove-btn" onClick={() => setFormData((p) => ({ ...p, icon: "" }))}>✕</button>
                 </>
               )}
             </div>
           </div>
-          <div style={{ display: "flex", gap: 10 }}>
+
+          <div className="form-actions">
             <button type="submit" className="button-pink-small" disabled={isSaving}>{isSaving ? "Збереження..." : editingId ? "Зберегти" : "Створити"}</button>
-            <button type="button" onClick={() => setShowForm(false)} style={{ padding: "8px 16px", border: "1px solid #e5e7eb", borderRadius: 8, background: "#fff", cursor: "pointer", fontSize: 13 }}>Скасувати</button>
+            <button type="button" className="btn-cancel" onClick={() => setShowForm(false)}>Скасувати</button>
           </div>
         </form>
       )}
 
-      {isLoading ? <div style={{ padding: 40, color: "#9ca3af", fontFamily: "inherit" }}>Завантаження...</div> : (
+      {isLoading ? (
+        <div className="admin-loading">Завантаження...</div>
+      ) : (
         <div className="admin-table-scroll">
           <table className="admin-table">
             <thead>
@@ -149,7 +153,10 @@ export const AdminCoursesList = () => {
               {courses.map((c) => (
                 <tr key={c.id}>
                   <td>
-                    {c.icon ? <img src={c.icon} alt="" style={{ width: 32, height: 32, objectFit: "contain" }} /> : <span style={{ color: "#9ca3af" }}>—</span>}
+                    {c.icon
+                      ? <img src={resolveImageUrl(c.icon)} alt="" style={{ width: 32, height: 32, objectFit: "contain" }} />
+                      : <span className="text-muted">—</span>
+                    }
                   </td>
                   <td style={{ fontWeight: 500 }}>
                     <span style={{ display: "inline-block", width: 12, height: 12, borderRadius: 3, background: c.color, marginRight: 8, border: "1px solid #e5e7eb", verticalAlign: "middle" }} />
@@ -165,7 +172,9 @@ export const AdminCoursesList = () => {
                   </td>
                 </tr>
               ))}
-              {courses.length === 0 && <tr><td colSpan={6} style={{ textAlign: "center", padding: 32, color: "#9ca3af" }}>Курсів ще немає</td></tr>}
+              {courses.length === 0 && (
+                <tr><td colSpan={6} style={{ textAlign: "center", padding: 32, color: "#9ca3af" }}>Курсів ще немає</td></tr>
+              )}
             </tbody>
           </table>
         </div>

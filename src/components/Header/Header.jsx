@@ -70,10 +70,7 @@ export const Header = () => {
     <>
       <header className={`header ${showHeader ? "visible" : "hidden"}`}>
         <div className="header-wrapper">
-          <Link
-            to="/"
-            className={`header-wrapper-logo auth-layout`}
-          >
+          <Link to="/" className={`header-wrapper-logo auth-layout`}>
             <img src={logo} alt="Med ed logo" />
             <div className="header-wrapper-logo-text">IT’s Med Ed</div>
           </Link>
@@ -197,8 +194,8 @@ export const Header = () => {
             <div className="header-wrapper-buttons">
               <div className="header-wrapper-buttons-wrapper">
                 {isAuthenticated ? (
-                  <Link to="/account" className="button-primary">
-                    Акаунт
+                  <Link to="/lectures" className="button-primary">
+                    До навчання
                   </Link>
                 ) : (
                   <a
@@ -323,8 +320,8 @@ export const Header = () => {
 
           <div className="mobile-menu-log">
             {isAuthenticated ? (
-              <Link to="/account" className="button-primary">
-                Акаунт
+              <Link to="/lectures" className="button-primary">
+                До навчання
               </Link>
             ) : (
               <a

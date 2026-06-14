@@ -9,7 +9,7 @@
 
 .lcp-content {
   flex: 1;
-  padding: 40px 56px;
+  padding: 24px 32px;
   min-width: 0;
 }
 
@@ -17,154 +17,190 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 28px;
+  margin-bottom: 30px;
   font-family: $font-fixel;
-  font-size: 13px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0%;
+  text-align: center;
 
   a {
-    color: #6b7280;
+    color: #85878d;
     text-decoration: none;
-    &:hover { color: #374151; }
+    transition: .3s ease-in-out;
+
+    &:hover {
+      transition: .3s ease-in-out;
+      color: #252c3f;
+    }
+
+    & img {
+      width: 24px;
+      height: 24px;
+    }
   }
 
-  span { color: #252c3f; font-weight: 500; }
+  span {
+    color: #252c3f;
+    font-weight: 500;
+  }
 }
 
 .lcp-breadcrumb-caret {
-  width: 14px;
-  height: 14px;
-  opacity: 0.4;
+  width: 20px;
+  height: 20px;
   transform: rotate(-90deg);
 }
 
 .lcp-header {
-  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 16px;
 }
 
 .lcp-title {
   font-family: $font-fixel;
-  font-size: 28px;
   font-weight: 700;
-  color: #252c3f;
-  margin: 0 0 16px;
+  font-size: 24px;
+  line-height: 38px;
+  letter-spacing: -1.3%;
   text-transform: uppercase;
+  color: $primary-color;
 }
 
 .lcp-progress-row {
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
 }
 
 .lcp-progress-bar {
   flex: 1;
-  max-width: 400px;
-  height: 8px;
-  background: #e5e7eb;
-  border-radius: 4px;
+  height: 20px;
+  background: #1c1d1d0d;
+  border-radius: 16px;
   overflow: hidden;
 }
 
 .lcp-progress-fill {
   height: 100%;
-  background: #f7b4d1;
-  border-radius: 4px;
+  background: $pink-default;
+  border-radius: 16px;
   transition: width 0.3s;
 }
 
 .lcp-count {
   font-family: $font-fixel;
-  font-size: 14px;
-  color: #6b7280;
-  white-space: nowrap;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  color: #252c3f7d;
 }
 
 .lcp-filters {
   display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-}
-
-.lcp-filter-btn {
-  padding: 6px 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 20px;
-  background: #fff;
-  font-family: $font-fixel;
-  font-size: 13px;
-  font-weight: 500;
-  color: #6b7280;
-  cursor: pointer;
-  transition: 0.15s;
-  display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 16px;
+  margin-bottom: 24px;
 
-  &:hover { border-color: #b1d4e0; color: #374151; }
+  .select-wrapper {
+    position: relative;
+    width: fit-content;
 
-  &.active {
-    background: #252c3f;
-    border-color: #252c3f;
-    color: #fff;
+    select {
+      padding: 8px 40px 8px 12px;
+      border-radius: 8px;
+      background-color: #f4f4f4;
+      border: none;
+      font-family: $font-fixel;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16px;
+      color: #85878d;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      cursor: pointer;
+    }
+
+    .select-caret {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      width: 20px;
+      height: 20px;
+    }
   }
 }
 
 .lcp-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 32px;
 }
 
 .lcp-lecture-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  padding: 12px 24px;
+  background: #ecf6f9;
+  border-radius: 16px;
   cursor: pointer;
-  transition: border-color 0.15s, box-shadow 0.15s;
   gap: 16px;
-
-  &:hover {
-    border-color: #b1d4e0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
 }
 
 .lcp-lecture-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   min-width: 0;
+
+  & img {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .lcp-lecture-title {
   font-family: $font-fixel;
-  font-size: 15px;
-  color: #252c3f;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 38px;
+  letter-spacing: 0%;
+  color: #1e293b;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .lcp-lecture-btn {
-  padding: 8px 20px;
-  background: #f7b4d1;
-  border: none;
-  border-radius: 20px;
-  font-family: $font-fixel;
-  font-size: 13px;
-  font-weight: 600;
-  color: #252c3f;
   cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.15s;
-  flex-shrink: 0;
+  min-height: 38px;
+  padding: 8px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: $font-fixel;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  background-color: #dec6f399;
+  border-radius: 12px;
+  transition: 0.3s ease-in-out;
+  border: none;
+  color: white;
 
-  &:hover { background: #f49cbd; }
+  &:hover {
+    transition: 0.3s ease-in-out;
+    background: #b994da99;
+  }
 }
 
 .lcp-empty {

@@ -1,14 +1,61 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { api } from "../../api";
-import { AdminImagePicker } from "../AdminImagePicker/AdminImagePicker";
+import { resolveImageUrl } from "../../utils/imageUrl";
 import { RichTextarea } from "../RichTextarea/RichTextarea";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import "./AdminLectureForm.scss";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const emptyLecture = { title: "", videoUrl: "", semester: 1, questions: "", pdfUrl: "" };
 
-const emptyLecture = { title: "", videoUrl: "", semester: 1, order: 0, questions: "", pdfUrl: "" };
+const SortableLectureItem = ({ lec, idx, isActive, onEdit, onDelete }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({ id: lec.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`alc-list-item ${isActive ? "active" : ""}`}
+      onClick={() => onEdit(lec)}
+    >
+      <span className="alc-drag-handle" {...attributes} {...listeners} onClick={(e) => e.stopPropagation()}>
+        ⠿
+      </span>
+      <span className="alc-list-num">{idx + 1}</span>
+      <div className="alc-list-info">
+        <span className="alc-list-title">{lec.title}</span>
+        <span className="alc-list-meta">{lec.semester} сем.</span>
+      </div>
+      <button
+        className="alc-delete-btn"
+        onClick={(e) => { e.stopPropagation(); onDelete(lec.id); }}
+      >
+        ✕
+      </button>
+    </div>
+  );
+};
 
 export const AdminLectureForm = () => {
   const { courseId } = useParams();
@@ -21,12 +68,12 @@ export const AdminLectureForm = () => {
   const [editingId, setEditingId] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState(emptyLecture);
-  const [slides, setSlides] = useState([]);
-  const [pickerOpen, setPickerOpen] = useState(false);
   const [pdfUploading, setPdfUploading] = useState(false);
 
   const [modalConfig, setModalConfig] = useState({ isOpen: false, title: "", subtitle: "", confirmText: "", cancelText: "", onConfirm: null });
   const closeModal = () => setModalConfig((p) => ({ ...p, isOpen: false }));
+
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   const fetchLectures = async () => {
     const [coursesRes, lecturesRes] = await Promise.all([
@@ -41,35 +88,27 @@ export const AdminLectureForm = () => {
 
   useEffect(() => { fetchLectures(); }, [courseId]);
 
+  const handleDragEnd = async ({ active, over }) => {
+    if (!over || active.id === over.id) return;
+    const oldIndex = lectures.findIndex((l) => l.id === active.id);
+    const newIndex = lectures.findIndex((l) => l.id === over.id);
+    const reordered = arrayMove(lectures, oldIndex, newIndex);
+    setLectures(reordered);
+    await api.patch(`/admin/courses/${courseId}/lectures/reorder`, {
+      items: reordered.map((l, i) => ({ id: l.id, order: i })),
+    });
+  };
+
   const handleNew = () => {
     setEditingId(null);
-    setFormData({ ...emptyLecture, order: lectures.length });
-    setSlides([]);
+    setFormData({ ...emptyLecture });
     setShowForm(true);
   };
 
-  const handleEdit = async (lec) => {
+  const handleEdit = (lec) => {
     setEditingId(lec.id);
-    setFormData({ title: lec.title, videoUrl: lec.videoUrl || "", semester: lec.semester, order: lec.order, questions: lec.questions || "", pdfUrl: lec.pdfUrl || "" });
-    setSlides((lec.slides ?? []).map((s) => ({ id: s.id, imageUrl: s.imageUrl })));
+    setFormData({ title: lec.title, videoUrl: lec.videoUrl || "", semester: lec.semester, questions: lec.questions || "", pdfUrl: lec.pdfUrl || "" });
     setShowForm(true);
-  };
-
-  const handleSlideAdd = (url) => {
-    setSlides((prev) => [...prev, { imageUrl: url }]);
-  };
-
-  const handleSlideRemove = (index) => {
-    setSlides((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const handleSlideMoveUp = (index) => {
-    if (index === 0) return;
-    setSlides((prev) => { const c = [...prev]; [c[index - 1], c[index]] = [c[index], c[index - 1]]; return c; });
-  };
-
-  const handleSlideMoveDown = (index) => {
-    setSlides((prev) => { if (index >= prev.length - 1) return prev; const c = [...prev]; [c[index], c[index + 1]] = [c[index + 1], c[index]]; return c; });
   };
 
   const handlePdfUpload = async (e) => {
@@ -90,7 +129,7 @@ export const AdminLectureForm = () => {
     e.preventDefault();
     setIsSaving(true);
     try {
-      const payload = { ...formData, slides };
+      const payload = { ...formData, order: lectures.length };
       if (editingId) {
         await api.patch(`/admin/lectures/${editingId}`, payload);
       } else {
@@ -107,7 +146,7 @@ export const AdminLectureForm = () => {
     setModalConfig({
       isOpen: true,
       title: "Видалити лекцію?",
-      subtitle: "Це видалить лекцію та всі її слайди.",
+      subtitle: "Це видалить лекцію та всі пов'язані дані.",
       confirmText: "Видалити",
       cancelText: "Скасувати",
       onConfirm: async () => {
@@ -122,7 +161,6 @@ export const AdminLectureForm = () => {
   return (
     <div className="admin-list-container">
       <ConfirmModal isOpen={modalConfig.isOpen} title={modalConfig.title} subtitle={modalConfig.subtitle} confirmText={modalConfig.confirmText} cancelText={modalConfig.cancelText} showIcon={true} onConfirm={modalConfig.onConfirm} onCancel={closeModal} />
-      <AdminImagePicker isOpen={pickerOpen} onClose={() => setPickerOpen(false)} onSelect={handleSlideAdd} />
 
       <div className="admin-list-header">
         <div>
@@ -139,18 +177,22 @@ export const AdminLectureForm = () => {
           ) : lectures.length === 0 ? (
             <div className="alc-empty">Лекцій ще немає</div>
           ) : (
-            <div className="alc-list">
-              {lectures.map((lec, idx) => (
-                <div key={lec.id} className={`alc-list-item ${editingId === lec.id ? "active" : ""}`} onClick={() => handleEdit(lec)}>
-                  <span className="alc-list-num">{idx + 1}</span>
-                  <div className="alc-list-info">
-                    <span className="alc-list-title">{lec.title}</span>
-                    <span className="alc-list-meta">{lec.semester} сем.</span>
-                  </div>
-                  <button className="alc-delete-btn" onClick={(e) => { e.stopPropagation(); handleDelete(lec.id); }}>✕</button>
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+              <SortableContext items={lectures.map((l) => l.id)} strategy={verticalListSortingStrategy}>
+                <div className="alc-list">
+                  {lectures.map((lec, idx) => (
+                    <SortableLectureItem
+                      key={lec.id}
+                      lec={lec}
+                      idx={idx}
+                      isActive={editingId === lec.id}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
+                    />
+                  ))}
                 </div>
-              ))}
-            </div>
+              </SortableContext>
+            </DndContext>
           )}
         </div>
 
@@ -163,15 +205,9 @@ export const AdminLectureForm = () => {
               <input type="text" value={formData.title} onChange={(e) => setFormData((p) => ({ ...p, title: e.target.value }))} required placeholder="Осі і площини тіла людини. Хребці" />
             </div>
 
-            <div className="form-row">
-              <div className="form-group half-width">
-                <label>Семестр</label>
-                <input type="number" min={1} value={formData.semester} onChange={(e) => setFormData((p) => ({ ...p, semester: Number(e.target.value) }))} />
-              </div>
-              <div className="form-group half-width">
-                <label>Порядок</label>
-                <input type="number" min={0} value={formData.order} onChange={(e) => setFormData((p) => ({ ...p, order: Number(e.target.value) }))} />
-              </div>
+            <div className="form-group">
+              <label>Семестр</label>
+              <input type="number" min={1} value={formData.semester} onChange={(e) => setFormData((p) => ({ ...p, semester: Number(e.target.value) }))} style={{ width: 120 }} />
             </div>
 
             <div className="form-group full-width">
@@ -185,45 +221,24 @@ export const AdminLectureForm = () => {
             </div>
 
             <div className="form-group full-width">
-              <label>PDF для завантаження</label>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+              <label>Конспект лекції (PDF)</label>
+              <div className="alc-field-row">
                 <label className="alc-upload-btn">
                   {pdfUploading ? "Завантаження..." : "📄 Завантажити PDF"}
                   <input type="file" accept="application/pdf" onChange={handlePdfUpload} style={{ display: "none" }} />
                 </label>
                 {formData.pdfUrl && (
                   <>
-                    <a href={formData.pdfUrl.startsWith("http") ? formData.pdfUrl : `${API_URL}${formData.pdfUrl}`} target="_blank" rel="noreferrer" style={{ fontSize: 13, color: "#1d4ed8" }}>Переглянути PDF</a>
+                    <a href={resolveImageUrl(formData.pdfUrl)} target="_blank" rel="noreferrer" className="alc-pdf-link">Переглянути PDF</a>
                     <button type="button" className="img-remove-btn" onClick={() => setFormData((p) => ({ ...p, pdfUrl: "" }))}>✕</button>
                   </>
                 )}
               </div>
             </div>
 
-            <div className="form-group full-width">
-              <label>Слайди конспекту</label>
-              <button type="button" className="img-pick-btn" onClick={() => setPickerOpen(true)}>📷 Додати слайд</button>
-
-              {slides.length > 0 && (
-                <div className="alc-slides-grid">
-                  {slides.map((slide, i) => (
-                    <div key={i} className="alc-slide-item">
-                      <img src={slide.imageUrl.startsWith("http") ? slide.imageUrl : `${API_URL}${slide.imageUrl}`} alt={`Слайд ${i + 1}`} />
-                      <div className="alc-slide-controls">
-                        <button type="button" onClick={() => handleSlideMoveUp(i)} disabled={i === 0}>↑</button>
-                        <span>{i + 1}</span>
-                        <button type="button" onClick={() => handleSlideMoveDown(i)} disabled={i === slides.length - 1}>↓</button>
-                        <button type="button" className="alc-slide-delete" onClick={() => handleSlideRemove(i)}>✕</button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
+            <div className="alc-form-actions">
               <button type="submit" className="button-pink-small" disabled={isSaving}>{isSaving ? "Збереження..." : editingId ? "Оновити лекцію" : "Створити лекцію"}</button>
-              <button type="button" onClick={() => setShowForm(false)} style={{ padding: "8px 16px", border: "1px solid #e5e7eb", borderRadius: 8, background: "#fff", cursor: "pointer", fontSize: 13 }}>Скасувати</button>
+              <button type="button" className="btn-cancel" onClick={() => setShowForm(false)}>Скасувати</button>
             </div>
           </form>
         )}
