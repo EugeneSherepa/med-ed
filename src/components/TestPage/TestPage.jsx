@@ -319,6 +319,7 @@ export const TestPage = () => {
     if (test.type === "BASE") return test.title;
     if (test.type === "AMPS") {
       let title = `${test.year} АМПС`;
+      if (test.day) title += ` день ${test.day}`;
       if (test.language)
         title += ` (${test.language === "en" ? "Eng" : "Укр"})`;
       return title;

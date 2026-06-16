@@ -15,6 +15,7 @@ import IconCaret from "../../assets/icon-caret-dropdown-second.svg";
 
 const generateTitle = (test) => {
   let title = `${test.year} АМПС`;
+  if (test.day) title += ` день ${test.day}`;
   if (test.language) title += ` (${test.language === "en" ? "Eng" : "Укр"})`;
   return title;
 };
