@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../../api";
 import "./AdminDashboard.scss";
 
-const TYPE_LABELS = { BOOKLET: "Буклет", BASE: "База", AMPS: "АМПС" };
+const TYPE_LABELS = { BOOKLET: "Буклет", BASE: "База", AMPS: "АМПС", LECTURE: "Лекція" };
 const ROLE_LABELS = { STUDENT: "Студент", TEACHER: "Викладач", ADMIN: "Адмін" };
 
 const getTestTitle = (test) => {
   if (!test) return "—";
-  if (test.type === "BASE") return test.title || "База";
+  if (test.type === "BASE" || test.type === "LECTURE") return test.title || "—";
   if (test.type === "AMPS") return `${test.year} АМПС`;
   return `${test.year}`;
 };

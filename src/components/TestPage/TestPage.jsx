@@ -287,7 +287,7 @@ export const TestPage = () => {
 
   const getTestTitle = () => {
     if (!test) return "";
-    if (test.type === "BASE") return test.title;
+    if (test.type === "BASE" || test.type === "LECTURE") return test.title;
     if (test.type === "AMPS") {
       let title = `${test.year} АМПС`;
       if (test.language)
@@ -330,7 +330,9 @@ export const TestPage = () => {
       ? "/bases"
       : test?.type === "AMPS"
         ? "/amps"
-        : "/booklets";
+        : test?.type === "LECTURE"
+          ? "/lectures"
+          : "/booklets";
 
   return (
     <div className="test-page">

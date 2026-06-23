@@ -19,7 +19,7 @@ import iconIncorrect from "../../assets/icon-incorrect.svg";
 const OPTION_LETTERS = ["A", "Б", "В", "Г", "Д", "Е", "Є", "Ж", "З", "И"];
 
 const getTestTitle = (test) => {
-  if (test.type === "BASE") return test.title;
+  if (test.type === "BASE" || test.type === "LECTURE") return test.title;
   if (test.type === "AMPS") {
     let title = `${test.year} АМПС`;
     if (test.language) title += ` (${test.language === "en" ? "Eng" : "Укр"})`;

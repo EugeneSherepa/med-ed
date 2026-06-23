@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   DndContext,
@@ -70,10 +70,15 @@ export const AdminLectureForm = () => {
   const [formData, setFormData] = useState(emptyLecture);
   const [pdfUploading, setPdfUploading] = useState(false);
 
+  const [lectureTest, setLectureTest] = useState(null);
+  const [testTitle, setTestTitle] = useState("");
+  const [testSaving, setTestSaving] = useState(false);
+
   const [modalConfig, setModalConfig] = useState({ isOpen: false, title: "", subtitle: "", confirmText: "", cancelText: "", onConfirm: null });
   const closeModal = () => setModalConfig((p) => ({ ...p, isOpen: false }));
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
+  const hasAutoSelected = useRef(false);
 
   const fetchLectures = async () => {
     const [coursesRes, lecturesRes] = await Promise.all([
@@ -82,8 +87,18 @@ export const AdminLectureForm = () => {
     ]);
     const course = coursesRes.data.find((c) => c.id === Number(courseId));
     setCourseTitle(course?.title ?? "");
-    setLectures(lecturesRes.data);
+    const lecs = lecturesRes.data;
+    setLectures(lecs);
     setIsLoading(false);
+    if (!hasAutoSelected.current && lecs.length > 0) {
+      hasAutoSelected.current = true;
+      const first = lecs[0];
+      setEditingId(first.id);
+      setFormData({ title: first.title, videoUrl: first.videoUrl || "", semester: first.semester, questions: first.questions || "", pdfUrl: first.pdfUrl || "" });
+      setLectureTest(first.test || null);
+      setTestTitle("");
+      setShowForm(true);
+    }
   };
 
   useEffect(() => { fetchLectures(); }, [courseId]);
@@ -102,12 +117,16 @@ export const AdminLectureForm = () => {
   const handleNew = () => {
     setEditingId(null);
     setFormData({ ...emptyLecture });
+    setLectureTest(null);
+    setTestTitle("");
     setShowForm(true);
   };
 
   const handleEdit = (lec) => {
     setEditingId(lec.id);
     setFormData({ title: lec.title, videoUrl: lec.videoUrl || "", semester: lec.semester, questions: lec.questions || "", pdfUrl: lec.pdfUrl || "" });
+    setLectureTest(lec.test || null);
+    setTestTitle("");
     setShowForm(true);
   };
 
@@ -129,17 +148,43 @@ export const AdminLectureForm = () => {
     e.preventDefault();
     setIsSaving(true);
     try {
-      const payload = { ...formData, order: lectures.length };
       if (editingId) {
-        await api.patch(`/admin/lectures/${editingId}`, payload);
+        await api.patch(`/admin/lectures/${editingId}`, { ...formData });
       } else {
-        await api.post(`/admin/courses/${courseId}/lectures`, payload);
+        const res = await api.post(`/admin/courses/${courseId}/lectures`, { ...formData, order: lectures.length });
+        setEditingId(res.data.id);
+        setLectureTest(res.data.test || null);
       }
       await fetchLectures();
-      setShowForm(false);
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const handleCreateTest = async () => {
+    setTestSaving(true);
+    try {
+      const res = await api.post(`/admin/lectures/${editingId}/test`, { title: testTitle });
+      setLectureTest(res.data);
+      setTestTitle("");
+    } finally {
+      setTestSaving(false);
+    }
+  };
+
+  const handleDeleteTest = () => {
+    setModalConfig({
+      isOpen: true,
+      title: "Видалити тест?",
+      subtitle: "Це видалить тест та всі питання до нього. Відновити неможливо.",
+      confirmText: "Видалити",
+      cancelText: "Скасувати",
+      onConfirm: async () => {
+        await api.delete(`/admin/lectures/${editingId}/test`);
+        setLectureTest(null);
+        closeModal();
+      },
+    });
   };
 
   const handleDelete = (id) => {
@@ -235,6 +280,45 @@ export const AdminLectureForm = () => {
                 )}
               </div>
             </div>
+
+            {editingId && (
+              <div className="form-group full-width alc-test-section">
+                <label>Тест до лекції</label>
+                {lectureTest ? (
+                  <div className="alc-test-info">
+                    <span className="alc-test-title">📝 {lectureTest.title}</span>
+                    <span className="alc-test-count">{lectureTest._count?.questions ?? 0} питань</span>
+                    <button
+                      type="button"
+                      className="action-btn questions"
+                      onClick={() => navigate(`/admin/tests/${lectureTest.id}/questions`)}
+                    >
+                      ☰
+                    </button>
+                    <button type="button" className="action-btn delete" onClick={handleDeleteTest}>
+                      ✕
+                    </button>
+                  </div>
+                ) : (
+                  <div className="alc-test-create">
+                    <input
+                      type="text"
+                      value={testTitle}
+                      onChange={(e) => setTestTitle(e.target.value)}
+                      placeholder={`Лекція: ${formData.title || "..."}`}
+                    />
+                    <button
+                      type="button"
+                      className="button-pink-small"
+                      onClick={handleCreateTest}
+                      disabled={testSaving}
+                    >
+                      {testSaving ? "Створення..." : "+ Створити тест"}
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
 
             <div className="alc-form-actions">
               <button type="submit" className="button-pink-small" disabled={isSaving}>{isSaving ? "Збереження..." : editingId ? "Оновити лекцію" : "Створити лекцію"}</button>

@@ -30,9 +30,16 @@ export const AdminTestForm = () => {
     day: "",
     variant: "",
     title: "",
+    lectureId: "",
   });
 
+  const [lectures, setLectures] = useState([]);
+
   const closeModal = () => setModalConfig((prev) => ({ ...prev, isOpen: false }));
+
+  useEffect(() => {
+    api.get("/admin/lectures").then((res) => setLectures(res.data)).catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (isEditing) {
@@ -49,6 +56,7 @@ export const AdminTestForm = () => {
             day: t.day || "",
             variant: t.variant || "",
             title: t.title || "",
+            lectureId: t.lectureId ? String(t.lectureId) : "",
           });
         } catch (error) {
           console.error("Failed to fetch test", error);
@@ -77,6 +85,34 @@ export const AdminTestForm = () => {
     setIsLoading(true);
 
     try {
+      if (formData.type === "LECTURE") {
+        if (isEditing) {
+          await api.patch(`/tests/${testId}`, { title: formData.title });
+          setModalConfig({
+            showIcon: false,
+            isOpen: true,
+            title: "Успішно оновлено!",
+            subtitle: "Зміни в налаштуваннях тесту збережені.",
+            confirmText: "До списку тестів",
+            cancelText: "Залишитись",
+            onConfirm: () => navigate("/admin/tests"),
+          });
+        } else {
+          if (!formData.lectureId) throw new Error("Оберіть лекцію");
+          const res = await api.post(`/admin/lectures/${formData.lectureId}/test`, { title: formData.title });
+          setModalConfig({
+            showIcon: false,
+            isOpen: true,
+            title: "Тест успішно створено!",
+            subtitle: "Бажаєте перейти до додавання питань для цього тесту?",
+            confirmText: "До питань",
+            cancelText: "До списку тестів",
+            onConfirm: () => navigate(`/admin/tests/${res.data.id}/questions`),
+          });
+        }
+        return;
+      }
+
       const payload = {
         type: formData.type,
         examType: formData.examType,
@@ -87,7 +123,7 @@ export const AdminTestForm = () => {
       if (formData.type === "BOOKLET") {
         if (formData.year) payload.year = parseInt(formData.year);
         if (formData.day) payload.day = parseInt(formData.day);
-        if (formData.variant) payload.variant = parseInt(formData.variant);
+        if (formData.variant) payload.variant = formData.variant;
         payload.title = null;
       } else if (formData.type === "AMPS") {
         if (formData.year) payload.year = parseInt(formData.year);
@@ -101,7 +137,6 @@ export const AdminTestForm = () => {
 
       if (isEditing) {
         await api.patch(`/tests/${testId}`, payload);
-        
         setModalConfig({
           showIcon: false,
           isOpen: true,
@@ -111,10 +146,8 @@ export const AdminTestForm = () => {
           cancelText: "Залишитись",
           onConfirm: () => navigate("/admin"),
         });
-
       } else {
         const res = await api.post("/tests", payload);
-        
         setModalConfig({
           showIcon: false,
           isOpen: true,
@@ -125,14 +158,13 @@ export const AdminTestForm = () => {
           onConfirm: () => navigate(`/admin/tests/${res.data.id}/questions`),
         });
       }
-      
+
     } catch (error) {
       console.error("Error saving test:", error);
-      
       setModalConfig({
         isOpen: true,
         title: "Помилка збереження",
-        subtitle: "Перевірте правильність заповнення всіх полів.",
+        subtitle: error.message || "Перевірте правильність заповнення всіх полів.",
         confirmText: "Зрозуміло",
         onConfirm: closeModal,
       });
@@ -188,48 +220,46 @@ export const AdminTestForm = () => {
               />
               АМПС
             </label>
+            <label>
+              <input
+                type="radio"
+                name="type"
+                value="LECTURE"
+                checked={formData.type === "LECTURE"}
+                onChange={handleChange}
+                disabled={isEditing}
+              />
+              Лекція
+            </label>
           </div>
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
-            <label>Іспит</label>
-            <select
-              name="examType"
-              value={formData.examType}
-              onChange={handleChange}
-            >
-              <option value="KROK_1">Крок 1</option>
-              <option value="KROK_2">Крок 2</option>
-              <option value="KROK_3">Крок 3</option>
-            </select>
+        {formData.type !== "LECTURE" && (
+          <div className="form-row">
+            <div className="form-group">
+              <label>Іспит</label>
+              <select name="examType" value={formData.examType} onChange={handleChange}>
+                <option value="KROK_1">Крок 1</option>
+                <option value="KROK_2">Крок 2</option>
+                <option value="KROK_3">Крок 3</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Cпеціальність</label>
+              <select name="category" value={formData.category} onChange={handleChange} required>
+                <option value="Медицина">Медицина</option>
+                <option value="Стоматологія">Стоматологія</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Мова</label>
+              <select name="language" value={formData.language} onChange={handleChange}>
+                <option value="uk">Українська</option>
+                <option value="en">English</option>
+              </select>
+            </div>
           </div>
-
-          <div className="form-group">
-            <label>Cпеціальність</label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              required
-            >
-              <option value="Медицина">Медицина</option>
-              <option value="Стоматологія">Стоматологія</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Мова</label>
-            <select
-              name="language"
-              value={formData.language}
-              onChange={handleChange}
-            >
-              <option value="uk">Українська</option>
-              <option value="en">English</option>
-            </select>
-          </div>
-        </div>
+        )}
 
         {formData.type === "BOOKLET" && (
           <div className="form-row dynamic-fields">
@@ -255,7 +285,7 @@ export const AdminTestForm = () => {
             <div className="form-group">
               <label>Варіант (необов'язково)</label>
               <input
-                type="number"
+                type="text"
                 name="variant"
                 value={formData.variant}
                 onChange={handleChange}
@@ -290,6 +320,66 @@ export const AdminTestForm = () => {
               onChange={handleChange}
               required={formData.type === "BASE"}
             />
+          </div>
+        )}
+
+        {formData.type === "LECTURE" && (
+          <div className="dynamic-fields">
+            <div className="form-group">
+              <label>Лекція *</label>
+              {isEditing ? (
+                <input
+                  type="text"
+                  disabled
+                  value={
+                    lectures.find((l) => l.id === Number(formData.lectureId))
+                      ? `${lectures.find((l) => l.id === Number(formData.lectureId)).course.title} — ${lectures.find((l) => l.id === Number(formData.lectureId)).title}`
+                      : `ID ${formData.lectureId}`
+                  }
+                />
+              ) : (
+                <select
+                  name="lectureId"
+                  value={formData.lectureId}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Оберіть лекцію</option>
+                  {Object.entries(
+                    lectures
+                      .filter((l) => !l.test)
+                      .reduce((acc, l) => {
+                        const key = l.course.title;
+                        if (!acc[key]) acc[key] = [];
+                        acc[key].push(l);
+                        return acc;
+                      }, {})
+                  ).map(([courseTitle, lecs]) => (
+                    <optgroup key={courseTitle} label={courseTitle}>
+                      {lecs.map((l) => (
+                        <option key={l.id} value={l.id}>
+                          {l.semester} сем. — {l.title}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
+              )}
+            </div>
+            <div className="form-group">
+              <label>Назва тесту (необов'язково)</label>
+              <input
+                type="text"
+                name="title"
+                placeholder={
+                  formData.lectureId
+                    ? `Лекція: ${lectures.find((l) => l.id === Number(formData.lectureId))?.title ?? "..."}`
+                    : "Лекція: ..."
+                }
+                value={formData.title}
+                onChange={handleChange}
+              />
+            </div>
           </div>
         )}
 

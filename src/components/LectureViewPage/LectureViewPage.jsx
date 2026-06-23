@@ -175,14 +175,26 @@ export const LectureViewPage = () => {
             )}
           </div>
 
-          {lecture.questions && (
-            <aside className="lvp-sidebar">
-              <h3 className="lvp-sidebar-title">Таймкоди до Лекції</h3>
-              <div
-                className="lvp-sidebar-content"
-                dangerouslySetInnerHTML={{ __html: lecture.questions }}
-              />
-            </aside>
+          {(lecture.questions || lecture.test) && (
+            <div className="lvp-sidebar-col">
+              {lecture.questions && (
+                <aside className="lvp-sidebar">
+                  <h3 className="lvp-sidebar-title">Таймкоди до Лекції</h3>
+                  <div
+                    className="lvp-sidebar-content"
+                    dangerouslySetInnerHTML={{ __html: lecture.questions }}
+                  />
+                </aside>
+              )}
+              {lecture.test && (
+                <button
+                  className="lvp-test-btn"
+                  onClick={() => navigate(`/test/${lecture.test.id}`)}
+                >
+                  Пройти тест до лекції
+                </button>
+              )}
+            </div>
           )}
         </div>
       </main>

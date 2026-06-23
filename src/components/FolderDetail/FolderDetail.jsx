@@ -21,7 +21,7 @@ import { NotePopover } from "../NotePopover/NotePopover";
 import iconDoc from "../../assets/icon-doc.svg";
 
 const getTestTitle = (test) => {
-  if (test.type === "BASE") return test.title;
+  if (test.type === "BASE" || test.type === "LECTURE") return test.title;
   if (test.type === "AMPS") {
     let t = `${test.year} АМПС`;
     if (test.language) t += ` (${test.language === "en" ? "Eng" : "Укр"})`;

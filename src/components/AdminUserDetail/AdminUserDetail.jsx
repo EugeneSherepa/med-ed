@@ -4,7 +4,7 @@ import { api } from "../../api";
 import "./AdminUserDetail.scss";
 
 const ROLE_LABELS = { STUDENT: "Студент", TEACHER: "Викладач", ADMIN: "Адмін" };
-const TYPE_LABELS = { BOOKLET: "Буклет", BASE: "База", AMPS: "АМПС" };
+const TYPE_LABELS = { BOOKLET: "Буклет", BASE: "База", AMPS: "АМПС", LECTURE: "Лекція" };
 
 const fmtTime = (seconds) => {
   if (!seconds) return "—";

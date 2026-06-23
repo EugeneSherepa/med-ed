@@ -24,10 +24,11 @@ const TYPE_TABS = [
   { value: "BASE",    label: "Бази" },
   { value: "AMPS",    label: "АМПС" },
   { value: "BOOKLET", label: "Буклети" },
+  { value: "LECTURE", label: "Лекції" },
 ];
 
 const getTestTitle = (test) => {
-  if (test.type === "BASE") return test.title || "Без назви";
+  if (test.type === "BASE" || test.type === "LECTURE") return test.title || "Без назви";
   if (test.type === "AMPS") {
     let s = `${test.year} АМПС`;
     if (test.language) s += ` (${test.language === "en" ? "Eng" : "Укр"})`;
@@ -57,8 +58,8 @@ const SortableRow = ({ test, idx, duplicatingId, onEdit, onQuestions, onAnalytic
       </td>
       <td className="text-muted text-sm">{idx + 1}</td>
       <td className="test-title">{getTestTitle(test)}</td>
-      <td>{test.category}</td>
-      <td>{EXAM_LABELS[test.examType] ?? test.examType}</td>
+      <td>{test.type === "LECTURE" ? "—" : test.category}</td>
+      <td>{test.type === "LECTURE" ? "—" : (EXAM_LABELS[test.examType] ?? test.examType)}</td>
       <td>
         <div className="status-dropdown-wrapper">
           <select
@@ -76,9 +77,11 @@ const SortableRow = ({ test, idx, duplicatingId, onEdit, onQuestions, onAnalytic
         <button className="action-btn questions" onClick={() => onQuestions(test.id)}>☰ Питання</button>
         <button className="action-btn edit" onClick={() => onEdit(test.id)}>✎ Редагувати</button>
         <button className="action-btn analytics" onClick={() => onAnalytics(test.id)}>📊 Аналітика</button>
-        <button className="action-btn duplicate" disabled={duplicatingId === test.id} onClick={() => onDuplicate(test.id)}>
-          {duplicatingId === test.id ? "…" : "⧉ Дублювати"}
-        </button>
+        {test.type !== "LECTURE" && (
+          <button className="action-btn duplicate" disabled={duplicatingId === test.id} onClick={() => onDuplicate(test.id)}>
+            {duplicatingId === test.id ? "…" : "⧉ Дублювати"}
+          </button>
+        )}
         <button className="action-btn delete" onClick={() => onDelete(test.id)}>✕</button>
       </td>
     </tr>
@@ -254,7 +257,7 @@ export const AdminTestsList = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        {availableExams.length > 1 && (
+        {availableExams.length > 1 && testType !== "LECTURE" && (
           <select className="abr-filter" value={filterExam} onChange={(e) => setFilterExam(e.target.value)}>
             <option value="">Всі іспити</option>
             {availableExams.map((e) => <option key={e} value={e}>{EXAM_LABELS[e] ?? e}</option>)}

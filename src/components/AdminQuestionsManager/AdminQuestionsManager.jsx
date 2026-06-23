@@ -6,11 +6,11 @@ import { AdminImagePicker } from "../AdminImagePicker/AdminImagePicker";
 import { RichTextarea } from "../RichTextarea/RichTextarea";
 import "./AdminQuestionsManager.scss";
 
-const TYPE_LABELS = { BOOKLET: "Буклети", BASE: "Бази", AMPS: "АМПС" };
+const TYPE_LABELS = { BOOKLET: "Буклети", BASE: "Бази", AMPS: "АМПС", LECTURE: "Лекції" };
 const EXAM_LABELS = { KROK_1: "Крок-1", KROK_2: "Крок-2", KROK_3: "Крок-3" };
 
 const getTestTitle = (t) => {
-  if (t.type === "BASE") return t.title;
+  if (t.type === "BASE" || t.type === "LECTURE") return t.title;
   if (t.type === "AMPS") {
     let s = `${t.year} АМПС`;
     if (t.language) s += ` (${t.language === "en" ? "Eng" : "Укр"})`;
@@ -437,7 +437,9 @@ export const AdminQuestionsManager = () => {
             ? "База:"
             : testInfo.type === "AMPS"
               ? "АМПС:"
-              : "Буклет:"}{" "}
+              : testInfo.type === "LECTURE"
+                ? "Тест до лекції:"
+                : "Буклет:"}{" "}
           {testInfo.title}
         </h2>
       </div>

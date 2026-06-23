@@ -25,7 +25,7 @@ const TYPE_TABS = [
 ];
 
 const getTestTitle = (t) => {
-  if (t.type === "BASE") return t.title || "Без назви";
+  if (t.type === "BASE" || t.type === "LECTURE") return t.title || "Без назви";
   if (t.type === "AMPS") {
     let s = `${t.year} АМПС`;
     if (t.language) s += ` (${t.language === "en" ? "Eng" : "Укр"})`;
