@@ -20,6 +20,18 @@
   min-width: 200px;
   max-width: 260px;
 
+  @media (max-width: 990px) {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    top: auto;
+    max-width: none;
+    min-width: 0;
+    border-radius: 16px;
+    z-index: 500;
+  }
+
   &__title {
     font-family: $font-fixel;
     font-size: 13px;

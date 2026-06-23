@@ -723,3 +723,64 @@
   border: 1px solid #e5e7eb;
   background: #f9fafb;
 }
+
+@media (max-width: 768px) {
+  .admin-qm-container {
+    padding: 20px 16px;
+  }
+
+  .admin-qm-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .admin-qm-layout {
+    flex-direction: column;
+    height: auto;
+    gap: 16px;
+  }
+
+  .admin-qm-sidebar {
+    width: 100%;
+
+    .admin-qm-list {
+      max-height: 280px;
+    }
+  }
+
+  .admin-qm-main {
+    padding: 20px 16px;
+  }
+
+  .admin-qm-form {
+    .form-row {
+      flex-direction: column;
+      gap: 16px;
+
+      .half-width {
+        flex: unset;
+        width: 100%;
+      }
+    }
+
+    .options-container {
+      padding: 16px;
+    }
+  }
+
+  .gq-copy-modal {
+    max-width: calc(100% - 32px);
+    padding: 20px;
+    margin: 16px;
+  }
+
+  .import-actions {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}

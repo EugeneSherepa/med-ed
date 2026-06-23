@@ -127,8 +127,8 @@ export const AdminTestForm = () => {
         payload.title = null;
       } else if (formData.type === "AMPS") {
         if (formData.year) payload.year = parseInt(formData.year);
+        if (formData.day) payload.day = parseInt(formData.day);
         payload.title = null;
-        payload.day = null;
         payload.variant = null;
       } else {
         payload.title = formData.title;
@@ -304,6 +304,15 @@ export const AdminTestForm = () => {
                 value={formData.year}
                 onChange={handleChange}
                 required={!isEditing}
+              />
+            </div>
+            <div className="form-group">
+              <label>День</label>
+              <input
+                type="number"
+                name="day"
+                value={formData.day}
+                onChange={handleChange}
               />
             </div>
           </div>

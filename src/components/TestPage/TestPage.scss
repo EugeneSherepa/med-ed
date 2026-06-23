@@ -1,6 +1,19 @@
 @use "../../styles/variables" as *;
 
-.swiper-wrapper {
+.test-question-card-text p {
+  font-family: $font-fixel;
+  font-size: 20px;
+  line-height: 140%;
+  border-radius: 8px;
+  color: #252c3f;
+}
+
+.test-question-card-text div {
+  font-family: $font-fixel;
+  font-size: 20px;
+  line-height: 140%;
+  border-radius: 8px;
+  color: #252c3f;
 }
 
 .test {
@@ -217,6 +230,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 2px;
       height: 44px;
       border-radius: 8px;
       padding: 8px 16px;
@@ -225,6 +239,26 @@
       font-weight: 500;
       font-size: 20px;
       line-height: 100%;
+
+      &-input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: transparent;
+        font-family: $font-fixel;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 100%;
+        color: #252c3f;
+        width: 42px;
+        text-align: center;
+        outline: none;
+        padding: 0;
+        cursor: text;
+        background: rgba(177, 212, 224, 0.35);
+        border-radius: 4px;
+      }
     }
   }
 
@@ -256,7 +290,7 @@
     &-modal {
       min-width: 280px;
       width: 100%;
-      max-width: 500px;
+      max-width: 740px;
       padding: 24px 16px;
       background-color: #ecf6f9;
       border-radius: 16px;
@@ -314,6 +348,7 @@
       margin-bottom: 16px;
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 16px;
 
       &-btn {
@@ -348,11 +383,27 @@
       margin-bottom: 16px;
       padding: 8px;
       font-family: $font-fixel;
-      font-size: 18px;
-      line-height: 100%;
+      font-size: 20px;
+      line-height: 140%;
       border-radius: 8px;
       background-color: $white;
       color: #252c3f;
+
+      & div {
+        font-family: $font-fixel;
+        font-size: 20px;
+        line-height: 140%;
+        border-radius: 8px;
+        color: #252c3f;
+      }
+
+      & p {
+        font-family: $font-fixel;
+        font-size: 20px;
+        line-height: 140%;
+        border-radius: 8px;
+        color: #252c3f;
+      }
 
       & img {
         padding: 8px;
@@ -455,11 +506,10 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            line-height: 125%;
             padding: 8px 0;
             font-family: $font-fixel;
-            font-size: 18px;
-            line-height: 125%;
+            font-size: 20px;
+            line-height: 150%;
           }
         }
 
@@ -479,7 +529,7 @@
           height: fit-content;
           object-fit: contain;
           padding: 8px 0 4px;
-          margin:  0 auto;
+          margin: 0 auto;
         }
 
         & .test-question-explanation {
@@ -489,8 +539,8 @@
 
           &-text {
             font-family: $font-fixel;
-            font-size: 18px;
-            line-height: 100%;
+            font-size: 16px;
+            line-height: 140%;
             color: #252c3f;
 
             & img {
@@ -502,8 +552,8 @@
 
             & * {
               font-family: $font-fixel;
-              font-size: 18px;
-              line-height: 100%;
+              font-size: 16px;
+              line-height: 140%;
               color: #252c3f;
             }
 
@@ -589,8 +639,10 @@
 }
 
 .test-labs-modal-content {
+  overflow-x: auto;
+
   table {
-    width: 100%;
+    min-width: 100%;
     border-collapse: separate;
     border-spacing: 0;
     border: 1px solid #85878d;
@@ -896,4 +948,10 @@
 
 .swiper-button-lock {
   display: none !important;
+}
+
+@media screen and (max-width: 990px) {
+  .test-question-card-tools-btn.report-trigger-btn {
+    margin-left: none !important;
+  }
 }

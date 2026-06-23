@@ -75,21 +75,6 @@
     margin-bottom: 2px;
   }
 
-  h1 {
-    font-size: 1.6em;
-    font-weight: 700;
-    margin: 6px 0;
-  }
-  h2 {
-    font-size: 1.3em;
-    font-weight: 600;
-    margin: 5px 0;
-  }
-  h3 {
-    font-size: 1.1em;
-    font-weight: 600;
-    margin: 4px 0;
-  }
   p {
     font-family: $font-fixel;
     font-size: 14px;
@@ -99,6 +84,21 @@
     overflow-y: auto;
     line-height: 1.6;
     word-break: break-word;
+  }
+
+  // Keyword markers visible in the editor
+  .kw {
+    border-bottom: 2px dashed #f59e0b;
+    background: rgba(251, 191, 36, 0.15);
+  }
+
+  // Inline images inserted via toolbar
+  .rt-img {
+    cursor: pointer;
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+    vertical-align: top;
   }
 }
 
@@ -174,26 +174,24 @@
     padding: 0 8px;
     min-width: auto;
   }
-}
 
-.rich-toolbar-select {
-  height: 28px;
-  padding: 0 6px;
-  border: 1px solid #e5e7eb;
-  border-radius: 5px;
-  background: #fff;
-  font-family: $font-fixel;
-  font-size: 12px;
-  color: #374151;
-  cursor: pointer;
-  outline: none;
-  transition: border-color 0.12s;
-
-  &:hover {
-    border-color: #b1d4e0;
+  &--kw {
+    font-size: 11px;
+    font-weight: 600;
+    color: #92400e;
+    border-bottom: 2px dashed #f59e0b;
+    padding: 0 8px;
+    min-width: auto;
   }
-  &:focus {
-    border-color: #b1d4e0;
+
+  &--align {
+    font-size: 14px;
+    min-width: 28px;
+  }
+
+  &--img {
+    font-size: 14px;
+    min-width: 28px;
   }
 }
 

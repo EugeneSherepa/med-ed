@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { api } from "../../api";
 import { getTestIdFromSlug } from "../../utils/savedSlug";
+import { resolveImageUrl, resolveHtml } from "../../utils/imageUrl";
 import { DashboardLeft } from "../DashboardLeft/DashboardLeft";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Mousewheel } from "swiper/modules";
@@ -22,6 +23,7 @@ const getTestTitle = (test) => {
   if (test.type === "BASE" || test.type === "LECTURE") return test.title;
   if (test.type === "AMPS") {
     let title = `${test.year} АМПС`;
+    if (test.day) title += ` день ${test.day}`;
     if (test.language) title += ` (${test.language === "en" ? "Eng" : "Укр"})`;
     return title;
   }
@@ -43,6 +45,7 @@ export const SavedQuestionViewer = () => {
   const [answers, setAnswers] = useState({});
   const [swiperInstance, setSwiperInstance] = useState(null);
   const [unsavedIds, setUnsavedIds] = useState(new Set());
+  const [countInput, setCountInput] = useState("1");
 
   const testId = getTestIdFromSlug(slug);
 
@@ -63,9 +66,22 @@ export const SavedQuestionViewer = () => {
 
   useEffect(() => {
     if (swiperInstance?.slideTo) {
-      swiperInstance.slideTo(currentQuestionIndex);
+      const total = questions.length;
+      const perView = window.innerWidth >= 990 ? 10 : 4;
+      const offset = Math.max(0, Math.min(currentQuestionIndex - Math.floor(perView / 2), total - perView));
+      swiperInstance.slideTo(offset);
     }
+    setCountInput(String(currentQuestionIndex + 1));
   }, [currentQuestionIndex, swiperInstance]);
+
+  const handleCountJump = () => {
+    const n = parseInt(countInput, 10);
+    if (!isNaN(n) && n >= 1 && n <= questions.length) {
+      setCurrentQuestionIndex(n - 1);
+    } else {
+      setCountInput(String(currentQuestionIndex + 1));
+    }
+  };
 
   const handleAnswerSelect = (questionId, optionId) => {
     if (answers[questionId]) return;
@@ -121,7 +137,16 @@ export const SavedQuestionViewer = () => {
         <div className="test-main">
           <aside className="test-sidebar">
             <div className="test-sidebar-count">
-              {currentQuestionIndex + 1}/{questions.length}
+              <input
+                type="text"
+                className="test-sidebar-count-input"
+                value={countInput}
+                onChange={(e) => setCountInput(e.target.value)}
+                onFocus={(e) => e.target.select()}
+                onKeyDown={(e) => e.key === "Enter" && handleCountJump()}
+                onBlur={handleCountJump}
+              />
+              <span>/{questions.length}</span>
             </div>
             <button className="test-sidebar-grid-button test-sidebar-grid-button-prev">
               <img src={iconCaret} className="active" alt="Prev" />
@@ -199,16 +224,16 @@ export const SavedQuestionViewer = () => {
                   </button>
                 </div>
 
-                <p className="test-question-card-text">
-                  {currentQuestion.text}
+                <div className="test-question-card-text kw-revealed">
+                  <div dangerouslySetInnerHTML={{ __html: resolveHtml(currentQuestion.text) }} />
                   {currentQuestion.image && (
                     <img
-                      src={currentQuestion.image}
+                      src={resolveImageUrl(currentQuestion.image)}
                       alt="question illustration"
                       className="test-question-image"
                     />
                   )}
-                </p>
+                </div>
 
                 <div className="test-question-card-options">
                   {currentQuestion.options.map((option, idx) => {
@@ -248,7 +273,7 @@ export const SavedQuestionViewer = () => {
                             <span className="test-question-card-options-item-letter">
                               {OPTION_LETTERS[idx] || "?"}
                             </span>
-                            {option.text}
+                            <span dangerouslySetInnerHTML={{ __html: resolveHtml(option.text) }} />
                           </div>
 
                           {hasAnsweredCurrent && (
@@ -263,20 +288,12 @@ export const SavedQuestionViewer = () => {
                           )}
                         </div>
 
-                        {option.image && (
-                          <img
-                            src={option.image}
-                            alt={`option ${idx}`}
-                            className="test-option-image"
-                          />
-                        )}
-
                         {hasAnsweredCurrent && option.explanation && (
                           <div className="test-question-explanation">
                             <div
                               className="test-question-explanation-text"
                               dangerouslySetInnerHTML={{
-                                __html: option.explanation,
+                                __html: resolveHtml(option.explanation),
                               }}
                             />
                           </div>
@@ -292,7 +309,7 @@ export const SavedQuestionViewer = () => {
                               <div
                                 className="test-question-explanation-text"
                                 dangerouslySetInnerHTML={{
-                                  __html: currentQuestion.explanation,
+                                  __html: resolveHtml(currentQuestion.explanation),
                                 }}
                               />
                             </div>

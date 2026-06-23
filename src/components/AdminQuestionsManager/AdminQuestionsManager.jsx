@@ -4,6 +4,7 @@ import { api } from "../../api";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import { AdminImagePicker } from "../AdminImagePicker/AdminImagePicker";
 import { RichTextarea } from "../RichTextarea/RichTextarea";
+import { resolveImageUrl, normalizeImageUrl, normalizeHtml } from "../../utils/imageUrl";
 import "./AdminQuestionsManager.scss";
 
 const TYPE_LABELS = { BOOKLET: "Буклети", BASE: "Бази", AMPS: "АМПС", LECTURE: "Лекції" };
@@ -13,6 +14,7 @@ const getTestTitle = (t) => {
   if (t.type === "BASE" || t.type === "LECTURE") return t.title;
   if (t.type === "AMPS") {
     let s = `${t.year} АМПС`;
+    if (t.day) s += ` день ${t.day}`;
     if (t.language) s += ` (${t.language === "en" ? "Eng" : "Укр"})`;
     return s;
   }
@@ -334,12 +336,23 @@ export const AdminQuestionsManager = () => {
     }
 
     setIsSaving(true);
+    const payload = {
+      ...formData,
+      image: normalizeImageUrl(formData.image),
+      text: normalizeHtml(formData.text),
+      explanation: normalizeHtml(formData.explanation),
+      options: formData.options.map((o) => ({
+        ...o,
+        text: normalizeHtml(o.text),
+        explanation: normalizeHtml(o.explanation),
+      })),
+    };
     try {
       if (activeQuestionId) {
-        await api.patch(`/tests/questions/${activeQuestionId}`, formData);
+        await api.patch(`/tests/questions/${activeQuestionId}`, payload);
         showNotification("Збережено", "Питання успішно оновлено!");
       } else {
-        await api.post(`/tests/${testId}/questions`, formData);
+        await api.post(`/tests/${testId}/questions`, payload);
         setFormData(emptyForm);
       }
       fetchQuestions();
@@ -594,7 +607,7 @@ export const AdminQuestionsManager = () => {
                     {formData.image && (
                       <>
                         <img
-                          src={formData.image}
+                          src={resolveImageUrl(formData.image)}
                           alt="question"
                           className="field-image-preview"
                         />
@@ -611,14 +624,13 @@ export const AdminQuestionsManager = () => {
                     )}
                   </div>
                 </div>
-                <textarea
+                <RichTextarea
                   value={formData.text}
-                  onChange={(e) =>
-                    setFormData({ ...formData, text: e.target.value })
-                  }
-                  rows="4"
-                  required
+                  onChange={(e) => setFormData({ ...formData, text: e.target.value })}
+                  rows={4}
                   placeholder="Введіть текст питання сюди..."
+                  showKeywordButton
+                  showImageButton
                 />
               </div>
 
@@ -643,35 +655,7 @@ export const AdminQuestionsManager = () => {
                             <span className="option-letter">
                               {letters[index] || "?"}
                             </span>
-                            <button
-                              type="button"
-                              className="img-pick-btn small"
-                              onClick={() => setPickerTarget(`option-${index}`)}
-                            >
-                              📷{" "}
-                              {option.image ? "Змінити" : "Зображення до варіанту"}
-                            </button>
-                            {option.image && (
-                              <>
-                                <img
-                                  src={option.image}
-                                  alt={`option-${index}`}
-                                  className="field-image-preview"
-                                />
-                                <button
-                                  type="button"
-                                  className="img-remove-btn"
-                                  onClick={() => {
-                                    const opts = [...formData.options];
-                                    opts[index].image = "";
-                                    setFormData((p) => ({ ...p, options: opts }));
-                                  }}
-                                >
-                                  ✕
-                                </button>
-                              </>
-                            )}
-                          </div>
+                            </div>
                           {formData.options.length > 2 && (
                             <button
                               type="button"
@@ -683,32 +667,20 @@ export const AdminQuestionsManager = () => {
                             </button>
                           )}
                         </div>
-                        <input
-                          type="text"
+                        <RichTextarea
+                          showImageButton
                           value={option.text}
-                          onChange={(e) =>
-                            handleOptionTextChange(index, e.target.value)
-                          }
+                          onChange={(e) => handleOptionTextChange(index, e.target.value)}
                           placeholder={`Варіант ${letters[index] || ""}`}
-                          required
+                          rows={2}
                         />
                         <RichTextarea
+                          showImageButton
                           value={option.explanation || ""}
                           onChange={(e) => handleOptionExplanationChange(index, e.target.value)}
                           placeholder={`Пояснення до варіанту ${letters[index] || ""} (необов'язково)`}
                           rows={2}
                         />
-                        <div className="field-image-row">
-                          <button
-                            type="button"
-                            className="img-pick-btn small"
-                            onClick={() =>
-                              setPickerTarget(`option-explanation-${index}`)
-                            }
-                          >
-                            📷 Вставити в пояснення
-                          </button>
-                        </div>
                       </div>
                       <div className="option-divider"></div>
                     </>

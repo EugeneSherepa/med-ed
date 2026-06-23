@@ -23,6 +23,7 @@
   border-radius: 20px;
   width: 100%;
   max-width: 500px;
+  margin: 16px;
 
   &-title {
     margin-bottom: 8px;
@@ -74,6 +75,23 @@
       padding: 10px 20px;
       border-radius: 8px;
       cursor: pointer;
+    }
+  }
+}
+
+@media (max-width: 990px) {
+  .report-modal {
+    padding: 24px 20px;
+    border-radius: 16px;
+
+    .modal-actions {
+      flex-direction: column;
+
+      .btn-cancel,
+      .btn-submit {
+        width: 100%;
+        text-align: center;
+      }
     }
   }
 }

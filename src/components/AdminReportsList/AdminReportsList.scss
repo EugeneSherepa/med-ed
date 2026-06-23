@@ -221,3 +221,47 @@
   color: #6b7280;
   font-size: 18px;
 }
+
+@media (max-width: 768px) {
+  .admin-reports {
+    padding: 16px;
+
+    &-header {
+      margin-bottom: 20px;
+
+      h2 {
+        font-size: 22px;
+      }
+    }
+  }
+
+  .reports-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+
+    .reports-tab {
+      flex-shrink: 0;
+    }
+  }
+
+  .report-card {
+    padding: 16px;
+
+    .report-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .report-actions {
+      flex-wrap: wrap;
+
+      button {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+      }
+    }
+  }
+}

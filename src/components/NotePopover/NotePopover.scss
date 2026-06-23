@@ -18,6 +18,17 @@
   padding: 12px;
   width: 280px;
 
+  @media (max-width: 990px) {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    top: auto;
+    width: auto;
+    border-radius: 16px;
+    z-index: 500;
+  }
+
   &__title {
     font-family: $font-fixel;
     font-size: 13px;

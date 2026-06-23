@@ -2,7 +2,8 @@ import { useState, useEffect, useMemo, useRef, memo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { api } from "../../api";
 import { DashboardLeft } from "../DashboardLeft/DashboardLeft";
-import { ConfirmModal } from "../ConfirmModal/ConfirmModal"; // 🚀 Import the custom modal
+import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
+import { resolveImageUrl, resolveHtml } from "../../utils/imageUrl";
 import "./TestPage.scss";
 import iconCaretDropdown from "../../assets/icon-caret-dropdown.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -47,6 +48,7 @@ export const TestPage = () => {
   const [showLabsModal, setShowLabsModal] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [swiperInstance, setSwiperInstance] = useState(null);
+  const [countInput, setCountInput] = useState("1");
 
   const [modalConfig, setModalConfig] = useState({
     isOpen: false,
@@ -66,7 +68,14 @@ export const TestPage = () => {
     const loadTestAndAttempt = async () => {
       try {
         const testRes = await api.get(`/tests/${testId}`);
-        setTest(testRes.data);
+        const shuffled = {
+          ...testRes.data,
+          questions: testRes.data.questions.map((q) => ({
+            ...q,
+            options: [...q.options].sort(() => Math.random() - 0.5),
+          })),
+        };
+        setTest(shuffled);
 
         const attemptsRes = await api.get("/attempts/my-attempts");
 
@@ -135,6 +144,26 @@ export const TestPage = () => {
       .then((res) => setNoteQuestionIds(new Set(res.data.map((n) => n.questionId))))
       .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    if (swiperInstance?.slideTo && test) {
+      const total = test.questions.length;
+      const perView = window.innerWidth >= 990 ? 10 : 4;
+      const offset = Math.max(0, Math.min(currentQuestionIndex - Math.floor(perView / 2), total - perView));
+      swiperInstance.slideTo(offset);
+    }
+    setCountInput(String(currentQuestionIndex + 1));
+  }, [currentQuestionIndex, swiperInstance, test]);
+
+  const handleCountJump = () => {
+    const total = test?.questions?.length ?? 0;
+    const n = parseInt(countInput, 10);
+    if (!isNaN(n) && n >= 1 && n <= total) {
+      setCurrentQuestionIndex(n - 1);
+    } else {
+      setCountInput(String(currentQuestionIndex + 1));
+    }
+  };
 
   const handleToggleSave = async () => {
     const qId = currentQuestion?.id;
@@ -280,8 +309,8 @@ export const TestPage = () => {
       return { progressPercent: percent, progressLabel: "Завершено" };
     }
 
-    let label = "В процесі";
-    if (percent === 0) label = "Не розпочато";
+    let label = "";
+    if (percent === 0) label = "";
     return { progressPercent: percent, progressLabel: label };
   }, [answers, test, isCompleted]);
 
@@ -290,6 +319,7 @@ export const TestPage = () => {
     if (test.type === "BASE" || test.type === "LECTURE") return test.title;
     if (test.type === "AMPS") {
       let title = `${test.year} АМПС`;
+      if (test.day) title += ` день ${test.day}`;
       if (test.language)
         title += ` (${test.language === "en" ? "Eng" : "Укр"})`;
       return title;
@@ -373,7 +403,16 @@ export const TestPage = () => {
         <div className="test-main">
           <aside className="test-sidebar">
             <div className="test-sidebar-count">
-              {currentQuestionIndex + 1}/{test.questions.length}
+              <input
+                type="text"
+                className="test-sidebar-count-input"
+                value={countInput}
+                onChange={(e) => setCountInput(e.target.value)}
+                onFocus={(e) => e.target.select()}
+                onKeyDown={(e) => e.key === "Enter" && handleCountJump()}
+                onBlur={handleCountJump}
+              />
+              <span>/{test.questions.length}</span>
             </div>
             <button className="test-sidebar-grid-button test-sidebar-grid-button-prev">
               <img src={iconCaret} className="active" alt="Prev" />
@@ -387,7 +426,7 @@ export const TestPage = () => {
               watchOverflow={true}
               breakpoints={{
                 0: { slidesPerView: 4 },
-                990: { slidesPerView: 10 },
+                990: { slidesPerView: 11 },
               }}
               className="mySwiper test-sidebar-grid"
               navigation={{
@@ -511,16 +550,16 @@ export const TestPage = () => {
                   />
                 </div>
 
-                <p className="test-question-card-text">
-                  {currentQuestion.text}
+                <div className={`test-question-card-text${hasAnsweredCurrent || isCompleted ? " kw-revealed" : ""}`}>
+                  <div dangerouslySetInnerHTML={{ __html: resolveHtml(currentQuestion.text) }} />
                   {currentQuestion.image && (
                     <img
-                      src={currentQuestion.image}
+                      src={resolveImageUrl(currentQuestion.image)}
                       alt="question illustration"
                       className="test-question-image"
                     />
                   )}
-                </p>
+                </div>
 
                 <div className="test-question-card-options">
                   {currentQuestion.options.map((option, idx) => {
@@ -572,7 +611,7 @@ export const TestPage = () => {
                             <span className="test-question-card-options-item-letter">
                               {letters[idx] || "?"}
                             </span>
-                            {option.text}
+                            <span dangerouslySetInnerHTML={{ __html: resolveHtml(option.text) }} />
                           </div>
 
                           {(hasAnsweredCurrent || isCompleted) && (
@@ -587,21 +626,13 @@ export const TestPage = () => {
                           )}
                         </div>
 
-                        {option.image && (
-                          <img
-                            src={option.image}
-                            alt={`option ${idx} illustration`}
-                            className="test-option-image"
-                          />
-                        )}
-
                         {(hasAnsweredCurrent || isCompleted) &&
                           option.explanation && (
                             <div className="test-question-explanation">
                               <div
                                 className="test-question-explanation-text"
                                 dangerouslySetInnerHTML={{
-                                  __html: option.explanation,
+                                  __html: resolveHtml(option.explanation),
                                 }}
                               />
                             </div>
@@ -617,7 +648,7 @@ export const TestPage = () => {
                               <div
                                 className="test-question-explanation-text"
                                 dangerouslySetInnerHTML={{
-                                  __html: currentQuestion.explanation,
+                                  __html: resolveHtml(currentQuestion.explanation),
                                 }}
                               />
                             </div>

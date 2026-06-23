@@ -106,7 +106,7 @@ export const RegistrationForm = () => {
           className="auth-form-wrapper-title"
           style={{ marginBottom: "24px" }}
         >
-          Створіть аккаунт
+          Створіть акаунт
         </div>
 
         {/* Display Error Message if one exists */}
@@ -290,7 +290,7 @@ export const RegistrationForm = () => {
       </form>
 
       <div className="auth-form-bottom">
-        Вже є аккаунт? <Link to="/login">Увійти</Link>
+        Вже є акаунт? <Link to="/login">Увійти</Link>
       </div>
     </div>
   );

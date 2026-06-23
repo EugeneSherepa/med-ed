@@ -5,7 +5,9 @@ export const resolveImageUrl = (url) => {
   if (url.startsWith("/uploads/")) return `${API_URL}${url}`;
   try {
     const parsed = new URL(url);
-    if (parsed.pathname.startsWith("/uploads/")) return `${API_URL}${parsed.pathname}`;
+    if (parsed.pathname.startsWith("/uploads/")) {
+      return `${API_URL}${parsed.pathname}`;
+    }
   } catch {}
   return url;
 };

@@ -32,6 +32,7 @@ export const AccountPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [isSavingPassword, setIsSavingPassword] = useState(false);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
 
   const navigate = useNavigate();
@@ -74,18 +75,31 @@ export const AccountPage = () => {
     fetchProfile();
   }, []);
 
-  const handlePhotoChange = (e) => {
+  const handlePhotoChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setPhotoFile(file);
-      setPhotoPreview(URL.createObjectURL(file));
+    if (!file) return;
+    setPhotoPreview(URL.createObjectURL(file));
+    setIsUploadingPhoto(true);
+    try {
+      const formData = new FormData();
+      formData.append("photo", file);
+      const response = await api.patch("/users/profile", formData);
+      const newPhotoUrl = getImageUrl(response.data.photo);
+      setPhotoPreview(newPhotoUrl);
+      setServerData((prev) => ({ ...prev, photo: response.data.photo }));
+      setPhotoFile(null);
+      showMessage("success", "Фото профілю оновлено!");
+    } catch {
+      showMessage("error", "Помилка при завантаженні фото");
+    } finally {
+      setIsUploadingPhoto(false);
+      e.target.value = "";
     }
   };
 
   const isProfileChanged = useMemo(() => {
     if (!serverData) return false;
     return (
-      photoFile !== null ||
       name !== (serverData.name || "") ||
       email !== (serverData.email || "") ||
       institution !== (serverData.institution || "") ||
@@ -124,14 +138,7 @@ export const AccountPage = () => {
       formData.append("course", course);
       formData.append("goal", goal);
 
-      if (photoFile) {
-        formData.append("photo", photoFile);
-      }
-
       const response = await api.patch("/users/profile", formData);
-
-      const formattedNewPhoto = getImageUrl(response.data.photo);
-      const finalPhotoUrl = formattedNewPhoto || photoPreview;
 
       setServerData((prev) => ({
         ...prev,
@@ -143,8 +150,6 @@ export const AccountPage = () => {
         goal,
         photo: response.data.photo,
       }));
-      setPhotoPreview(finalPhotoUrl);
-      setPhotoFile(null);
       showMessage("success", "Особисті дані успішно оновлено! 🎉");
     } catch (error) {
       const errorMsg =
@@ -230,13 +235,14 @@ export const AccountPage = () => {
                     type="button"
                     onClick={() => fileInputRef.current.click()}
                     className="account-wrapper-form-photo-button"
+                    disabled={isUploadingPhoto}
                   >
-                    Змінити фото
+                    {isUploadingPhoto ? "Завантаження..." : "Змінити фото"}
                   </button>
                   <input
                     type="file"
                     ref={fileInputRef}
-                    photoPreview={handlePhotoChange}
+                    onChange={handlePhotoChange}
                     accept="image/png, image/jpeg, image/jpg, image/webp"
                     style={{ display: "none" }}
                   />

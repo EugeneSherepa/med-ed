@@ -3,6 +3,7 @@ import { api } from "../../api";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import { AdminImagePicker } from "../AdminImagePicker/AdminImagePicker";
 import { RichTextarea } from "../RichTextarea/RichTextarea";
+import { resolveImageUrl, normalizeImageUrl, normalizeHtml } from "../../utils/imageUrl";
 import "../AdminQuestionsManager/AdminQuestionsManager.scss";
 import "./AdminGlobalQuestions.scss";
 import iconClose from "../../assets/icon-close.svg";
@@ -16,6 +17,7 @@ const getTestTitle = (t) => {
   if (t.type === "BASE" || t.type === "LECTURE") return t.title;
   if (t.type === "AMPS") {
     let s = `${t.year} АМПС`;
+    if (t.day) s += ` день ${t.day}`;
     if (t.language) s += ` (${t.language === "en" ? "Eng" : "Укр"})`;
     return s;
   }
@@ -189,12 +191,23 @@ export const AdminGlobalQuestions = () => {
       return;
     }
     setIsSaving(true);
+    const payload = {
+      ...formData,
+      image: normalizeImageUrl(formData.image),
+      text: normalizeHtml(formData.text),
+      explanation: normalizeHtml(formData.explanation),
+      options: formData.options.map((o) => ({
+        ...o,
+        text: normalizeHtml(o.text),
+        explanation: normalizeHtml(o.explanation),
+      })),
+    };
     try {
       if (activeId) {
-        await api.patch(`/admin/global-questions/${activeId}`, formData);
+        await api.patch(`/admin/global-questions/${activeId}`, payload);
         notify("Збережено", "Питання оновлено!");
       } else {
-        await api.post("/admin/global-questions", formData);
+        await api.post("/admin/global-questions", payload);
         setFormData(emptyForm);
       }
       fetchQuestions();
@@ -424,7 +437,7 @@ export const AdminGlobalQuestions = () => {
                   {formData.image && (
                     <>
                       <img
-                        src={formData.image}
+                        src={resolveImageUrl(formData.image)}
                         alt="question"
                         className="field-image-preview"
                       />
@@ -441,14 +454,13 @@ export const AdminGlobalQuestions = () => {
                   )}
                 </div>
               </div>
-              <textarea
+              <RichTextarea
                 value={formData.text}
-                onChange={(e) =>
-                  setFormData({ ...formData, text: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, text: e.target.value })}
                 rows={4}
-                required
                 placeholder="Введіть текст питання..."
+                showKeywordButton
+                showImageButton
               />
             </div>
 
@@ -471,34 +483,6 @@ export const AdminGlobalQuestions = () => {
                           <span className="option-letter">
                             {LETTERS[i] || "?"}
                           </span>
-                          <button
-                            type="button"
-                            className="img-pick-btn small"
-                            onClick={() => setPickerTarget(`option-${i}`)}
-                          >
-                            📷{" "}
-                            {opt.image ? "Змінити" : "Зображення до варіанту"}
-                          </button>
-                          {opt.image && (
-                            <>
-                              <img
-                                src={opt.image}
-                                alt={`option-${i}`}
-                                className="field-image-preview"
-                              />
-                              <button
-                                type="button"
-                                className="img-remove-btn"
-                                onClick={() => {
-                                  const opts = [...formData.options];
-                                  opts[i].image = "";
-                                  setFormData((p) => ({ ...p, options: opts }));
-                                }}
-                              >
-                                ✕
-                              </button>
-                            </>
-                          )}
                         </div>
                         {formData.options.length > 2 && (
                           <button
@@ -510,32 +494,20 @@ export const AdminGlobalQuestions = () => {
                           </button>
                         )}
                       </div>
-                      <input
-                        type="text"
+                      <RichTextarea
+                        showImageButton
                         value={opt.text}
-                        onChange={(e) =>
-                          handleOptionTextChange(i, e.target.value)
-                        }
+                        onChange={(e) => handleOptionTextChange(i, e.target.value)}
                         placeholder={`Варіант ${LETTERS[i] || ""}`}
-                        required
+                        rows={2}
                       />
                       <RichTextarea
+                        showImageButton
                         value={opt.explanation || ""}
                         onChange={(e) => handleOptionExplanationChange(i, e.target.value)}
                         placeholder={`Пояснення до варіанту ${LETTERS[i] || ""} (необов'язково)`}
                         rows={2}
                       />
-                      <div className="field-image-row">
-                        <button
-                          type="button"
-                          className="img-pick-btn small"
-                          onClick={() =>
-                            setPickerTarget(`option-explanation-${i}`)
-                          }
-                        >
-                          📷 Вставити в пояснення
-                        </button>
-                      </div>
                     </div>
                     <div className="option-divider"></div>
                   </>

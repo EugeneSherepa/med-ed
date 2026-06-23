@@ -46,7 +46,8 @@
 .admin-table-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-wrap: wrap;
 
   .action-btn {
     display: flex;
@@ -122,5 +123,10 @@
   }
 }
 
-
+@media (max-width: 768px) {
+  .atl-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
 
