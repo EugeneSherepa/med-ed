@@ -37,6 +37,9 @@ import { Saved } from "../pages/Saved/Saved";
 import { SavedDetail } from "../pages/Saved/SavedDetail";
 import { TestPage } from "../components/TestPage/TestPage";
 import { FolderDetail } from "../components/FolderDetail/FolderDetail";
+import { Lectures } from "../pages/Lectures/Lectures";
+import { LectureCoursePage } from "../components/LectureCoursePage/LectureCoursePage";
+import { LectureViewPage } from "../components/LectureViewPage/LectureViewPage";
 
 const Admin = lazy(() =>
   import("../pages/Admin/Admin").then((m) => ({ default: m.Admin })),
@@ -86,9 +89,14 @@ const AdminGlobalQuestions = lazy(() =>
     default: m.AdminGlobalQuestions,
   })),
 );
-const AdminBasesReorder = lazy(() =>
-  import("../components/AdminBasesReorder/AdminBasesReorder").then((m) => ({
-    default: m.AdminBasesReorder,
+const AdminCoursesList = lazy(() =>
+  import("../components/AdminCoursesList/AdminCoursesList").then((m) => ({
+    default: m.AdminCoursesList,
+  })),
+);
+const AdminLectureForm = lazy(() =>
+  import("../components/AdminLectureForm/AdminLectureForm").then((m) => ({
+    default: m.AdminLectureForm,
   })),
 );
 
@@ -233,6 +241,31 @@ const AppRouter = () => {
           }
         />
 
+        <Route
+          path="/lectures"
+          element={
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
+              <Lectures />
+            </RoleProtectedRoute>
+          }
+        />
+        <Route
+          path="/lectures/:courseSlug"
+          element={
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
+              <LectureCoursePage />
+            </RoleProtectedRoute>
+          }
+        />
+        <Route
+          path="/lectures/:courseSlug/:lectureId"
+          element={
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
+              <LectureViewPage />
+            </RoleProtectedRoute>
+          }
+        />
+
         {/* Admin (lazy-loaded — admin-only, large bundle) */}
         <Route
           path="/admin"
@@ -325,10 +358,18 @@ const AppRouter = () => {
             }
           />
           <Route
-            path="bases-reorder"
+            path="courses"
             element={
               <Suspense fallback={<AdminLoader />}>
-                <AdminBasesReorder />
+                <AdminCoursesList />
+              </Suspense>
+            }
+          />
+          <Route
+            path="lectures/:courseId"
+            element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminLectureForm />
               </Suspense>
             }
           />

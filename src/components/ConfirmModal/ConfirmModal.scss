@@ -92,3 +92,25 @@
     transform: scale(1);
   }
 }
+
+@media (max-width: 990px) {
+  .confirm-modal {
+    &-content {
+      max-width: calc(100% - 40px);
+      padding: 24px 20px;
+      border-radius: 24px;
+    }
+
+    &-title {
+      font-size: 18px;
+    }
+
+    &-actions {
+      gap: 12px;
+
+      button {
+        flex: 1;
+      }
+    }
+  }
+}

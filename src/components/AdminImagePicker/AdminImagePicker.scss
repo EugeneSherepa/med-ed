@@ -238,3 +238,30 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+@media (max-width: 768px) {
+  .img-picker-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .img-picker-modal {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .img-picker-header,
+  .img-picker-upload {
+    padding: 16px;
+  }
+
+  .img-picker-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    padding: 12px 16px 24px;
+  }
+
+  .img-picker-thumb {
+    height: 120px;
+  }
+}

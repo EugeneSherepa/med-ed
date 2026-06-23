@@ -22,7 +22,8 @@ export const DashboardLeft = ({
   searchPlaceholder = "Пошук...",
 }) => {
   const { currentUser } = useAuth();
-  const isAdminOrTeacher = currentUser?.role === "ADMIN" || currentUser?.role === "TEACHER";
+  const isAdminOrTeacher =
+    currentUser?.role === "ADMIN" || currentUser?.role === "TEACHER";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -112,9 +113,9 @@ export const DashboardLeft = ({
         <ul className="left-panel-links">
           <li className="left-panel-links-link">
             <Link
-              to="/"
+              to="/lectures"
               className={
-                currentLink === "" || currentLink === "/"
+                currentLink === "/lectures"
                   ? "left-panel-links-link-current"
                   : ""
               }

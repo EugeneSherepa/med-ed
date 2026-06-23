@@ -1,0 +1,400 @@
+@use "../../styles/variables" as *;
+
+.lectures-page {
+  display: flex;
+  min-height: 100vh;
+  background: #fff;
+}
+
+.lectures-content {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 62px;
+  padding: 42px 32px;
+  min-width: 0;
+
+  &-left {
+    width: 70%;
+  }
+
+  &-right {
+    width: 30%;
+    height: 93vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+
+      &-title {
+        font-family: $font-fixel;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 100%;
+        color: $primary-color;
+      }
+
+      &-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border: 1px solid #e7eae9;
+        border-radius: 12px;
+
+        & img {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+
+    &-profile {
+      margin: 0 auto;
+      max-width: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      & img {
+        width: 112px;
+        height: 112px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: none;
+        padding: 4px;
+        background:
+          radial-gradient(
+            73.92% 251.95% at 26.91% 46.73%,
+            #f7b4d1 0%,
+            #e3cee1 23.19%,
+            #dbd0f7 44.5%,
+            #b1d4e0 97%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 154, 66, 0) 0%,
+            rgba(177, 212, 224, 0.2) 55.02%,
+            rgba(255, 154, 66, 0.2) 100%
+          );
+        margin: 0 auto;
+      }
+
+      &-title {
+        margin-top: 8px;
+        margin-bottom: 8px;
+        font-family: $font-fixel;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 100%;
+        color: $primary-color;
+        text-align: center;
+      }
+
+      &-text {
+        font-family: $font-fixel;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 120%;
+        text-align: center;
+        color: $primary-color;
+      }
+    }
+
+    &-bottom {
+      & img {
+        width: 100%;
+        height: fit-content;
+        object-fit: contain;
+        margin-bottom: 32px;
+        border-radius: 24px;
+      }
+
+      &-text {
+        margin-bottom: 8px;
+        font-family: $font-fixel;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        color: black;
+      }
+
+      &-button {
+        width: 100%;
+        padding: 8px 0 !important;
+      }
+    }
+  }
+}
+
+.lectures-topbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+
+  &-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &-top {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      font-family: $font-artegra;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 22px;
+      color: $primary-color;
+
+      &-emote {
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 100%;
+      }
+    }
+
+    &-bottom {
+      font-family: $font-fixel;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 100%;
+      color: #85878d;
+    }
+  }
+}
+
+.lectures-search {
+  position: relative;
+  max-width: 310px;
+  width: 100%;
+
+  input {
+    max-width: 310px;
+    width: 100%;
+    height: 48px;
+    padding-top: 12px;
+    padding-right: 18px;
+    padding-left: 16px;
+    padding-bottom: 12px;
+    border-radius: 12px;
+    border: 1px solid #e7eae9;
+    font-family: "Fixel", sans-serif, serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    color: #85878d;
+  }
+
+  img {
+    pointer-events: none;
+    position: absolute;
+    right: 18px;
+    top: 12px;
+  }
+}
+
+.lectures-tabs {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.lectures-tab {
+  padding: 6px 16px;
+  border: 1px solid #e7eae9;
+  border-radius: 8px;
+  background: #fff;
+  font-family: $font-fixel;
+  font-size: 16px;
+  font-weight: 500;
+  color: #85878d;
+  cursor: pointer;
+  transition: 0.15s;
+
+  &.active {
+    background: $pink-active;
+    border-color: $pink-active;
+    color: #fff;
+  }
+}
+
+.lectures-section-title {
+  margin-bottom: 24px;
+  font-family: $font-fixel;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 22px;
+  color: #211c37;
+}
+
+.lectures-loading {
+  font-family: $font-fixel;
+  font-size: 14px;
+  color: #9ca3af;
+  padding: 40px 0;
+}
+
+.lectures-empty {
+  text-align: center;
+  padding: 60px 0;
+  font-family: $font-fixel;
+  color: #6b7280;
+  font-size: 15px;
+  line-height: 1.7;
+
+  .lectures-empty-bee {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.lectures-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.course-card {
+  padding: 16px;
+  padding-bottom: 20px;
+  border-radius: 12px;
+}
+
+.course-card-icon {
+  margin-bottom: 20px;
+  padding: 9px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.course-card-title {
+  margin-bottom: 10px;
+  font-family: $font-eastman;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  color: $primary-color;
+  text-transform: uppercase;
+}
+
+.course-card-meta {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.course-card-progress-bar {
+  width: 50%;
+  height: 20px;
+  background: #1c1d1d0d;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.course-card-progress-fill {
+  height: 100%;
+  background: $pink-active;
+  border-radius: 16px;
+  transition: width 0.3s;
+}
+
+.course-card-count {
+  width: 50%;
+  font-family: $font-fixel;
+  font-size: 16px;
+  font-weight: 500;
+  color: #252c3f;
+}
+
+.course-card-btn {
+  min-height: 38px;
+  padding: 8px 0;
+  background: #dec6f399;
+  color: white;
+  cursor: pointer;
+  transition: background 0.15s;
+  width: 100%;
+  font-family: $font-fixel;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  color: $white;
+  border: none;
+  border-radius: 12px;
+
+  &:hover {
+    background: #b994da99;
+  }
+}
+
+@media (max-width: 990px) {
+  .lectures-content {
+    flex-direction: column;
+    gap: 0;
+    padding: 84px 20px 40px;
+
+    &-left {
+      width: 100%;
+    }
+
+    &-right {
+      display: none;
+    }
+  }
+
+  .lectures-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .lectures-search {
+    max-width: 100%;
+
+    input {
+      max-width: 100%;
+    }
+  }
+
+  .lectures-tabs {
+    overflow-x: auto;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+
+    .lectures-tab {
+      flex-shrink: 0;
+    }
+  }
+
+  .lectures-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .lectures-section-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+}

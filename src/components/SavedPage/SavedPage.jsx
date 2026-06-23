@@ -12,10 +12,10 @@ import iconCaretRight from "../../assets/icon-caret-button.svg";
 import iconDoc from "../../assets/icon-doc.svg";
 
 const EXAM_LABELS = { KROK_1: "Крок-1", KROK_2: "Крок-2", KROK_3: "Крок-3" };
-const TYPE_LABELS = { BOOKLET: "Буклет", BASE: "База", AMPS: "АМПС" };
+const TYPE_LABELS = { BOOKLET: "Буклет", BASE: "База", AMPS: "АМПС", LECTURE: "Лекція" };
 
 const getTestTitle = (test) => {
-  if (test.type === "BASE") return test.title;
+  if (test.type === "BASE" || test.type === "LECTURE") return test.title;
   if (test.type === "AMPS") {
     let title = `${test.year} АМПС`;
     if (test.day) title += ` день ${test.day}`;

@@ -10,3 +10,13 @@
   color: $gray;
   white-space: nowrap;
 }
+
+@media (max-width: 990px) {
+  .svq-header {
+    grid-template-columns: 1fr auto !important;
+  }
+
+  .svq-progress-label {
+    font-size: 12px;
+  }
+}

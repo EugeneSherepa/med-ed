@@ -77,19 +77,12 @@
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
-  cursor: grab;
-  transition: box-shadow 0.15s, border-color 0.15s, background 0.15s;
+  transition: box-shadow 0.15s, border-color 0.15s;
   user-select: none;
-
-  &:active { cursor: grabbing; }
 
   &:hover {
     border-color: #b1d4e0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  }
-
-  &[draggable="true"]:active {
-    background: #f0f9ff;
   }
 }
 
@@ -141,4 +134,25 @@
 
   &.published { background: #ecfdf5; color: #059669; }
   &.draft     { background: #f3f4f6; color: #6b7280; }
+}
+
+@media (max-width: 768px) {
+  .abr-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+
+    .abr-tab {
+      flex-shrink: 0;
+    }
+  }
+
+  .abr-item {
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .abr-meta {
+    display: none;
+  }
 }

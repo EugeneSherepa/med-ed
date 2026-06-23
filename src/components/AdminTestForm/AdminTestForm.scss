@@ -156,6 +156,9 @@
   }
 
   .dynamic-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     animation: fadeIn 0.3s ease-in-out;
   }
 }

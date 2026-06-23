@@ -4,7 +4,7 @@ export const PublicRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem("accessToken");
 
   if (isAuthenticated) {
-    return <Navigate to="/account" replace />;
+    return <Navigate to="/lectures" replace />;
   }
 
   return children;

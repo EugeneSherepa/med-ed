@@ -64,7 +64,7 @@ export const AdminImagePicker = ({ isOpen, onClose, onSelect }) => {
 
   // Pass the relative path — callers resolve it to a full URL via resolveImageUrl
   const handleSelect = (url) => {
-    if (onSelect) onSelect(url);
+    if (onSelect) onSelect(resolveImageUrl(url));
     onClose();
   };
 

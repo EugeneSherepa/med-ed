@@ -1,5 +1,27 @@
 @use "../../styles/variables" as *;
+@use "../AdminBasesReorder/AdminBasesReorder.scss";
 
+.atl-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  .admin-search-bar {
+    input {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-family: $font-fixel;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+
+      &:focus { border-color: #b1d4e0; }
+    }
+  }
+}
 
 .type-badge {
   display: inline-flex;
@@ -24,7 +46,8 @@
 .admin-table-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-wrap: wrap;
 
   .action-btn {
     display: flex;
@@ -100,5 +123,10 @@
   }
 }
 
-
+@media (max-width: 768px) {
+  .atl-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
 
