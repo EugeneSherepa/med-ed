@@ -16,7 +16,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { api } from "../../api";
 import "./AdminBasesReorder.scss";
 
-const EXAM_LABELS = { KROK_1: "Крок-1", KROK_2: "Крок-2", KROK_3: "Крок-3" };
+const EXAM_LABELS = { KROK_1: "КРОК_1", KROK_2: "КРОК_2", KROK_3: "КРОК_3" };
 
 const TYPE_TABS = [
   { value: "BASE",    label: "Бази" },

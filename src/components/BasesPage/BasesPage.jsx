@@ -13,6 +13,8 @@ import closeIcon from "../../assets/icon-close-second.svg";
 import IconCaret from "../../assets/icon-caret-dropdown-second.svg";
 import cardDot from "../../assets/card-dot-white.svg";
 
+const EXAM_LABELS = { KROK_1: "КРОК_1", KROK_2: "КРОК_2", KROK_3: "КРОК_3" };
+
 export const BasesPage = () => {
   const [bases, setBases] = useState([]);
   const [attempts, setAttempts] = useState([]);
@@ -210,7 +212,7 @@ export const BasesPage = () => {
                 <option value="">Усі іспити</option>
                 {availableExams.map((exam) => (
                   <option key={exam} value={exam}>
-                    {exam}
+                    {EXAM_LABELS[exam] ?? exam}
                   </option>
                 ))}
               </select>

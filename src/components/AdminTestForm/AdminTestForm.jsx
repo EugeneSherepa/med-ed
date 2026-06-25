@@ -122,12 +122,12 @@ export const AdminTestForm = () => {
 
       if (formData.type === "BOOKLET") {
         if (formData.year) payload.year = parseInt(formData.year);
-        if (formData.day) payload.day = parseInt(formData.day);
+        if (formData.day) payload.day = formData.day;
         if (formData.variant) payload.variant = formData.variant;
         payload.title = null;
       } else if (formData.type === "AMPS") {
         if (formData.year) payload.year = parseInt(formData.year);
-        if (formData.day) payload.day = parseInt(formData.day);
+        if (formData.day) payload.day = formData.day;
         payload.title = null;
         payload.variant = null;
       } else {
@@ -239,9 +239,9 @@ export const AdminTestForm = () => {
             <div className="form-group">
               <label>Іспит</label>
               <select name="examType" value={formData.examType} onChange={handleChange}>
-                <option value="KROK_1">Крок 1</option>
-                <option value="KROK_2">Крок 2</option>
-                <option value="KROK_3">Крок 3</option>
+                <option value="KROK_1">КРОК_1</option>
+                <option value="KROK_2">КРОК_2</option>
+                <option value="KROK_3">КРОК_3</option>
               </select>
             </div>
             <div className="form-group">
@@ -276,7 +276,7 @@ export const AdminTestForm = () => {
             <div className="form-group">
               <label>День (необов'язково)</label>
               <input
-                type="number"
+                type="text"
                 name="day"
                 value={formData.day}
                 onChange={handleChange}
@@ -309,7 +309,7 @@ export const AdminTestForm = () => {
             <div className="form-group">
               <label>День</label>
               <input
-                type="number"
+                type="text"
                 name="day"
                 value={formData.day}
                 onChange={handleChange}

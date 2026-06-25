@@ -8,7 +8,7 @@ import { resolveImageUrl, normalizeImageUrl, normalizeHtml } from "../../utils/i
 import "./AdminQuestionsManager.scss";
 
 const TYPE_LABELS = { BOOKLET: "Буклети", BASE: "Бази", AMPS: "АМПС", LECTURE: "Лекції" };
-const EXAM_LABELS = { KROK_1: "Крок-1", KROK_2: "Крок-2", KROK_3: "Крок-3" };
+const EXAM_LABELS = { KROK_1: "КРОК_1", KROK_2: "КРОК_2", KROK_3: "КРОК_3" };
 
 const getTestTitle = (t) => {
   if (t.type === "BASE" || t.type === "LECTURE") return t.title;

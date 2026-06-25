@@ -13,6 +13,7 @@ import adminIcon from "../../assets/icon-person.svg";
 import burger from "../../assets/burger.svg";
 import close from "../../assets/icon-close.svg";
 import searchIcon from "../../assets/icon-search.svg";
+import searchIconSecond from "../../assets/icon-search-second.svg";
 
 export const DashboardLeft = ({
   currentLink,
@@ -126,6 +127,23 @@ export const DashboardLeft = ({
                 alt="Main"
               />
               Головна
+            </Link>
+          </li>
+
+          <li className="left-panel-links-link">
+            <Link
+              to="/search"
+              className={
+                currentLink === "/search" ? "left-panel-links-link-current" : ""
+              }
+            >
+              <img
+                src={searchIconSecond}
+                className="left-panel-links-link-image"
+                alt="Search"
+                style={{ width: "20px", height: "20px" }}
+              />
+              Знайти тест
             </Link>
           </li>
 

@@ -40,6 +40,7 @@ import { FolderDetail } from "../components/FolderDetail/FolderDetail";
 import { Lectures } from "../pages/Lectures/Lectures";
 import { LectureCoursePage } from "../components/LectureCoursePage/LectureCoursePage";
 import { LectureViewPage } from "../components/LectureViewPage/LectureViewPage";
+import { SearchPage } from "../components/SearchPage/SearchPage";
 
 const Admin = lazy(() =>
   import("../pages/Admin/Admin").then((m) => ({ default: m.Admin })),
@@ -241,6 +242,14 @@ const AppRouter = () => {
           }
         />
 
+        <Route
+          path="/search"
+          element={
+            <RoleProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}>
+              <SearchPage />
+            </RoleProtectedRoute>
+          }
+        />
         <Route
           path="/lectures"
           element={

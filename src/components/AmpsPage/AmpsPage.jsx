@@ -13,6 +13,8 @@ import searchIcon from "../../assets/icon-search.svg";
 import closeIcon from "../../assets/icon-close-second.svg";
 import IconCaret from "../../assets/icon-caret-dropdown-second.svg";
 
+const EXAM_LABELS = { KROK_1: "КРОК_1", KROK_2: "КРОК_2", KROK_3: "КРОК_3" };
+
 const generateTitle = (test) => {
   let title = `${test.year} АМПС`;
   if (test.day) title += ` день ${test.day}`;
@@ -211,7 +213,7 @@ export const AmpsPage = () => {
                 <option value="">Усі іспити</option>
                 {availableExams.map((exam) => (
                   <option key={exam} value={exam}>
-                    {exam}
+                    {EXAM_LABELS[exam] ?? exam}
                   </option>
                 ))}
               </select>
