@@ -22,7 +22,7 @@ import "./AdminLectureForm.scss";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-const emptyLecture = { title: "", videoUrl: "", semester: 1, questions: "", pdfUrl: "" };
+const emptyLecture = { title: "", videoUrl: "", semester: 1, questions: "", pdfUrl: "", vocabularyUrl: "" };
 
 const SortableLectureItem = ({ lec, idx, isActive, onEdit, onDelete }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
@@ -85,6 +85,10 @@ export const AdminLectureForm = () => {
   const [testTitle, setTestTitle] = useState("");
   const [testSaving, setTestSaving] = useState(false);
 
+  const [lecturePostTest, setLecturePostTest] = useState(null);
+  const [postTestTitle, setPostTestTitle] = useState("");
+  const [postTestSaving, setPostTestSaving] = useState(false);
+
   const [modalConfig, setModalConfig] = useState({ isOpen: false, title: "", subtitle: "", confirmText: "", cancelText: "", onConfirm: null });
   const closeModal = () => setModalConfig((p) => ({ ...p, isOpen: false }));
 
@@ -105,9 +109,11 @@ export const AdminLectureForm = () => {
       hasAutoSelected.current = true;
       const first = lecs[0];
       setEditingId(first.id);
-      setFormData({ title: first.title, videoUrl: first.videoUrl || "", semester: first.semester, questions: first.questions || "", pdfUrl: first.pdfUrl || "" });
+      setFormData({ title: first.title, videoUrl: first.videoUrl || "", semester: first.semester, questions: first.questions || "", pdfUrl: first.pdfUrl || "", vocabularyUrl: first.vocabularyUrl || "" });
       setLectureTest(first.test || null);
       setTestTitle("");
+      setLecturePostTest(first.postTest || null);
+      setPostTestTitle("");
       setShowForm(true);
     }
   };
@@ -130,14 +136,18 @@ export const AdminLectureForm = () => {
     setFormData({ ...emptyLecture });
     setLectureTest(null);
     setTestTitle("");
+    setLecturePostTest(null);
+    setPostTestTitle("");
     setShowForm(true);
   };
 
   const handleEdit = (lec) => {
     setEditingId(lec.id);
-    setFormData({ title: lec.title, videoUrl: lec.videoUrl || "", semester: lec.semester, questions: lec.questions || "", pdfUrl: lec.pdfUrl || "" });
+    setFormData({ title: lec.title, videoUrl: lec.videoUrl || "", semester: lec.semester, questions: lec.questions || "", pdfUrl: lec.pdfUrl || "", vocabularyUrl: lec.vocabularyUrl || "" });
     setLectureTest(lec.test || null);
     setTestTitle("");
+    setLecturePostTest(lec.postTest || null);
+    setPostTestTitle("");
     setShowForm(true);
   };
 
@@ -264,6 +274,32 @@ export const AdminLectureForm = () => {
       onConfirm: async () => {
         await api.delete(`/admin/lectures/${editingId}/test`);
         setLectureTest(null);
+        closeModal();
+      },
+    });
+  };
+
+  const handleCreatePostTest = async () => {
+    setPostTestSaving(true);
+    try {
+      const res = await api.post(`/admin/lectures/${editingId}/post-test`, { title: postTestTitle });
+      setLecturePostTest(res.data);
+      setPostTestTitle("");
+    } finally {
+      setPostTestSaving(false);
+    }
+  };
+
+  const handleDeletePostTest = () => {
+    setModalConfig({
+      isOpen: true,
+      title: "Видалити текст до лекції?",
+      subtitle: "Це видалить тест та всі питання до нього. Відновити неможливо.",
+      confirmText: "Видалити",
+      cancelText: "Скасувати",
+      onConfirm: async () => {
+        await api.delete(`/admin/lectures/${editingId}/post-test`);
+        setLecturePostTest(null);
         closeModal();
       },
     });
@@ -540,6 +576,35 @@ export const AdminLectureForm = () => {
               </div>
             </div>
 
+            <div className="form-group full-width">
+              <label>Посилання на словник</label>
+              <div className="alc-field-row">
+                <input
+                  type="url"
+                  value={formData.vocabularyUrl}
+                  onChange={(e) =>
+                    setFormData((p) => ({
+                      ...p,
+                      vocabularyUrl: e.target.value,
+                    }))
+                  }
+                  placeholder="https://..."
+                  style={{ flex: 1 }}
+                />
+                {formData.vocabularyUrl && (
+                  <button
+                    type="button"
+                    className="img-remove-btn"
+                    onClick={() =>
+                      setFormData((p) => ({ ...p, vocabularyUrl: "" }))
+                    }
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            </div>
+
             {editingId && (
               <div className="form-group full-width alc-test-section">
                 <label>Тест до лекції</label>
@@ -583,6 +648,55 @@ export const AdminLectureForm = () => {
                       disabled={testSaving}
                     >
                       {testSaving ? "Створення..." : "+ Створити тест"}
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {editingId && (
+              <div className="form-group full-width alc-test-section">
+                <label>Текст до лекції</label>
+                {lecturePostTest ? (
+                  <div className="alc-test-info">
+                    <span className="alc-test-title">
+                      📝 {lecturePostTest.title}
+                    </span>
+                    <span className="alc-test-count">
+                      {lecturePostTest._count?.questions ?? 0} питань
+                    </span>
+                    <button
+                      type="button"
+                      className="action-btn questions"
+                      onClick={() =>
+                        navigate(`/admin/tests/${lecturePostTest.id}/questions`)
+                      }
+                    >
+                      ☰
+                    </button>
+                    <button
+                      type="button"
+                      className="action-btn delete"
+                      onClick={handleDeletePostTest}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ) : (
+                  <div className="alc-test-create">
+                    <input
+                      type="text"
+                      value={postTestTitle}
+                      onChange={(e) => setPostTestTitle(e.target.value)}
+                      placeholder={`Текст до лекції: ${formData.title || "..."}`}
+                    />
+                    <button
+                      type="button"
+                      className="button-pink-small"
+                      onClick={handleCreatePostTest}
+                      disabled={postTestSaving}
+                    >
+                      {postTestSaving ? "Створення..." : "+ Створити тест"}
                     </button>
                   </div>
                 )}

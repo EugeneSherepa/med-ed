@@ -211,6 +211,26 @@
     background: #fa8dbc;
     transition: 0.3s ease-in-out;
   }
+
+  &-second {
+    background-color: #99e36b;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #7fd549;
+      transition: 0.3s ease-in-out;
+    }
+  }
+
+  &-third {
+    background-color: #dec6f3;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #B994DA99;
+      transition: 0.3s ease-in-out;
+    }
+  }
 }
 
 .lvp-sidebar-title {
@@ -324,7 +344,7 @@
   font-weight: 500;
   color: $primary-color;
   white-space: nowrap;
-  min-width: 52px;
+  min-width: 58px;
   padding-top: 1px;
 }
 
@@ -407,7 +427,9 @@
     .swiper-button-next {
       width: 28px;
       height: 28px;
-      &::after { font-size: 11px; }
+      &::after {
+        font-size: 11px;
+      }
     }
   }
 

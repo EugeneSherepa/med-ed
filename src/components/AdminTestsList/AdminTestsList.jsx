@@ -18,7 +18,7 @@ import { api } from "../../api";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
 import "./AdminTestsList.scss";
 
-const EXAM_LABELS = { KROK_1: "Крок-1", KROK_2: "Крок-2", KROK_3: "Крок-3" };
+const EXAM_LABELS = { KROK_1: "КРОК_1", KROK_2: "КРОК_2", KROK_3: "КРОК_3" };
 
 const TYPE_TABS = [
   { value: "BASE",    label: "Бази" },

@@ -298,7 +298,9 @@ export const LectureViewPage = () => {
 
       <main className="lvp-content">
         <nav className="lcp-breadcrumb">
-          <Link to="/lectures"><img src={iconMain} alt="" /></Link>
+          <Link to="/lectures">
+            <img src={iconMain} alt="" />
+          </Link>
           <img src={iconCaret} alt=">" className="lcp-breadcrumb-caret" />
           <Link to={`/lectures?type=${course?.type}`}>{typeLabel}</Link>
           <img src={iconCaret} alt=">" className="lcp-breadcrumb-caret" />
@@ -355,25 +357,52 @@ export const LectureViewPage = () => {
                       item.type === "timecode" ? (
                         <button
                           key={i}
-                          ref={(el) => { tcButtonRefs.current[item.tcIndex] = el; }}
+                          ref={(el) => {
+                            tcButtonRefs.current[item.tcIndex] = el;
+                          }}
                           className={`lvp-timecode${item.tcIndex === activeTimecodeIdx ? " lvp-timecode--active" : ""}`}
                           onClick={() => seekTo(item.seconds)}
                         >
                           <span className="lvp-timecode-time">{item.time}</span>
-                          <span className="lvp-timecode-label">{item.label}</span>
+                          <span className="lvp-timecode-label">
+                            {item.label}
+                          </span>
                         </button>
                       ) : (
-                        <p key={i} className="lvp-timecode-text">{item.content}</p>
-                      )
+                        <p key={i} className="lvp-timecode-text">
+                          {item.content}
+                        </p>
+                      ),
                     )}
                   </div>
                 </aside>
               )}
 
               {lecture.test && (
-                <button className="lvp-test-btn" onClick={() => navigate(`/test/${lecture.test.id}`)}>
+                <button
+                  className="lvp-test-btn"
+                  onClick={() => navigate(`/test/${lecture.test.id}`)}
+                >
                   Пройти тест до лекції
                 </button>
+              )}
+              {lecture.postTest && (
+                <button
+                  className="lvp-test-btn lvp-test-btn-second"
+                  onClick={() => navigate(`/test/${lecture.postTest.id}`)}
+                >
+                  Пройти текст до лекції
+                </button>
+              )}
+              {lecture.vocabularyUrl && (
+                <a
+                  className="lvp-test-btn lvp-test-btn-third"
+                  href={lecture.vocabularyUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Пройти словник до лекції
+                </a>
               )}
             </div>
           )}

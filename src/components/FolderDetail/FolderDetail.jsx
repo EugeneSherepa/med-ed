@@ -35,7 +35,7 @@ const getTestTitle = (test) => {
   return t;
 };
 
-const EXAM_LABELS = { KROK_1: "Крок-1", KROK_2: "Крок-2", KROK_3: "Крок-3" };
+const EXAM_LABELS = { KROK_1: "КРОК_1", KROK_2: "КРОК_2", KROK_3: "КРОК_3" };
 const LETTERS = ["A", "Б", "В", "Г", "Д", "Е", "Є", "Ж", "З", "И"];
 
 export const FolderDetail = () => {

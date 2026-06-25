@@ -1,9 +1,24 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { api } from "../../api";
 import { resolveImageUrl } from "../../utils/imageUrl";
 import { AdminImagePicker } from "../AdminImagePicker/AdminImagePicker";
 import { ConfirmModal } from "../ConfirmModal/ConfirmModal";
+import "./AdminCoursesList.scss";
 
 const TYPE_OPTIONS = [
   { value: "PREPARATION", label: "Підготовка до пар" },
@@ -11,6 +26,43 @@ const TYPE_OPTIONS = [
 ];
 
 const emptyForm = { title: "", slug: "", type: "PREPARATION", icon: "", color: "#ecf6f9", sortOrder: 0 };
+
+const SortableCourseRow = ({ course, onEdit, onDelete, onNavigate }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
+    useSortable({ id: course.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
+  };
+
+  return (
+    <tr ref={setNodeRef} style={style}>
+      <td>
+        <span className="abr-handle" {...attributes} {...listeners}>⠿</span>
+      </td>
+      <td>
+        {course.icon
+          ? <img src={resolveImageUrl(course.icon)} alt="" style={{ width: 32, height: 32, objectFit: "contain" }} />
+          : <span className="text-muted">—</span>
+        }
+      </td>
+      <td style={{ fontWeight: 500 }}>
+        <span style={{ display: "inline-block", width: 12, height: 12, borderRadius: 3, background: course.color, marginRight: 8, border: "1px solid #e5e7eb", verticalAlign: "middle" }} />
+        {course.title}
+      </td>
+      <td className="text-muted">{course.slug}</td>
+      <td>{course.type === "PREPARATION" ? "Підготовка" : "Іспити"}</td>
+      <td>{course._count?.lectures ?? 0}</td>
+      <td style={{ display: "flex", gap: 8 }}>
+        <button className="action-btn questions" onClick={() => onNavigate(course.id)}>☰ Лекції</button>
+        <button className="action-btn edit" onClick={() => onEdit(course)}>✎ Редагувати</button>
+        <button className="action-btn delete" onClick={() => onDelete(course.id)}>✕</button>
+      </td>
+    </tr>
+  );
+};
 
 export const AdminCoursesList = () => {
   const navigate = useNavigate();
@@ -21,6 +73,11 @@ export const AdminCoursesList = () => {
   const [showForm, setShowForm] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  const [isReordering, setIsReordering] = useState(false);
+  const [savedMsg, setSavedMsg] = useState(false);
+
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   const [modalConfig, setModalConfig] = useState({ isOpen: false, title: "", subtitle: "", confirmText: "", cancelText: "", onConfirm: null });
   const closeModal = () => setModalConfig((p) => ({ ...p, isOpen: false }));
@@ -30,6 +87,29 @@ export const AdminCoursesList = () => {
   };
 
   useEffect(() => { fetchCourses(); }, []);
+
+  const handleDragEnd = ({ active, over }) => {
+    if (!over || active.id === over.id) return;
+    const oldIndex = courses.findIndex((c) => c.id === active.id);
+    const newIndex = courses.findIndex((c) => c.id === over.id);
+    setCourses(arrayMove(courses, oldIndex, newIndex));
+    setIsDirty(true);
+  };
+
+  const handleSaveOrder = async () => {
+    setIsReordering(true);
+    try {
+      await api.patch("/admin/courses/reorder", {
+        items: courses.map((c, i) => ({ id: c.id, sortOrder: i })),
+      });
+      setCourses((prev) => prev.map((c, i) => ({ ...c, sortOrder: i })));
+      setIsDirty(false);
+      setSavedMsg(true);
+      setTimeout(() => setSavedMsg(false), 2500);
+    } finally {
+      setIsReordering(false);
+    }
+  };
 
   const handleEdit = (course) => {
     setEditingId(course.id);
@@ -81,7 +161,15 @@ export const AdminCoursesList = () => {
 
       <div className="admin-list-header">
         <h2>Курси лекцій</h2>
-        <button className="button-pink-small" onClick={handleNew}>+ Новий курс</button>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {savedMsg && <span className="abr-saved">✓ Збережено</span>}
+          {isDirty && (
+            <button className="btn-cancel" onClick={handleSaveOrder} disabled={isReordering}>
+              {isReordering ? "Збереження..." : "↕ Зберегти порядок"}
+            </button>
+          )}
+          <button className="button-pink-small" onClick={handleNew}>+ Новий курс</button>
+        </div>
       </div>
 
       {showForm && (
@@ -138,45 +226,37 @@ export const AdminCoursesList = () => {
         <div className="admin-loading">Завантаження...</div>
       ) : (
         <div className="admin-table-scroll">
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>Іконка</th>
-                <th>Назва</th>
-                <th>Slug</th>
-                <th>Тип</th>
-                <th>Лекцій</th>
-                <th>Дії</th>
-              </tr>
-            </thead>
-            <tbody>
-              {courses.map((c) => (
-                <tr key={c.id}>
-                  <td>
-                    {c.icon
-                      ? <img src={resolveImageUrl(c.icon)} alt="" style={{ width: 32, height: 32, objectFit: "contain" }} />
-                      : <span className="text-muted">—</span>
-                    }
-                  </td>
-                  <td style={{ fontWeight: 500 }}>
-                    <span style={{ display: "inline-block", width: 12, height: 12, borderRadius: 3, background: c.color, marginRight: 8, border: "1px solid #e5e7eb", verticalAlign: "middle" }} />
-                    {c.title}
-                  </td>
-                  <td className="text-muted">{c.slug}</td>
-                  <td>{c.type === "PREPARATION" ? "Підготовка" : "Іспити"}</td>
-                  <td>{c._count?.lectures ?? 0}</td>
-                  <td style={{ display: "flex", gap: 8 }}>
-                    <button className="action-btn questions" onClick={() => navigate(`/admin/lectures/${c.id}`)}>☰ Лекції</button>
-                    <button className="action-btn edit" onClick={() => handleEdit(c)}>✎ Редагувати</button>
-                    <button className="action-btn delete" onClick={() => handleDelete(c.id)}>✕</button>
-                  </td>
-                </tr>
-              ))}
-              {courses.length === 0 && (
-                <tr><td colSpan={6} style={{ textAlign: "center", padding: 32, color: "#9ca3af" }}>Курсів ще немає</td></tr>
-              )}
-            </tbody>
-          </table>
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={courses.map((c) => c.id)} strategy={verticalListSortingStrategy}>
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th style={{ width: 32 }}></th>
+                    <th>Іконка</th>
+                    <th>Назва</th>
+                    <th>Slug</th>
+                    <th>Тип</th>
+                    <th>Лекцій</th>
+                    <th>Дії</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {courses.map((c) => (
+                    <SortableCourseRow
+                      key={c.id}
+                      course={c}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
+                      onNavigate={(id) => navigate(`/admin/lectures/${id}`)}
+                    />
+                  ))}
+                  {courses.length === 0 && (
+                    <tr><td colSpan={7} style={{ textAlign: "center", padding: 32, color: "#9ca3af" }}>Курсів ще немає</td></tr>
+                  )}
+                </tbody>
+              </table>
+            </SortableContext>
+          </DndContext>
         </div>
       )}
     </div>

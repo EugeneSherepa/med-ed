@@ -55,7 +55,7 @@ export const LecturesOverview = () => {
           <div className="lectures-topbar">
             <div className="lectures-topbar-left">
               <div className="lectures-topbar-left-top">
-                Привіт бджілко <span>👋</span>
+                Привіт, бджілко <span>👋</span>
               </div>
               <div className="lectures-topbar-left-bottom">
                 Ми поруч на кожному етапі навчання!
