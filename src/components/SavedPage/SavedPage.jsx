@@ -19,11 +19,13 @@ const getTestTitle = (test) => {
   if (test.type === "AMPS") {
     let title = `${test.year} АМПС`;
     if (test.day) title += ` день ${test.day}`;
+    if (test.subtitle) title += ` ${test.subtitle}`;
     if (test.language) title += ` (${test.language === "en" ? "Eng" : "Укр"})`;
     return title;
   }
   let title = `${test.year}`;
   if (test.day) title += ` день ${test.day}`;
+    if (test.subtitle) title += ` ${test.subtitle}`;
   if (test.language) title += ` (${test.language === "en" ? "Eng" : "Укр"})`;
   if (test.variant) title += ` варіант ${test.variant}`;
   return title;

@@ -28,6 +28,7 @@ export const AdminTestForm = () => {
     language: "uk",
     year: "",
     day: "",
+    subtitle: "",
     variant: "",
     title: "",
     lectureId: "",
@@ -53,7 +54,8 @@ export const AdminTestForm = () => {
             category: t.category || "Медицина",
             language: t.language || "uk",
             year: t.year || "",
-            day: t.day || "",
+            day: (t.day && !isNaN(Number(t.day))) ? t.day : "",
+            subtitle: t.subtitle || "",
             variant: t.variant || "",
             title: t.title || "",
             lectureId: t.lectureId ? String(t.lectureId) : "",
@@ -127,7 +129,8 @@ export const AdminTestForm = () => {
         payload.title = null;
       } else if (formData.type === "AMPS") {
         if (formData.year) payload.year = parseInt(formData.year);
-        if (formData.day) payload.day = formData.day;
+        payload.day = formData.day || null;
+        payload.subtitle = formData.subtitle || null;
         payload.title = null;
         payload.variant = null;
       } else {
@@ -307,12 +310,22 @@ export const AdminTestForm = () => {
               />
             </div>
             <div className="form-group">
-              <label>День</label>
+              <label>День (необов'язково)</label>
               <input
-                type="text"
+                type="number"
                 name="day"
                 value={formData.day}
                 onChange={handleChange}
+              />
+            </div>
+            <div className="form-group">
+              <label>Мітка (необов'язково)</label>
+              <input
+                type="text"
+                name="subtitle"
+                value={formData.subtitle}
+                onChange={handleChange}
+                placeholder="напр. ТЕСТ"
               />
             </div>
           </div>
