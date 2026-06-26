@@ -8,6 +8,10 @@
     justify-content: space-between;
   }
 
+  &__icon {
+    display: flex;
+  }
+
   &__back {
     cursor: pointer;
     padding: 0;

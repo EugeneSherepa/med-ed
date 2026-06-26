@@ -217,6 +217,54 @@
   opacity: 0.6;
 }
 
+// ─── Answers toggle ───────────────────────────────────────────────
+.sp-answers-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sp-answers-toggle-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.sp-toggle-track {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  background: #d1d5db;
+  transition: background 0.2s;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &.on {
+    background: $pink-active;
+  }
+}
+
+.sp-toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+
+  .sp-toggle-track.on & {
+    transform: translateX(16px);
+  }
+}
+
 // ─── Keyword highlight ────────────────────────────────────────────
 mark.sp-highlight {
   background: rgba(250, 141, 188, 0.28);

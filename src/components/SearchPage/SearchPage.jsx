@@ -29,19 +29,25 @@ const highlightHtml = (html, words) => {
     words.forEach((word) => {
       result = result.replace(
         new RegExp(`(${escapeRegex(word)})`, "gi"),
-        '<mark class="sp-highlight">$1</mark>'
+        '<mark class="sp-highlight">$1</mark>',
       );
     });
     return result;
   });
 };
 
-const TYPE_LABELS = { BOOKLET: "Буклет", BASE: "База", AMPS: "АМПС", LECTURE: "Лекція" };
+const TYPE_LABELS = {
+  BOOKLET: "Буклет",
+  BASE: "База",
+  AMPS: "АМПС",
+  LECTURE: "Лекція",
+};
 const EXAM_LABELS = { KROK_1: "КРОК_1", KROK_2: "КРОК_2", KROK_3: "КРОК_3" };
 const ALL_TYPES = ["BOOKLET", "BASE", "AMPS", "LECTURE"];
 
 const getTestLabel = (test) => {
-  if (test.type === "BASE" || test.type === "LECTURE") return test.title || TYPE_LABELS[test.type];
+  if (test.type === "BASE" || test.type === "LECTURE")
+    return test.title || TYPE_LABELS[test.type];
   if (test.type === "AMPS") {
     let t = test.year ? `${test.year} АМПС` : "АМПС";
     if (test.day) t += ` день ${test.day}`;
@@ -54,13 +60,20 @@ const getTestLabel = (test) => {
   return t || test.title || "—";
 };
 
-
-const QuestionCard = ({ question, words, onReport }) => {
+const QuestionCard = ({ question, words, showAnswers, onReport }) => {
   const [localSaved, setLocalSaved] = useState(question.savedByCurrentUser);
   const [savePending, setSavePending] = useState(false);
   const [showFolderPicker, setShowFolderPicker] = useState(false);
   const [showNotePicker, setShowNotePicker] = useState(false);
   const [hasNote, setHasNote] = useState(false);
+  const [selectedOptionId, setSelectedOptionId] = useState(null);
+
+  const hasAnswered = selectedOptionId !== null;
+  const revealAnswers = showAnswers || hasAnswered;
+
+  useEffect(() => {
+    if (!showAnswers) setSelectedOptionId(null);
+  }, [showAnswers]);
 
   const handleSave = async () => {
     if (savePending) return;
@@ -105,7 +118,10 @@ const QuestionCard = ({ question, words, onReport }) => {
             onClick={handleSave}
             disabled={savePending}
           >
-            <img src={localSaved ? iconBookmarkFilled : iconBookmark} alt="Зберегти" />
+            <img
+              src={localSaved ? iconBookmarkFilled : iconBookmark}
+              alt="Зберегти"
+            />
             {localSaved ? "Збережено" : "Зберегти"}
           </button>
 
@@ -151,7 +167,11 @@ const QuestionCard = ({ question, words, onReport }) => {
         </div>
 
         <div className="test-question-card-text kw-revealed">
-          <div dangerouslySetInnerHTML={{ __html: highlightHtml(question.text, words) }} />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: highlightHtml(question.text, words),
+            }}
+          />
           {question.image && (
             <img
               src={resolveImageUrl(question.image)}
@@ -162,37 +182,69 @@ const QuestionCard = ({ question, words, onReport }) => {
         </div>
 
         <div className="test-question-card-options">
-          {question.options.map((opt, i) => (
-            <label
-              key={opt.id}
-              className={`test-question-card-options-item${opt.isCorrect ? " correct" : ""} disabled-option`}
-            >
-              <div className="test-question-card-options-item-top">
-                <div className="test-question-card-options-item-top-left">
-                  <input type="radio" disabled />
-                  <span className="test-question-card-options-item-letter">
-                    {OPTION_LETTERS[i] ?? i + 1}
-                  </span>
-                  <span dangerouslySetInnerHTML={{ __html: highlightHtml(opt.text, words) }} />
+          {question.options.map((opt, i) => {
+            const isSelected = opt.id === selectedOptionId;
+            const isCorrect = opt.isCorrect;
+            let cls = "test-question-card-options-item";
+            if (revealAnswers && isCorrect) cls += " correct";
+            if (hasAnswered && isSelected && !isCorrect) cls += " incorrect";
+            if (revealAnswers) cls += " disabled-option";
+            return (
+              <label
+                key={opt.id}
+                className={cls}
+                onClick={
+                  !revealAnswers ? () => setSelectedOptionId(opt.id) : undefined
+                }
+                style={!revealAnswers ? { cursor: "pointer" } : undefined}
+              >
+                <div className="test-question-card-options-item-top">
+                  <div className="test-question-card-options-item-top-left">
+                    <input
+                      type="radio"
+                      disabled
+                      checked={isSelected}
+                      readOnly
+                    />
+                    <span className="test-question-card-options-item-letter">
+                      {OPTION_LETTERS[i] ?? i + 1}
+                    </span>
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: highlightHtml(opt.text, words),
+                      }}
+                    />
+                  </div>
+                  {revealAnswers && isCorrect && (
+                    <div>
+                      <img src={iconCorrect} alt="Правильно" />
+                    </div>
+                  )}
                 </div>
-                {opt.isCorrect && (
-                  <div>
-                    <img src={iconCorrect} alt="Правильно" />
+                {revealAnswers && opt.explanation && (
+                  <div className="test-question-explanation">
+                    <div
+                      className="test-question-explanation-text"
+                      dangerouslySetInnerHTML={{ __html: opt.explanation }}
+                    />
                   </div>
                 )}
-              </div>
-              {opt.explanation && (
-                <div className="test-question-explanation">
-                  <div className="test-question-explanation-text" dangerouslySetInnerHTML={{ __html: opt.explanation }} />
-                </div>
-              )}
-              {opt.isCorrect && question.explanation && !question.options.some((o) => o.explanation) && (
-                <div className="test-question-explanation">
-                  <div className="test-question-explanation-text" dangerouslySetInnerHTML={{ __html: question.explanation }} />
-                </div>
-              )}
-            </label>
-          ))}
+                {revealAnswers &&
+                  isCorrect &&
+                  question.explanation &&
+                  !question.options.some((o) => o.explanation) && (
+                    <div className="test-question-explanation">
+                      <div
+                        className="test-question-explanation-text"
+                        dangerouslySetInnerHTML={{
+                          __html: question.explanation,
+                        }}
+                      />
+                    </div>
+                  )}
+              </label>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -212,6 +264,7 @@ export const SearchPage = () => {
   const [pages, setPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(!!initialQ);
+  const [showAnswers, setShowAnswers] = useState(false);
   const [reportQuestionId, setReportQuestionId] = useState(null);
   const debounceRef = useRef(null);
   const inputRef = useRef(null);
@@ -262,7 +315,7 @@ export const SearchPage = () => {
 
   const toggleType = (type) => {
     setActiveTypes((prev) =>
-      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type],
     );
     setPage(1);
   };
@@ -273,9 +326,13 @@ export const SearchPage = () => {
     doSearch(query, activeTypes, nextPage);
   };
 
-  const words = query.trim().split(/\s+/).filter((w) => w.length >= 3);
+  const words = query
+    .trim()
+    .split(/\s+/)
+    .filter((w) => w.length >= 3);
   const hasResults = results.length > 0;
-  const showEmptyState = !hasSearched || (hasSearched && !isLoading && !hasResults);
+  const showEmptyState =
+    !hasSearched || (hasSearched && !isLoading && !hasResults);
   const isEmpty = hasSearched && !isLoading && !hasResults && query.length >= 3;
 
   return (
@@ -323,6 +380,15 @@ export const SearchPage = () => {
                   {activeTypes.includes(type)}
                 </button>
               ))}
+              <label className="sp-answers-toggle">
+                <span className="sp-answers-toggle-label">Відповіді</span>
+                <span
+                  className={`sp-toggle-track ${showAnswers ? "on" : ""}`}
+                  onClick={() => setShowAnswers((v) => !v)}
+                >
+                  <span className="sp-toggle-knob" />
+                </span>
+              </label>
             </div>
           )}
         </div>
@@ -331,8 +397,9 @@ export const SearchPage = () => {
         {!hasSearched && (
           <div className="sp-hero">
             <p className="sp-hero-text">
-              Не гугли, знаходь питання прямо тут —<br />
-              введи ключове слово для пошуку
+              Бджілко, кожен КРОК наближає тебе до мети.
+              <br />
+              Введи слово для пошуку🐝
             </p>
             <p className="sp-hero-hint">Мінімум 3 символи</p>
           </div>
@@ -362,6 +429,7 @@ export const SearchPage = () => {
                   key={q.id}
                   question={q}
                   words={words}
+                  showAnswers={showAnswers}
                   onReport={(id) => setReportQuestionId(id)}
                 />
               ))}
