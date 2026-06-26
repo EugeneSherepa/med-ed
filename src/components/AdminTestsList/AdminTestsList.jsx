@@ -31,6 +31,8 @@ const getTestTitle = (test) => {
   if (test.type === "BASE" || test.type === "LECTURE") return test.title || "Без назви";
   if (test.type === "AMPS") {
     let s = `${test.year} АМПС`;
+    if (test.day) s += ` день ${test.day}`;
+    if (test.subtitle) s += ` ${test.subtitle}`;
     if (test.language) s += ` (${test.language === "en" ? "Eng" : "Укр"})`;
     return s;
   }

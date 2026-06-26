@@ -29,11 +29,13 @@ const getTestTitle = (t) => {
   if (t.type === "AMPS") {
     let s = `${t.year} АМПС`;
     if (t.day) s += ` день ${t.day}`;
+    if (t.subtitle) s += ` ${t.subtitle}`;
     if (t.language) s += ` (${t.language === "en" ? "Eng" : "Укр"})`;
     return s;
   }
   let s = `${t.year}`;
   if (t.day) s += ` день ${t.day}`;
+    if (t.subtitle) s += ` ${t.subtitle}`;
   if (t.language) s += ` (${t.language === "en" ? "Eng" : "Укр"})`;
   if (t.variant) s += ` варіант ${t.variant}`;
   return s;

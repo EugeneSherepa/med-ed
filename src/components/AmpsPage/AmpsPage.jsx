@@ -18,6 +18,7 @@ const EXAM_LABELS = { KROK_1: "КРОК_1", KROK_2: "КРОК_2", KROK_3: "КР�
 const generateTitle = (test) => {
   let title = `${test.year} АМПС`;
   if (test.day) title += ` день ${test.day}`;
+    if (test.subtitle) title += ` ${test.subtitle}`;
   if (test.language) title += ` (${test.language === "en" ? "Eng" : "Укр"})`;
   return title;
 };

@@ -120,6 +120,7 @@ export const BookletsPage = () => {
   const generateTitle = (test) => {
     let title = `${test.year}`;
     if (test.day) title += ` день ${test.day}`;
+    if (test.subtitle) title += ` ${test.subtitle}`;
     if (test.language) title += ` (${test.language})`;
     if (test.variant) title += ` варіант ${test.variant}`;
     return title;

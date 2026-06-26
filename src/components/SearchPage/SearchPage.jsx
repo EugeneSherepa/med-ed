@@ -45,10 +45,12 @@ const getTestLabel = (test) => {
   if (test.type === "AMPS") {
     let t = test.year ? `${test.year} АМПС` : "АМПС";
     if (test.day) t += ` день ${test.day}`;
+    if (test.subtitle) t += ` ${test.subtitle}`;
     return t;
   }
   let t = test.year ? `${test.year}` : "";
   if (test.day) t += ` день ${test.day}`;
+  if (test.subtitle) t += ` ${test.subtitle}`;
   return t || test.title || "—";
 };
 

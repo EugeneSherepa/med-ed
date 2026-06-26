@@ -30,6 +30,7 @@ const getTestTitle = (test) => {
   }
   let t = `${test.year}`;
   if (test.day) t += ` день ${test.day}`;
+    if (test.subtitle) t += ` ${test.subtitle}`;
   if (test.language) t += ` (${test.language === "en" ? "Eng" : "Укр"})`;
   if (test.variant) t += ` варіант ${test.variant}`;
   return t;
